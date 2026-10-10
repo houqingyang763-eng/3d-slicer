@@ -1,0 +1,4 @@
+output/scenes/CT_threshold_practice.mrb filter=lfs diff=lfs merge=lfs -text
+tools/Slicer-5.12.4/bin/Qt5WebEngineCore.dll filter=lfs diff=lfs merge=lfs -text
+tools/Slicer-5.12.4/lib/Python/Lib/site-packages/SimpleITK/_SimpleITK.pyd filter=lfs diff=lfs merge=lfs -text
+work/downloads/Slicer-5.12.4-win-amd64.exe filter=lfs diff=lfs merge=lfs -text

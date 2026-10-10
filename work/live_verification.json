@@ -1,0 +1,68 @@
+{
+  "slicer_version": "5.12.4",
+  "initial_distance_mm": 70.35623639735144,
+  "after_move_distance_mm": 60.35623639735144,
+  "tool_tip_world_follows_transform": true,
+  "distance_line_follows_tip": true,
+  "side_move_changes_direction": true,
+  "reset_restores_initial_pose": true,
+  "screenshot": "C:\\Users\\HOU\\Desktop\\3D  Slicer\\output\\screenshots\\MRI_practice.png",
+  "nodes": [
+    {
+      "name": "Camera",
+      "type": "vtkMRMLCameraNode"
+    },
+    {
+      "name": "Red Transform",
+      "type": "vtkMRMLLinearTransformNode"
+    },
+    {
+      "name": "Red Volume Slice",
+      "type": "vtkMRMLModelNode"
+    },
+    {
+      "name": "Green Transform",
+      "type": "vtkMRMLLinearTransformNode"
+    },
+    {
+      "name": "Green Volume Slice",
+      "type": "vtkMRMLModelNode"
+    },
+    {
+      "name": "Yellow Transform",
+      "type": "vtkMRMLLinearTransformNode"
+    },
+    {
+      "name": "Yellow Volume Slice",
+      "type": "vtkMRMLModelNode"
+    },
+    {
+      "name": "MRHead",
+      "type": "vtkMRMLScalarVolumeNode"
+    },
+    {
+      "name": "PracticeTarget",
+      "type": "vtkMRMLMarkupsFiducialNode"
+    },
+    {
+      "name": "IllustrativeTargetSphere",
+      "type": "vtkMRMLModelNode"
+    },
+    {
+      "name": "SimulatedToolToImage",
+      "type": "vtkMRMLLinearTransformNode"
+    },
+    {
+      "name": "SimulatedToolModel",
+      "type": "vtkMRMLModelNode"
+    },
+    {
+      "name": "SimulatedToolTip",
+      "type": "vtkMRMLMarkupsFiducialNode"
+    },
+    {
+      "name": "TipToTargetDistance",
+      "type": "vtkMRMLMarkupsLineNode"
+    }
+  ]
+}

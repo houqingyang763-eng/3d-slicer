@@ -1,0 +1,32 @@
+from __future__ import print_function
+
+""" This module loads all the classes from the wrapped Qt libraries into
+its namespace."""
+
+__kits_to_load = [ 'Core', 'Gui', 'Widgets', 'Multimedia', 'Network', 'OpenGL', 'Sql', 'Svg', 'UiTools', 'WebKit', 'WebKitWidgets', 'Xml', 'XmlPatterns' ]
+
+import os
+import sys
+_standalone_python = "python" in str.lower(os.path.split(sys.executable)[-1])
+
+# Set to True when debugging
+_CTK_VERBOSE_IMPORT = False
+
+for kit in __kits_to_load:
+  # Since importing a PythonQt-based module outside of a Qt application
+  # leads to a segfault, skip the import if it happens in a standalone
+  # python interpreter.
+  # See https://github.com/commontk/CTK/pull/520
+  if _standalone_python:
+    continue
+  try:
+    exec("from PythonQt.Qt%s import *" % kit)
+  except ImportError as detail:
+    if _CTK_VERBOSE_IMPORT:
+      print(detail)
+
+if "QObject" not in locals() and not _standalone_python:
+  from PythonQt.private import QObject
+
+# Removing things the user shouldn't have to see.
+del __kits_to_load, _standalone_python, _CTK_VERBOSE_IMPORT

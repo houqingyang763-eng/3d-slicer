@@ -1,0 +1,22 @@
+{
+  "CT": {
+    "scene": "C:\\Users\\HOU\\Desktop\\3D  Slicer\\output\\scenes\\CT_threshold_practice.mrb",
+    "threshold": 250,
+    "voxels": 1384846,
+    "mesh_points": 791722
+  },
+  "MRI": {
+    "scene": "C:\\Users\\HOU\\Desktop\\3D  Slicer\\output\\scenes\\MRI_navigation_practice.mrb",
+    "target_RAS_mm": [
+      12.204807281494155,
+      1.4286041259765625,
+      -0.7143020629882812
+    ],
+    "initial_tip_RAS_mm": [
+      57.204807281494155,
+      -28.571395874023438,
+      44.28569793701172
+    ],
+    "initial_distance_mm": 70.35623639735144
+  }
+}

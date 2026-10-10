@@ -1,0 +1,14 @@
+[
+  {
+    "file": "MR-head.nrrd",
+    "source": "https://github.com/Slicer/SlicerTestingData/releases/download/SHA256/cc211f0dfd9a05ca3841ce1141b292898b2dd2d3f08286affadf823a7e58df93",
+    "sha256": "cc211f0dfd9a05ca3841ce1141b292898b2dd2d3f08286affadf823a7e58df93",
+    "bytes": 6607313
+  },
+  {
+    "file": "CT-brain.nrrd",
+    "source": "https://github.com/Slicer/SlicerTestingData/releases/download/SHA256/6a5b6caccb76576a863beb095e3bfb910c50ca78f4c9bf043aa42f976cfa53d1",
+    "sha256": "6a5b6caccb76576a863beb095e3bfb910c50ca78f4c9bf043aa42f976cfa53d1",
+    "bytes": 16366792
+  }
+]
