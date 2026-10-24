@@ -1,0 +1,70 @@
+{
+  "passed": true,
+  "mode": "linux_mock_software_validation",
+  "run_id": "20261024T090044Z_4e8a81",
+  "started_at": 1792832444.9810932,
+  "offline_only": false,
+  "no_slicer": false,
+  "checks": [
+    {
+      "name": "geometry_tests",
+      "passed": true,
+      "exit_code": 0,
+      "log": "geometry_tests.log"
+    },
+    {
+      "name": "bridge_tests",
+      "passed": true,
+      "exit_code": 0,
+      "log": "bridge_tests.log"
+    },
+    {
+      "name": "resource_checks",
+      "passed": true,
+      "exit_code": 0,
+      "log": "resource_checks.log"
+    },
+    {
+      "name": "metrics_and_gate",
+      "passed": true,
+      "exit_code": 0,
+      "log": "metrics_and_gate.log"
+    },
+    {
+      "name": "offline_evaluation",
+      "passed": true,
+      "exit_code": 0,
+      "log": "offline_evaluation.log"
+    },
+    {
+      "name": "point_statistics",
+      "passed": true,
+      "exit_code": 0,
+      "log": "point_statistics.log"
+    },
+    {
+      "name": "moveit_navigation",
+      "passed": true,
+      "exit_code": 0,
+      "log": "moveit_navigation.log"
+    },
+    {
+      "name": "slicer_scene",
+      "passed": true
+    },
+    {
+      "name": "scene_reload",
+      "passed": true,
+      "exit_code": 0,
+      "log": "scene_reload.log"
+    },
+    {
+      "name": "stop_recorded_groups",
+      "passed": true
+    }
+  ],
+  "boundary": "Synthetic optical observations and UR mock; no physical accuracy or ASTM conformity.",
+  "offline_report": "../offline/report.html",
+  "integration_result": "../moveit_mock/run.json",
+  "finished_at": 1792832492.9227793
+}

@@ -1,0 +1,55 @@
+{
+  "passed": true,
+  "mode": "linux_mock_software_validation",
+  "run_id": "20261024T090333Z_940920",
+  "started_at": 1792832613.7928722,
+  "offline_only": true,
+  "no_slicer": false,
+  "checks": [
+    {
+      "name": "geometry_tests",
+      "passed": true,
+      "exit_code": 0,
+      "log": "geometry_tests.log"
+    },
+    {
+      "name": "bridge_tests",
+      "passed": true,
+      "exit_code": 0,
+      "log": "bridge_tests.log"
+    },
+    {
+      "name": "resource_checks",
+      "passed": true,
+      "exit_code": 0,
+      "log": "resource_checks.log"
+    },
+    {
+      "name": "lifecycle_tests",
+      "passed": true,
+      "exit_code": 0,
+      "log": "lifecycle_tests.log"
+    },
+    {
+      "name": "metrics_and_gate",
+      "passed": true,
+      "exit_code": 0,
+      "log": "metrics_and_gate.log"
+    },
+    {
+      "name": "offline_evaluation",
+      "passed": true,
+      "exit_code": 0,
+      "log": "offline_evaluation.log"
+    },
+    {
+      "name": "point_statistics",
+      "passed": true,
+      "exit_code": 0,
+      "log": "point_statistics.log"
+    }
+  ],
+  "boundary": "Synthetic optical observations and UR mock; no physical accuracy or ASTM conformity.",
+  "offline_report": "offline_report.html",
+  "finished_at": 1792832614.5150976
+}

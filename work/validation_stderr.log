@@ -1,7 +1,0 @@
-GetSliceOrientationPreset: invalid orientation preset name: Reformat
-GetSliceOrientationPreset: invalid orientation preset name: Reformat
-GetSliceOrientationPreset: invalid orientation preset name: Reformat
-Warning: In vtkMRMLLayoutNode.cxx, line 259
-vtkMRMLLayoutNode (00000227F070C090): Can't find layout:3
-
-

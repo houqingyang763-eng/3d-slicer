@@ -1,0 +1,188 @@
+{
+  "checked_at": "2026-10-23",
+  "activity": "primary-source literature and release audit only; no calibration algorithms run",
+  "qualified_full_platform_benchmarks": 0,
+  "recommendations": {
+    "optical_head": "LARK conditional on external data licensing clarification",
+    "real_spatiotemporal": "ETH ASL 2017 non-commercial research",
+    "synthetic_stress": "KinHEC supplementary only"
+  },
+  "datasets": [
+    {
+      "name": "LARK",
+      "url": "https://nist.mni.mcgill.ca/data/",
+      "paper": "https://arxiv.org/html/2610.07561v1",
+      "code_commit": "5e80e3ee9c90f7b6b9bb7e2a08c2017359854286",
+      "formal_trials": {
+        "grid": 20,
+        "head": 20
+      },
+      "formal_recordings": 1000,
+      "formal_camera_videos": 5000,
+      "actual_zip_entries": 28376,
+      "actual_zip_mp4": 5225,
+      "actual_igtpos": 1045,
+      "extra_grid_trial": "GT21:45 recordings; exclude from formal 1-20 protocol",
+      "results_rows": {
+        "grid": 99760,
+        "head": 34440
+      },
+      "units": "mm",
+      "raw_igtpos_columns": [
+        "x",
+        "y",
+        "z"
+      ],
+      "raw_igtpos_timestamp": false,
+      "raw_igtpos_orientation": false,
+      "metrics": [
+        "FRE",
+        "TRE",
+        "nearest-neighbor spatial trajectory RMSE"
+      ],
+      "latency_metric": false,
+      "gt": "machined grid geometry and MRI-derived head model; simultaneous fusionTrack is comparator, not exact truth",
+      "license": {
+        "code_design": "CC-BY-4.0",
+        "external_dataset_archives": "no separate license found in archives or data landing page; clarify coverage"
+      },
+      "official_splits": "fixed fiducials/targets; 20 trial units; no ML split",
+      "raw_zip_size": 23499797383,
+      "raw_zip_fully_downloaded": false,
+      "evaluation_scripts_public": true,
+      "evaluation_run": false
+    },
+    {
+      "name": "ETH ASL hand-eye 2017",
+      "url": "https://projects.asl.ethz.ch/datasets/hand-eye-calibration-2017/",
+      "doi": "10.3929/ethz-c-000788527",
+      "code_commit": "966cd92518f24aa7dfdacc8ba9c5fa4a441270cd",
+      "license": {
+        "code": "BSD-3-Clause",
+        "DOI_data": "In Copyright - Non-Commercial Use Permitted (DataCite)"
+      },
+      "units": "timestamp seconds; xyz meters; quaternion xyzw",
+      "samples": {
+        "robot_real": [
+          2817,
+          1703
+        ],
+        "vicon_prime_sense1": [
+          7093,
+          1533
+        ],
+        "robot_sim": [
+          3488,
+          1067
+        ]
+      },
+      "exact_real_extrinsic_gt": false,
+      "official_splits": null,
+      "limits": [
+        "no head/medical image/patient reference",
+        "real pose-stream residual not absolute accuracy",
+        "check repeated timestamps and pair convention"
+      ]
+    },
+    {
+      "name": "METRIC",
+      "url": "https://zenodo.org/records/7976757",
+      "doi": "10.3390/info14060314",
+      "license": "CC-BY-4.0",
+      "raw_size": 25944578404,
+      "archive_md5_published": "a319a7549bc2246bcb97f53b59d7526b",
+      "checksum_locally_verified": false,
+      "zip_entries": 36555,
+      "png_files": 18072,
+      "csv_files": 18144,
+      "yaml_files": 72,
+      "gt": {
+        "synthetic": "simulator",
+        "real": "AprilTag detection + 15cm tag + mount CAD + robot FK reference; shared errors"
+      },
+      "full_download": false,
+      "samples_checked": [
+        "real robot 4x4 pose",
+        "real GT/gt_cam4.csv"
+      ],
+      "metrics": "translation mm; rotation deg",
+      "limits": [
+        "Panda and RGB/Depth camera networks",
+        "no medical optical tracker/head/latency"
+      ]
+    },
+    {
+      "name": "Koide Menegatti 2019",
+      "url": "https://researchdata.cab.unipd.it/122/",
+      "license": "CC-BY-4.0",
+      "size_landing": "15MB",
+      "tasks": [
+        "hand-eye images/poses",
+        "held-out reconstruction flatness"
+      ],
+      "exact_extrinsic_gt": false,
+      "full_download": false
+    },
+    {
+      "name": "RIRE v3",
+      "url": "https://rire.insight-journal.org/",
+      "task": "inter-modality brain image registration only",
+      "gt": "marker-based sequestered transforms",
+      "evaluation_service": "official page says no longer maintained",
+      "data_license": "not independently checked",
+      "qualified_current_selfcontained": false
+    },
+    {
+      "name": "KinHEC",
+      "url": "https://huggingface.co/datasets/ezharjan/KinHEC",
+      "commit": "9cc2e2642c0ef86233c9e1edff889d6af14bcdaa",
+      "license": "MIT",
+      "synthetic": true,
+      "sequences": 77628,
+      "eye_to_hand_sequences": 29850,
+      "size": "50.1GB",
+      "units": "meters; seconds; radians; quaternion wxyz",
+      "gt": [
+        "X",
+        "Y",
+        "time offset",
+        "true joints and poses",
+        "visibility/outliers"
+      ],
+      "split": "HF only train; no independent heldout split",
+      "full_download": false,
+      "validation_run": false,
+      "limits": [
+        "recent Sep2026 release",
+        "synthetic noise does not establish real device accuracy"
+      ]
+    }
+  ],
+  "evidence_sha256": {
+    "ethz_datacite.json": "5ed206f927caaef3d1ca57c80c654bbae3d9655b532c2f172d602f9ff309f196",
+    "ethz_LICENSE.txt": "8e380d5d293ce42f93224684bbf9796c35e8a3b6f13ee7b2f4711012a502b91f",
+    "ethz_zip_manifest.json": "7c6ddd3b48eb7cffda311fbbc94b76e337c977561e5835071a7d0f39c8fbb192",
+    "kinhec_api.json": "a50d24b63f74b3f5a50d54e8d0c37be4f21dd9092d54a0e54c67d5a53014d709",
+    "kinhec_card.md": "ee9ad9db2f308d72cc0fe1ee8f70706645a308c6f6497e00a62d6e989e0b2d04",
+    "kinhec_LICENSE.txt": "92ff78c69eada02282ffd722df786fc0f02573c1397f972822dca81d0318a2e6",
+    "LARK_Datasets.zip": "6f41e55fb459b1677e8b3514f628ad1504b3764eb6b68df93e9613b406fd7214",
+    "lark_data_dictionary.md": "adfd269f6a9261d8aedaa93309cc3034d1b04dc91c164d0aa66279b9c348252c",
+    "lark_GT01_01_IGTPos.txt": "0b556e59dacac53a377bbc1e303d1b1d83e7279ac99fcaf153ddd9ea742f128f",
+    "lark_HT01_R1_IGTPos.txt": "f139d8c8b180c6833d056aa770c15a22a794e3c1747db59e06f703d5e65d60ab",
+    "lark_README.txt": "4cddbc8e64d5b4396045aa9212a46cb072cf01e17d1ea8ee866b5f22bed3c02c",
+    "lark_registration_points.txt": "84349a4f33dccb1f17bfdce70e19c6b7560e3fe9c89452b415c3e3b36b032372",
+    "lark_repo_manifest.json": "defc1cf9bf087f33ca8003c1455ff3df6b2082ebc62f77fea210e9f29c8e0a7e",
+    "lark_target_points.txt": "7110d31d17a2bfab311d37decf3abc65b673d9307a8a1966527723ba679aaf65",
+    "lark_tree.json": "6a70a283258aadbde47843ad096919909b9243d299a487cfd1624ef9c344ffd0",
+    "lark_video_zip_manifest.json": "a69c0996957ef984d3b0d37e651fc5fdef09e4a344becf44d42d86315aa06890",
+    "lark_zip_manifest.json": "3aa627adff422427c0e37ad335637b56bd73a2676a0278123dc93f211f346ab4",
+    "metric_paper.txt": "8de91493ccaa0fac7bf68ac191cbf9aa276939f969f022a14603a29c50e449af",
+    "metric_sample_0.txt": "59027c8dbd23e26256c4a6e0b1cdede1da9a3c014528c93f347940550c77b0e5",
+    "metric_sample_1.txt": "60fddde351548d8c31558603f231276d2f5103c3ad0e64924ecf56a9fe25c294",
+    "metric_zenodo_metadata.json": "ddc528f6d7971485ed56e222d455c405a229889f0f3d6c160df09fba9aebfe30",
+    "metric_zip_manifest.json": "16a04ca9fd7af83c0fbbab1bce4dfbc154ea9b1394c28a35533cf491b8528894",
+    "prime_sense_color_w_vicon_1.zip": "3637c3c8a21851a2db29e02bcb02ca65d90ceb43ef1243bfe4edd4abc67f5d06",
+    "robot_arm_w_color_camera_real.zip": "2454578f731e656a940ddf51017b56e8d535c58d16a50629b85326005dedd6c3",
+    "robot_arm_w_color_camera_sim.zip": "03335b69deadcbf534811e17f8fca4fa40dce316e627d03df0c1f5c37bd9eb33"
+  }
+}

@@ -1,0 +1,15 @@
+test_atomic_json_permanent_permission_failure_is_bounded (test_protocol.ProtocolTests.test_atomic_json_permanent_permission_failure_is_bounded) ... ok
+test_atomic_json_replacement_and_nan_rejection (test_protocol.ProtocolTests.test_atomic_json_replacement_and_nan_rejection) ... ok
+test_atomic_json_transient_permission_failure_retries_complete_file (test_protocol.ProtocolTests.test_atomic_json_transient_permission_failure_retries_complete_file) ... ok
+test_atomic_json_unrelated_replace_error_does_not_retry (test_protocol.ProtocolTests.test_atomic_json_unrelated_replace_error_does_not_retry) ... ok
+test_execute_requires_plan_reference_and_matching_pose (test_protocol.ProtocolTests.test_execute_requires_plan_reference_and_matching_pose) ... ok
+test_non_axis_aligned_tip_offset (test_protocol.ProtocolTests.test_non_axis_aligned_tip_offset) ... ok
+test_quaternion_sign_does_not_change_orientation_error (test_protocol.ProtocolTests.test_quaternion_sign_does_not_change_orientation_error) ... ok
+test_reject_stale_and_future_commands (test_protocol.ProtocolTests.test_reject_stale_and_future_commands) ... ok
+test_reject_wrong_coordinate_contract_and_bad_numbers (test_protocol.ProtocolTests.test_reject_wrong_coordinate_contract_and_bad_numbers) ... ok
+test_tip_to_tool_conversion_respects_orientation (test_protocol.ProtocolTests.test_tip_to_tool_conversion_respects_orientation) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.010s
+
+OK

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "request_id": "gate-20261023_164512_b45bf5-camera_extrinsic_3mm_execute-3f51c3",
+  "command": "execute",
+  "frame_id": "base",
+  "position_m": [
+    -0.8286060459219977,
+    -0.1714405936186409,
+    0.3457709422401026
+  ],
+  "orientation_xyzw": [
+    -0.7070272332377134,
+    -0.7070354549225706,
+    0.010606203830780666,
+    0.010043175939803275
+  ],
+  "timestamp": 1792745114.0031357,
+  "plan_request_id": "gate-20261023_164512_b45bf5-camera_extrinsic_3mm_plan-5aeda8"
+}

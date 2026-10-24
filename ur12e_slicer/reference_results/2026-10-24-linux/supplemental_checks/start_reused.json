@@ -1,0 +1,19 @@
+{
+  "backend": {
+    "running": true,
+    "ready": true,
+    "checked_at": 1792832629.3284097,
+    "pid": 446,
+    "feedback_age_s": 0.08528399467468262,
+    "request_id": null,
+    "status": "idle"
+  },
+  "slicer": {
+    "running": true,
+    "ready": true,
+    "pid": 725,
+    "heartbeat_age_s": 0.3400435447692871,
+    "group": 724
+  },
+  "simulation_only": true
+}

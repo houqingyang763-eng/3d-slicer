@@ -1,0 +1,10 @@
+Submitted ideal_calibration_plan: plan (gate-20261024_170101_892aad-ideal_calibration_plan-a10766)
+Submitted ideal_calibration_execute: execute (gate-20261024_170101_892aad-ideal_calibration_execute-3e60b5)
+ideal_calibration: command 1.898 mm; image target 1.898 mm; imposed bias 0.000 mm
+Submitted camera_extrinsic_3mm_plan: plan (gate-20261024_170101_892aad-camera_extrinsic_3mm_plan-942ce3)
+Submitted camera_extrinsic_3mm_execute: execute (gate-20261024_170101_892aad-camera_extrinsic_3mm_execute-26537a)
+camera_extrinsic_3mm: command 1.508 mm; image target 3.257 mm; imposed bias 3.000 mm
+Submitted calibration_restored_plan: plan (gate-20261024_170101_892aad-calibration_restored_plan-2b64e5)
+Submitted calibration_restored_execute: execute (gate-20261024_170101_892aad-calibration_restored_execute-3526c1)
+calibration_restored: command 1.823 mm; image target 1.823 mm; imposed bias 0.000 mm
+{"passed": true, "output": "ur12e_slicer/output/navigation_benchmark/20261024_170101_892aad"}

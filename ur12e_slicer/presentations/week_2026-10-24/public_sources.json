@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-24",
+  "original_figures_redistributed": false,
+  "internal_ppt_included": false,
+  "source_pages": [
+    "https://arxiv.org/html/2509.19076v1",
+    "https://slicer-ros2.readthedocs.io/en/v1.2/",
+    "https://arxiv.org/html/2604.25661v1",
+    "https://openrobotms.github.io/",
+    "https://doi.org/10.1007/s11548-025-03494-y",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC10544812/",
+    "https://store.astm.org/f2554-22.html",
+    "https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfstandards/detail.cfm?standard__identification_no=45859",
+    "https://atracsys.com/product/astm-phantom/",
+    "https://github.com/Atracsys/SlicerAstmPhantomTest",
+    "https://arxiv.org/html/2610.07561v1",
+    "https://nist.mni.mcgill.ca/data/",
+    "https://projects.asl.ethz.ch/datasets/hand-eye-calibration-2017/"
+  ]
+}

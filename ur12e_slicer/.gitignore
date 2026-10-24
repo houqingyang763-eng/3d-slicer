@@ -1,0 +1,49 @@
+# Install dependencies from pinned sources; do not publish local installations.
+/downloads/
+/assets/ur_description/
+/runtime/
+/.local/
+/ros2_ws/build/
+/ros2_ws/install/
+/ros2_ws/log/
+__pycache__/
+*.py[cod]
+node_modules/
+
+# All live runs are local. Curated, provenance-recorded examples are stored in
+# reference_results instead of mixing current runtime state with old results.
+/output/
+
+# Internal presentation contains source figures without general redistribution
+# permission. Only the public text outline / source links are published.
+/presentations/*
+!/presentations/week_2026-10-24/
+/presentations/week_2026-10-24/*
+!/presentations/week_2026-10-24/public_outline.md
+!/presentations/week_2026-10-24/public_sources.json
+**/build/
+**/.codex-finalizer/
+**/.chart-data-*/
+
+# Keep the compact audit inputs and license-bearing source excerpts only.
+# Downloaded papers, tutorial scenes, ZIP directories and binary tails are not
+# required to run this project and stay outside the public package.
+/research/benchmark_evidence/*
+!/research/benchmark_evidence/astm_audit/
+!/research/benchmark_evidence/lark_LICENSE
+!/research/benchmark_evidence/lark_README.txt
+!/research/benchmark_evidence/lark_data_dictionary.md
+!/research/benchmark_evidence/lark_summarize_head_points.py
+!/research/benchmark_evidence/lark_registration_points.txt
+!/research/benchmark_evidence/lark_target_points.txt
+!/research/benchmark_evidence/lark_GT01_01_IGTPos.txt
+!/research/benchmark_evidence/lark_HT01_R1_IGTPos.txt
+!/research/benchmark_evidence/lark_zip_manifest.json
+!/research/benchmark_evidence/ethz_LICENSE.txt
+!/research/benchmark_evidence/ethz_datacite.json
+!/research/benchmark_evidence/ethz_zip_manifest.json
+!/research/benchmark_evidence/kinhec_LICENSE.txt
+/research/benchmark_evidence/astm_audit/*
+!/research/benchmark_evidence/astm_audit/analytic_input_example.json
+!/research/benchmark_evidence/astm_audit/source_manifest.json
+!/research/benchmark_evidence/astm_audit/source/

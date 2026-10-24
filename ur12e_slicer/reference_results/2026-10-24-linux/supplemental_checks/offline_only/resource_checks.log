@@ -1,0 +1,9 @@
+test_external_slicer_path_is_resolved_explicitly (test_fetch_assets.AssetIntegrityTest.test_external_slicer_path_is_resolved_explicitly) ... ok
+test_missing_resource_in_check_only_is_read_only (test_fetch_assets.AssetIntegrityTest.test_missing_resource_in_check_only_is_read_only) ... ok
+test_verified_cache_is_reused_without_network (test_fetch_assets.AssetIntegrityTest.test_verified_cache_is_reused_without_network) ... ok
+test_wrong_digest_is_rejected_and_file_preserved (test_fetch_assets.AssetIntegrityTest.test_wrong_digest_is_rejected_and_file_preserved) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+OK

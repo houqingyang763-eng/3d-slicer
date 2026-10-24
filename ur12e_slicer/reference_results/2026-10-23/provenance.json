@@ -1,0 +1,264 @@
+{
+  "schema_version": 1,
+  "curated_at": "2026-10-24",
+  "kind": "historical_software_simulation_reference",
+  "simulation_only": true,
+  "astm_conformity_claim": false,
+  "source_preserved_locally": true,
+  "transformation": "CSV/HTML, truth and other path-free records are byte-for-byte copies. JSON/JSONL strings containing the original Windows or WSL repository prefix were converted to repository-relative POSIX paths; all numerical, temporal, request ID, validation and independent truth hash fields were preserved. Source SHA256 and changed JSON field locations are recorded per file. These are derived publication copies, not new experiments. The historical bundled interpreter executable path was generalized to its interpreter kind and recorded Python version; no private runtime is required by the published source.",
+  "limitations": [
+    "Synthetic optical observations and UR mock hardware; no physical tracker or robot accuracy claim.",
+    "No ASTM conformity claim or cross-platform ranking.",
+    "Historical result files do not serve as live runtime state.",
+    "Original source outputs remain locally in ignored output/; source hashes refer to that historical evidence.",
+    "Code hashes in delivery_manifest.json refer to the original 2026-10-23 validation version, not later portability edits."
+  ],
+  "files": [
+    {
+      "source_path": "ur12e_slicer/output/navigation_offline/20261023_164510_ae600c/analytic_point_statistics.json",
+      "source_sha256": "4102f56e5dbad2c45f8890b7eb7f35f3576845625bba1f4ade28d93c9685fceb",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/offline/analytic_point_statistics.json",
+      "published_sha256": "4102f56e5dbad2c45f8890b7eb7f35f3576845625bba1f4ade28d93c9685fceb",
+      "source_bytes": 1221,
+      "published_bytes": 1221,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_offline/20261023_164510_ae600c/cases.csv",
+      "source_sha256": "40024bb33781ca7a544d64b6239b4954482b833adb771ce1ca3c29b4051323f3",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/offline/cases.csv",
+      "published_sha256": "40024bb33781ca7a544d64b6239b4954482b833adb771ce1ca3c29b4051323f3",
+      "source_bytes": 10712,
+      "published_bytes": 10712,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_offline/20261023_164510_ae600c/fixture.json",
+      "source_sha256": "f6848599b337bf4f96c6dff282bcba42014631fdda828ab7bf8a8416f78f78c0",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/offline/fixture.json",
+      "published_sha256": "f6848599b337bf4f96c6dff282bcba42014631fdda828ab7bf8a8416f78f78c0",
+      "source_bytes": 11113,
+      "published_bytes": 11113,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_offline/20261023_164510_ae600c/report.html",
+      "source_sha256": "3b498a827a328ea6473d4c12004b728ea6396bdc23044692134ae202c0ba42f8",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/offline/report.html",
+      "published_sha256": "3b498a827a328ea6473d4c12004b728ea6396bdc23044692134ae202c0ba42f8",
+      "source_bytes": 4077,
+      "published_bytes": 4077,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_offline/20261023_164510_ae600c/run.json",
+      "source_sha256": "754d3360d90997cd232928e35a27497d2842fc1dbac73d02059666236e77fef5",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/offline/run.json",
+      "published_sha256": "754d3360d90997cd232928e35a27497d2842fc1dbac73d02059666236e77fef5",
+      "source_bytes": 158795,
+      "published_bytes": 158795,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_offline/20261023_164510_ae600c/truth.json",
+      "source_sha256": "66c248c55b601116249257bd8abffb10500e0083e308b58340eaf3b62d53bb38",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/offline/truth.json",
+      "published_sha256": "66c248c55b601116249257bd8abffb10500e0083e308b58340eaf3b62d53bb38",
+      "source_bytes": 7730,
+      "published_bytes": 7730,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_benchmark/20261023_164512_b45bf5/calibration_restored.json",
+      "source_sha256": "fb908da9f05fd0d7656d66df3575c224e9d2693f7ef50676e13987073df813cc",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/moveit_mock/calibration_restored.json",
+      "published_sha256": "fb908da9f05fd0d7656d66df3575c224e9d2693f7ef50676e13987073df813cc",
+      "source_bytes": 15758,
+      "published_bytes": 15758,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_benchmark/20261023_164512_b45bf5/calibration_restored_execute_request.json",
+      "source_sha256": "dce2d55e14f901722e27d5af31192bf265ad380ac74ff692ef9f1b807b2a11ef",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/moveit_mock/calibration_restored_execute_request.json",
+      "published_sha256": "dce2d55e14f901722e27d5af31192bf265ad380ac74ff692ef9f1b807b2a11ef",
+      "source_bytes": 501,
+      "published_bytes": 501,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_benchmark/20261023_164512_b45bf5/calibration_restored_plan_request.json",
+      "source_sha256": "d33c58e36db637d0c091b82afb47356d4d29abd163d6c9568aa0181357b94273",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/moveit_mock/calibration_restored_plan_request.json",
+      "published_sha256": "d33c58e36db637d0c091b82afb47356d4d29abd163d6c9568aa0181357b94273",
+      "source_bytes": 410,
+      "published_bytes": 410,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_benchmark/20261023_164512_b45bf5/camera_extrinsic_3mm.json",
+      "source_sha256": "e546fb8d8b2796433a52a6daa8856c5e2a81f0b067ef6de8cb5f1dc3b31d5be6",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/moveit_mock/camera_extrinsic_3mm.json",
+      "published_sha256": "e546fb8d8b2796433a52a6daa8856c5e2a81f0b067ef6de8cb5f1dc3b31d5be6",
+      "source_bytes": 14729,
+      "published_bytes": 14729,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_benchmark/20261023_164512_b45bf5/camera_extrinsic_3mm_execute_request.json",
+      "source_sha256": "30b162b39545ca7c6090fe79d9d95d989ec1289873e8a24cdb8484d96537e60e",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/moveit_mock/camera_extrinsic_3mm_execute_request.json",
+      "published_sha256": "30b162b39545ca7c6090fe79d9d95d989ec1289873e8a24cdb8484d96537e60e",
+      "source_bytes": 500,
+      "published_bytes": 500,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_benchmark/20261023_164512_b45bf5/camera_extrinsic_3mm_plan_request.json",
+      "source_sha256": "169a5e0b6adb876ac42470ddb12d754c1cbcfdd4290d000e9cc22b79410cebe6",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/moveit_mock/camera_extrinsic_3mm_plan_request.json",
+      "published_sha256": "169a5e0b6adb876ac42470ddb12d754c1cbcfdd4290d000e9cc22b79410cebe6",
+      "source_bytes": 409,
+      "published_bytes": 409,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_benchmark/20261023_164512_b45bf5/cases.csv",
+      "source_sha256": "1847fa22407bf17ddae7026b4ff577964741b299c94d22a9c61f2740d1a0cf43",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/moveit_mock/cases.csv",
+      "published_sha256": "1847fa22407bf17ddae7026b4ff577964741b299c94d22a9c61f2740d1a0cf43",
+      "source_bytes": 400,
+      "published_bytes": 400,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_benchmark/20261023_164512_b45bf5/ideal_calibration.json",
+      "source_sha256": "d29891e8daf855ef9175c0ad624053db8588ef7eee634b469c009ecc4ded1b56",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/moveit_mock/ideal_calibration.json",
+      "published_sha256": "d29891e8daf855ef9175c0ad624053db8588ef7eee634b469c009ecc4ded1b56",
+      "source_bytes": 15235,
+      "published_bytes": 15235,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_benchmark/20261023_164512_b45bf5/ideal_calibration_execute_request.json",
+      "source_sha256": "19ee2ca95d4a3f239d61ee312f22d7f67567a2b20192705e63264113f6aa9070",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/moveit_mock/ideal_calibration_execute_request.json",
+      "published_sha256": "19ee2ca95d4a3f239d61ee312f22d7f67567a2b20192705e63264113f6aa9070",
+      "source_bytes": 494,
+      "published_bytes": 494,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_benchmark/20261023_164512_b45bf5/ideal_calibration_plan_request.json",
+      "source_sha256": "2c780037fd86a78ac657191ec3800326eb20897c22e0a31a039348d77444392c",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/moveit_mock/ideal_calibration_plan_request.json",
+      "published_sha256": "2c780037fd86a78ac657191ec3800326eb20897c22e0a31a039348d77444392c",
+      "source_bytes": 406,
+      "published_bytes": 406,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_benchmark/20261023_164512_b45bf5/initial_state.json",
+      "source_sha256": "4ed31cb1f18fd8947a68c970875cdbeb12441d1a3175995330c607359ac764dd",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/moveit_mock/initial_state.json",
+      "published_sha256": "4ed31cb1f18fd8947a68c970875cdbeb12441d1a3175995330c607359ac764dd",
+      "source_bytes": 7240,
+      "published_bytes": 7240,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_benchmark/20261023_164512_b45bf5/observations.jsonl",
+      "source_sha256": "b1c8bccb1a32a1011c2c2021478a6903b3bc51988191571bae218c52f5345ca7",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/moveit_mock/observations.jsonl",
+      "published_sha256": "b1c8bccb1a32a1011c2c2021478a6903b3bc51988191571bae218c52f5345ca7",
+      "source_bytes": 32040,
+      "published_bytes": 32040,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_benchmark/20261023_164512_b45bf5/report.html",
+      "source_sha256": "6c56a19af32343720a79764bd0a77342aedf10f74c3f6e2fef3025ffceaf6898",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/moveit_mock/report.html",
+      "published_sha256": "6c56a19af32343720a79764bd0a77342aedf10f74c3f6e2fef3025ffceaf6898",
+      "source_bytes": 1534,
+      "published_bytes": 1534,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_benchmark/20261023_164512_b45bf5/run.json",
+      "source_sha256": "f994164e45ad048038abb0619fb74cdba3dcb969113033a1cc5f51404a763755",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/moveit_mock/run.json",
+      "published_sha256": "97e21235c3a3630bc181da17961a5964b614ff73820a3926cf9749def2bbcd18",
+      "source_bytes": 84621,
+      "published_bytes": 84586,
+      "path_strings_normalized": [
+        "$.reference_world_path"
+      ]
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_benchmark/20261023_164512_b45bf5/truth.json",
+      "source_sha256": "7206ac1dc20372b8e6c6f6848824cd6bd657ce512c899deb2f7f31265e55ea2e",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/moveit_mock/truth.json",
+      "published_sha256": "7206ac1dc20372b8e6c6f6848824cd6bd657ce512c899deb2f7f31265e55ea2e",
+      "source_bytes": 3045,
+      "published_bytes": 3045,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_benchmark/metric_and_gate_checks.json",
+      "source_sha256": "2b9baa431b5edb3f402a244039c6f905c02e2bfcca31659a64c17ed77f50095d",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/checks/metric_and_gate_checks.json",
+      "published_sha256": "2b9baa431b5edb3f402a244039c6f905c02e2bfcca31659a64c17ed77f50095d",
+      "source_bytes": 2732,
+      "published_bytes": 2732,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_benchmark/scene_reload_verification.json",
+      "source_sha256": "5f0482ae64a456ceec1483d99da2e8580a4af572e100f3897fd2f63f74f62db6",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/checks/scene_reload_verification.json",
+      "published_sha256": "5f0482ae64a456ceec1483d99da2e8580a4af572e100f3897fd2f63f74f62db6",
+      "source_bytes": 689,
+      "published_bytes": 689,
+      "path_strings_normalized": []
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_benchmark/scene_metadata.json",
+      "source_sha256": "f4bc4c6e6fed1aa37f2cdb41f3be14f63ca64d393c84bf974e64d8c476c9703a",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/checks/scene_metadata.json",
+      "published_sha256": "cf1f9c8e0aee92798c206ceed4bf8385af5db206651cf6b37565c88642dbd574",
+      "source_bytes": 1962,
+      "published_bytes": 1714,
+      "path_strings_normalized": [
+        "$.source_result",
+        "$.volume_path",
+        "$.artifacts.scene",
+        "$.artifacts.head_screenshot",
+        "$.artifacts.platform_screenshot"
+      ]
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_benchmark/delivery_manifest.json",
+      "source_sha256": "fc981d17d74889aa3ee8fd1c5d5ae02e6ef739a1eb6e28cce33085c1c555b6cb",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/checks/delivery_manifest.json",
+      "published_sha256": "4302789c67bbc77aaa2ee0cf9a39be33e8015b47e983303e1601c4305e58d8c0",
+      "source_bytes": 7311,
+      "published_bytes": 7158,
+      "path_strings_normalized": [
+        "$.offline_run"
+      ]
+    },
+    {
+      "source_path": "ur12e_slicer/output/navigation_benchmark_2026-10-23/verification.json",
+      "source_sha256": "028a972c84a79d3787d8b2292fceec9e8de9cfa93d22693a3636c8347fb37c42",
+      "published_path": "ur12e_slicer/reference_results/2026-10-23/checks/geometry_first_run_environment.json",
+      "published_sha256": "2aff017021d104e0e201d423c5df5de30eac2f2427beedf18f6b7c7c331e3edd",
+      "source_bytes": 499,
+      "published_bytes": 460,
+      "path_strings_normalized": [
+        "$.execution_environment.executable"
+      ]
+    }
+  ]
+}

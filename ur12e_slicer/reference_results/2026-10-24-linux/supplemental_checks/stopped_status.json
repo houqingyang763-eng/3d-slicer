@@ -1,0 +1,13 @@
+{
+  "backend": {
+    "running": false,
+    "ready": false,
+    "checked_at": 1792832631.285864,
+    "detail": "[Errno 2] No such file or directory: '/proc/446/stat'"
+  },
+  "slicer": {
+    "running": false,
+    "ready": false
+  },
+  "simulation_only": true
+}

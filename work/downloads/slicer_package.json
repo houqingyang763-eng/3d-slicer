@@ -1,9 +1,0 @@
-{
-  "source_url": "https://download.slicer.org/bitstream/6aa1db04ce9de556d30112bb",
-  "resolved_url": "https://slicer-packages.kitware.com/api/v1/item/6aa1db04ce9de556d30112bb/download",
-  "expected_bytes": 268839640,
-  "actual_bytes": 268839640,
-  "sha512": "5ba320cb67f0acdaacf0a31380e9cf3b9f46d05f57a53da7e04ebcd9490251ecbe998bfefdbdab1f747e038653177868cdb0ad30986473b9d68efba0f4c6045c",
-  "expected_sha512": "5ba320cb67f0acdaacf0a31380e9cf3b9f46d05f57a53da7e04ebcd9490251ecbe998bfefdbdab1f747e038653177868cdb0ad30986473b9d68efba0f4c6045c",
-  "checksum_verified": true
-}

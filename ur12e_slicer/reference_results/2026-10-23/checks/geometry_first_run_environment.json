@@ -1,0 +1,16 @@
+{
+  "unit_tests": {
+    "suite": "test_geometry",
+    "tests_run": 26,
+    "failures": 0,
+    "errors": 0,
+    "result": "passed"
+  },
+  "execution_environment": {
+    "executable": "python3 (historical bundled interpreter; Python 3.12.14)",
+    "python": "3.12.14",
+    "numpy": "2.3.5"
+  },
+  "offline_result": "run.json",
+  "evidence_boundary": "mathematical simulation and failure gating only; no hardware measurement or ASTM conformity"
+}

@@ -1,0 +1,120 @@
+Installing Ubuntu prerequisites from configured Ubuntu repositories.
+Hit:1 http://packages.ros.org/ros2/ubuntu noble InRelease
+Hit:2 http://security.ubuntu.com/ubuntu noble-security InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu noble InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu noble-backports InRelease
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+ca-certificates is already the newest version (20260816ubuntu0.24.04.1).
+curl is already the newest version (8.5.0-2ubuntu10.16).
+locales is already the newest version (2.39-0ubuntu8.9).
+software-properties-common is already the newest version (0.99.49.4).
+python3 is already the newest version (3.12.3-0ubuntu2.1).
+python3-venv is already the newest version (3.12.3-0ubuntu2.1).
+python3-numpy is already the newest version (1:1.26.4+ds-6ubuntu1).
+python3-yaml is already the newest version (6.0.1-2build2).
+git is already the newest version (1:2.43.0-1ubuntu7.4).
+0 upgraded, 0 newly installed, 0 to remove and 4 not upgraded.
+Generating locales (this might take a while)...
+  en_US.ISO-8859-1... done
+  en_US.UTF-8... done
+Generation complete.
+Hit:1 http://security.ubuntu.com/ubuntu noble-security InRelease
+Hit:2 http://archive.ubuntu.com/ubuntu noble InRelease
+Hit:3 http://packages.ros.org/ros2/ubuntu noble InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu noble-backports InRelease
+Reading package lists...
+Adding component(s) 'universe' to all repositories.
+Verifying the pinned official ros2-apt-source 1.3.0 package.
+Pinned source package is already installed; retaining its managed configuration.
+Installing ROS 2 Jazzy, MoveIt 2 and the official UR metapackage.
+Hit:1 http://packages.ros.org/ros2/ubuntu noble InRelease
+Hit:2 http://security.ubuntu.com/ubuntu noble-security InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu noble InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu noble-backports InRelease
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+ros-jazzy-desktop is already the newest version (0.11.0-1noble.20261006.040109).
+ros-dev-tools is already the newest version (1.0.3).
+ros-jazzy-moveit is already the newest version (2.12.4-1noble.20260921.025955).
+ros-jazzy-ur is already the newest version (3.9.0-1noble.20261006.044441).
+ros-jazzy-ros2controlcli is already the newest version (4.48.1-1noble.20261006.035651).
+ros-jazzy-tf2-tools is already the newest version (0.36.23-1noble.20260915.174418).
+0 upgraded, 0 newly installed, 0 to remove and 4 not upgraded.
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libglu1-mesa is already the newest version (9.0.2-1.1build1).
+libglu1-mesa set to manually installed.
+libpulse-mainloop-glib0 is already the newest version (1:16.1+dfsg1-2ubuntu10.1).
+libpulse-mainloop-glib0 set to manually installed.
+libnss3 is already the newest version (2:3.98-1ubuntu0.3).
+libnss3 set to manually installed.
+libasound2t64 is already the newest version (1.2.11-1ubuntu0.3).
+libasound2t64 set to manually installed.
+qt5dxcb-plugin is already the newest version (5.0.65-1build9).
+fonts-noto-cjk is already the newest version (1:20230817+repack1-3).
+0 upgraded, 0 newly installed, 0 to remove and 4 not upgraded.
+Checking installed packages and UR12e launch arguments (no nodes launched).
+/opt/ros/jazzy
+/opt/ros/jazzy
+/opt/ros/jazzy
+/opt/ros/jazzy
+/opt/ros/jazzy
+/opt/ros/jazzy
+WARNING:root:[33;21mCannot infer URDF from `/opt/ros/jazzy/share/ur_moveit_config`. -- using config/ur.urdf[0m
+WARNING:root:[33;21mCannot infer SRDF from `/opt/ros/jazzy/share/ur_moveit_config`. -- using config/ur.srdf[0m
+WARNING:root:[33;21m"File /opt/ros/jazzy/share/ur_moveit_config/config/ur.urdf doesn't exist"[0m
+WARNING:root:[33;21mThe robot description will be loaded from /robot_description topic [0m
+Python imports available: numpy, rclpy, yaml, MoveGroup, ExecuteTrajectory
+
+Installation checks passed. Runtime planning and execution remain separate checks.
+For each new shell: source /opt/ros/jazzy/setup.bash
+
+Setup exit code: 0
+Logs: ur12e_slicer/output/environment/setup-20261024T090202Z-452
+UR description: verified pinned required files
+MR-head.nrrd: verified source SHA256
+Slicer: ur12e_slicer/.local/slicer/Slicer (verified installation receipt)
+OK   os: Supported target: Ubuntu 24.04 x86_64; found Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39
+OK   architecture: x86_64
+OK   python: 3.12.3
+OK   command:bash: /usr/bin/bash
+OK   command:colcon: /usr/bin/colcon
+OK   command:setsid: /usr/bin/setsid
+OK   python:numpy: 1.26.4
+OK   python:yaml: 6.0.1
+OK   ROS setup: /opt/ros/jazzy/setup.bash
+OK   ROS package:rclpy: /opt/ros/jazzy/share/rclpy
+OK   ROS package:ur_robot_driver: /opt/ros/jazzy/share/ur_robot_driver
+OK   ROS package:ur_moveit_config: /opt/ros/jazzy/share/ur_moveit_config
+OK   ROS package:ur_description: /opt/ros/jazzy/share/ur_description
+OK   ROS package:moveit_ros_move_group: /opt/ros/jazzy/share/moveit_ros_move_group
+OK   ROS package:moveit_msgs: /opt/ros/jazzy/share/moveit_msgs
+OK   ROS package:controller_manager: /opt/ros/jazzy/share/controller_manager
+OK   UR12e support:ur_robot_driver/launch/ur_control.launch.py: /opt/ros/jazzy/share/ur_robot_driver/launch/ur_control.launch.py
+OK   UR12e support:ur_moveit_config/launch/ur_moveit.launch.py: /opt/ros/jazzy/share/ur_moveit_config/launch/ur_moveit.launch.py
+OK   installed:ros2-apt-source: 1.3.0~noble
+OK   installed:ros-jazzy-controller-manager: 4.48.1-1noble.20261006.035021
+OK   installed:ros-jazzy-moveit-ros-move-group: 2.12.4-1noble.20260915.202214
+OK   installed:ros-jazzy-ur-description: 3.5.1-1noble.20260920.234208
+OK   installed:ros-jazzy-ur-moveit-config: 3.9.0-1noble.20261006.043609
+OK   installed:ros-jazzy-ur-robot-driver: 3.9.0-1noble.20261006.040539
+OK   UR description: UR description: verified pinned required files
+OK   MR image: MR-head.nrrd: verified source SHA256
+OK   Slicer: Slicer: ur12e_slicer/.local/slicer/Slicer (verified installation receipt)
+OK   GUI dependency:libglu1-mesa: install ok installed
+OK   GUI dependency:libpulse-mainloop-glib0: install ok installed
+OK   GUI dependency:libnss3: install ok installed
+OK   GUI dependency:libasound2t64: install ok installed
+OK   GUI dependency:qt5dxcb-plugin: install ok installed
+OK   GUI dependency:fonts-noto-cjk: install ok installed
+NOTE Package presence and asset checks do not establish successful planning, execution, GUI rendering or physical-device accuracy.
+Installation checks passed. Runtime validation is separate; use start_linux.sh when ready.

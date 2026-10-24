@@ -1,58 +1,78 @@
-# 脑科手术坐标配准平台：项目入口
+# 3D Slicer 影像导航与 UR12e 仿真
 
-当前阶段：模拟点配准实践，以及光学定位、UR 机械臂和路径规划的整合调研。更新日期：2026-10-17。
+本仓库包含基础配准练习，以及 UR12e、ROS 2 / MoveIt 2、3D Slicer 的仿真联动和导航误差评价。当前交付以 **Ubuntu 24.04、x86_64 桌面系统**为部署目标。更新日期：2026-10-24。
 
-## 2026-10-17 本次作业入口
+**接手的 Codex 先读 [AGENTS.md](AGENTS.md)，操作者按 [Linux 部署与验收](ur12e_slicer/DEPLOYMENT_LINUX.md)执行。** 安装、启动、运行和检查均使用仓库入口，不需要原作者的用户名、Windows 路径、WSL 镜像或 Codex 私有运行时。
 
-- [模拟点配准实践：步骤、7 张截图、实测误差与复现方法](docs/模拟点配准实践_2026-10-17.md)
-- [项目调研：配准、手术导航、UR、路径规划及 Slicer 机器人整合](docs/项目调研_配准与机器人导航_2026-10-17.md)，包含 11 篇代表论文和官方实现资料。
-- 双击 **Open_Registration_Practice.cmd** 打开专用练习；[配准前后场景和原始结果](output/registration_2026-10-17/)可单独查看。
+## 本周交付
 
-本次已完成的是模拟点配准及资料调研；尚未连接光学设备或真实机械臂。PPT 由用户另行制作。
+1. Slicer 目标设置 → 文件桥 → MoveIt 规划与 UR12e mock 执行 → 关节、工具反馈。
+2. 公共 MR 头部影像、非单位坐标变换、合成配准点与独立检查点、模拟光学观测。
+3. 离线误差与失效场景；三个影像目标的 MoveIt/mock 执行和六类执行前拒绝检查。
+4. 参考平台调研、跨平台评价协议和可读的 JSON / CSV / HTML 结果。
 
-## 先看什么
+这些成果验证软件、几何和仿真链路。光学观测与真值是合成的；尚未连接物理定位仪或真实机械臂，没有完成实物精度测试或 ASTM 标准符合性测试。
 
-先读 [项目入门说明](docs/项目入门说明.md)。它解释影像、目标、配准、光学定位和实时导航如何连接。
+## Linux 快速入口
 
-需要操作时查 [Slicer 基础操作](docs/Slicer基础操作.md)。需要知道论文讲了什么时查 [四篇论文笔记](docs/四篇论文笔记.md)，不必按顺序读完原论文。
+当前文件树已移除早期 Windows 软件和工作缓存，旧提交历史仍然较大；少量早期练习场景保留 LFS 指针。浅克隆并跳过当前 Linux 任务不需要的旧 LFS 文件自动下载：
 
-## 直接打开软件
+```bash
+GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 https://github.com/houqingyang763-eng/3d-slicer.git
+cd 3d-slicer
+bash ur12e_slicer/bootstrap/install_linux.sh
+bash ur12e_slicer/start_linux.sh
+bash ur12e_slicer/run_navigation_linux.sh
+```
 
-双击本文件夹里的 **Open_Classroom_Slicer.cmd**，进入 MRI 目标与模拟工具练习。右侧按钮可以移动工具、观察距离变化、定位切片和保存当前练习。
+`install_linux.sh` 需要联网和安装系统包时的 `sudo` 权限；后续启动、运行、停止使用普通用户。每一步都应退出成功再继续。完整依赖、Slicer 路径覆盖、后台模式、预期结果、日志和排错见 [部署说明](ur12e_slicer/DEPLOYMENT_LINUX.md)。
 
-双击 **Open_CT_Practice.cmd**，进入 CT 阈值分割练习。它已经包含一个高密度区域分割和一个对应的三维表面模型。
+完成后：
 
-软件已在 `tools/Slicer-5.12.4/` 目录部署，版本为官方稳定版 5.12.4。无需运行安装器，当前电脑已实际启动成功；Slicer 自带 Python 环境，不需要另外安装 Python、Anaconda 或编译整套软件。这个目录是完整运行环境，不要移动其中单独的 exe 或 dll。
+```bash
+bash ur12e_slicer/stop_linux.sh
+```
 
-MRI 和 CT 是两个独立的官方示例，**没有在这里相互配准或融合**。MRI 中的目标是为练习人为选取的点，工具是合成的圆柱模型；CT 中按 HU ≥ 250 提取的结构只是阈值分割练习，未做解剖学审核。本次没有接入定位硬件，也没有测量现实导航精度。
+只检查离线几何时，在已安装 Python 3 和 NumPy 的环境运行：
 
-## 怎样指挥 Codex
+```bash
+python3 ur12e_slicer/navigation_benchmark/run_offline.py \
+  --output "$PWD/ur12e_slicer/output/my_offline_run"
+```
 
-例如：“在当前 MRI 上加两个目标点”“把模拟工具向目标移动 20 mm”“显示工具的变换”“解释这个 CT 分割和模型有什么区别”。
+## 先看哪些文件
 
-通过上述启动入口打开软件后，Codex 可以在运行中的 Slicer 内执行脚本并检查结果。采用本机文件队列连接，未开启网络控制服务。若同时打开多个课堂窗口，Codex 默认连接最近启动的窗口；旧窗口可以继续使用。
+| 入口 | 用途 |
+|---|---|
+| [Linux 部署与验收](ur12e_slicer/DEPLOYMENT_LINUX.md) | 环境、安装、启动、结果检查、故障处理 |
+| [Codex 交接约定](AGENTS.md) | 工作目录、命令、证据边界和维护规则 |
+| [目标、已知与任务清单](ur12e_slicer/README.md) | 阶段目标与已完成 / 待完成内容 |
+| [本轮导航成果](ur12e_slicer/NAVIGATION_BENCHMARK_RESULTS_2026-10-23.md) | 2026-10-23 参考运行、数据与限制 |
+| [历史参考结果与来源](ur12e_slicer/reference_results/2026-10-23/PROVENANCE.md) | 已发布的离线 / MoveIt 报告与原始记录，不等于接收方本机通过 |
+| [本次 Linux 部署验证](ur12e_slicer/reference_results/2026-10-24-linux/PROVENANCE.md) | WSL2 / WSLg、普通用户、独立 Linux 目录中的完整实跑与已知限制 |
+| [导航几何与离线评价](ur12e_slicer/navigation_benchmark/README.md) | 坐标约定、固定场景、指标与单元测试 |
+| [平台评价协议](ur12e_slicer/research/BENCHMARK_PROTOCOL_v1.md) | 可比条件、静态定位与完整导航的评价范围 |
+| [baseline 调研](ur12e_slicer/research/BASELINE_REVIEW_2026-10-23.md) | 平台与公开数据的选择理由 |
+| [文件通信协议](ur12e_slicer/protocol.md) | 请求、状态、坐标与误差字段 |
 
-## 文件在哪里
+## 目录
 
 | 位置 | 内容 |
 |---|---|
-| 根目录的 5 份 PDF | 原始资料，未改动。两份“基于3Dslicer的导航系统”完全相同 |
-| `docs/` | 项目说明、操作说明、论文笔记 |
-| `data/` | 官方公开的 MRI、CT 练习数据及来源清单 |
-| `output/scenes/` | 两个基础场景，以及点击“保存当前练习”产生的新场景 |
-| `output/screenshots/` | 软件内截图 |
-| `scripts/` | 场景构建、操作连接、启动与验证脚本 |
-| `work/` | 论文文字提取、安装包、日志、验证结果等工作文件 |
-| `tools/` | 3D Slicer 运行环境 |
+| `ur12e_slicer/bootstrap/` | Linux 环境、资源恢复、mock 后台生命周期 |
+| `ur12e_slicer/ros2_ws/src/ur12e_slicer_bridge/` | ROS 2 Python 包和固定 mock launch |
+| `ur12e_slicer/slicer/` | Slicer 面板、任务文件桥、头部影像结果查看器 |
+| `ur12e_slicer/navigation_benchmark/` | 不依赖 ROS 的坐标链、统计、执行前检查和离线试验 |
+| `ur12e_slicer/validation/` | ROS 实际执行检查、场景核查、环境与结果采集 |
+| `ur12e_slicer/research/` | 研究资料、来源审计、评价协议 |
+| `data/` | 公开示例影像和来源记录 |
+| `docs/`、`scripts/` | 较早的 Slicer 入门、配准练习和 Windows 工具 |
+| `ur12e_slicer/output/`、`ur12e_slicer/runtime/` | 当前机器的新结果、日志和进程状态；不能当作克隆后已运行的证据 |
 
-## 本项目的工作约定
+构建产物、安装包、下载缓存和进程状态不随源码交付；必需资源由安装步骤恢复。参考结果与本机新结果分开解释，详见部署说明。
 
-- 2026-10-17 根据新作业完成模拟点配准和相关调研；PPT 由用户另行制作。
-- 用户想会一些简单操作，具体学哪项由后续提问决定，不安排固定课程。
-- 学长要求的“模型”类型未知；“从零原创程序”的开发范围也未知，等下次课明确。
-- 当前完成环境、基础演示与模拟配准；后续要逐步整合光学定位、医学影像和 UR 机械臂。已有 InVesalius 仓库作为参考，尚未决定复用哪些内容。
-- 以后在本文件夹开展这个项目。新的课堂需求明确后，再确定硬件、数据、程序形式和评价标准。
+## Windows 旧入口
 
-## 来源和环境记录
+已有 Windows + WSL 用户可继续参考 [使用与验收](ur12e_slicer/使用与验收.md)、[环境记录](docs/环境与验证记录.md)和 `Start_UR12e_Demo.cmd` / `Stop_UR12e_Demo.cmd`。这些入口依赖此前本机部署的 Windows Slicer 与专用 WSL 发行版，不是 Linux 部署步骤。当前提交不再携带 Windows Slicer；新 Windows 环境需自行准备，不保证旧启动器可直接运行。Linux 不执行 `.cmd` / `.ps1`。
 
-[本机环境与验证记录](docs/环境与验证记录.md)列出部署方式、版本、数据来源和本次已验证事项。
+早期练习见 [模拟点配准实践](docs/模拟点配准实践_2026-10-17.md)、[项目入门说明](docs/项目入门说明.md)和 [Slicer 基础操作](docs/Slicer基础操作.md)。早期 MRI 与 CT 是独立公开示例，没有在仓库中实现影像融合。

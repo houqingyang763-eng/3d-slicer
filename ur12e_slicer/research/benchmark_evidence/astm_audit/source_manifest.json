@@ -1,0 +1,71 @@
+{
+  "audit_date_local": "2026-10-23",
+  "kind": "static_source_review",
+  "runtime_tested": false,
+  "standard_full_text_obtained": false,
+  "astm_compliance_claim": false,
+  "repository": "https://github.com/Atracsys/SlicerAstmPhantomTest",
+  "commit": "de04b3a2137407f38eff5f468a1331975a364b5e",
+  "upstream_license_path": "source/License.txt",
+  "upstream_files": [
+    "README.md",
+    "AstmPhantomTest/AstmPhantomTest.py",
+    "AstmPhantomTest/AstmPhantomTestClasses/Measurements.py",
+    "AstmPhantomTest/AstmPhantomTestClasses/Phantom.py",
+    "AstmPhantomTest/AstmPhantomTestClasses/Pointer.py",
+    "AstmPhantomTest/AstmPhantomTestClasses/Utils.py",
+    "AnalyzePhantomJSON.m",
+    "AstmPhantomTest/Resources/gt/phantom.txt",
+    "AstmPhantomTest/Resources/wv/FusionTrack500.txt",
+    "License.txt"
+  ],
+  "sources": [
+    {
+      "id": "astm",
+      "url": "https://store.astm.org/f2554-22.html",
+      "access": "Official public scope; full standard not acquired",
+      "use": "Scope and standardized point localization purpose"
+    },
+    {
+      "id": "fda",
+      "url": "https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfstandards/detail.cfm?standard__identification_no=45859",
+      "access": "Official recognition 11-415, complete standard, entered 2024-12-23",
+      "use": "Static scope, subsystem vs whole-system boundary, orientation exclusion"
+    },
+    {
+      "id": "morley",
+      "doi": "10.1177/15533506231217620",
+      "url": "https://journals.sagepub.com/doi/10.1177/15533506231217620",
+      "mirror": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10773158/",
+      "access": "Publisher and PMC indexed primary full-text methods/results; direct fetch intermittently timeout/captcha; no bypass",
+      "standard_version": "F2554-18",
+      "quantitative_cross_platform_comparison_ready": false
+    },
+    {
+      "id": "cooper",
+      "doi": "10.1186/s42836-025-00340-z",
+      "url": "https://link.springer.com/article/10.1186/s42836-025-00340-z",
+      "access": "Publisher full-text",
+      "standard_version": "F2554-22 extended to intended use and planes",
+      "quantitative_cross_platform_comparison_ready": false
+    },
+    {
+      "id": "teatini",
+      "doi": "10.1007/s11548-020-02302-z",
+      "url": "https://link.springer.com/article/10.1007/s11548-020-02302-z",
+      "access": "Publisher full-text",
+      "standard_version": "F2554-10 inspired custom validation phantom",
+      "quantitative_cross_platform_comparison_ready": false
+    }
+  ],
+  "critical_findings": [
+    "Single-point avg err is norm of mean error vector, not mean of error norms.",
+    "Precision RMS is root mean squared 3D distance from mean, denominator n.",
+    "Multi-point point pairs are dependent; all-point rigid-fit residual is not held-out TRE.",
+    "Phantom.calibrate uses similarity (scale allowed); DistMeasurement reg stats use rigid body.",
+    "Rotation default step 0.25 deg disagrees with generated HTML 1 deg statement; actual sample increments are thresholded, not guaranteed uniform.",
+    "Only PointerToTracker OK checked in relative-position sampling callback, no timestamps/freshness recorded.",
+    "Empty stats can be zero; .any() treats legal zero coordinates as false; local implementation must use explicit validity.",
+    "AnalyzePhantomJSON.m expects older JSON keys/shapes; not assumed compatible with current Python export."
+  ]
+}

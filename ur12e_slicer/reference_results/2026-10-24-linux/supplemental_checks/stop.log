@@ -1,0 +1,3 @@
+Sent SIGINT to the recorded launch process; waiting for its group to exit.
+Verified: the recorded simulation group has no live non-zombie processes.
+Stopped: no live processes remain in the recorded task groups.

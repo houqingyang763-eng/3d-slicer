@@ -1,0 +1,176 @@
+{
+  "robot_type": "ur12e",
+  "description_commit": "c2ae8652b6e9c1f9f3fedac48d63bef93d3cb9ba",
+  "origin_source": "assets/ur_description/urdf/ur_macro.xacro; config/ur12e/visual_parameters.yaml; physical_parameters.yaml",
+  "base_note": "base_link_inertia visual yaw pi plus base_link->base_link_inertia yaw pi gives net visual yaw 2pi relative to base_link.",
+  "links": [
+    {
+      "link": "base_link",
+      "file": "assets/ur_description/meshes/ur10e/visual/base.dae",
+      "origin_xyz_m": [
+        0,
+        0,
+        0
+      ],
+      "origin_rpy_rad": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "color": [
+        0.6,
+        0.68,
+        0.73
+      ]
+    },
+    {
+      "link": "shoulder_link",
+      "file": "assets/ur_description/meshes/ur10e/visual/shoulder.dae",
+      "origin_xyz_m": [
+        0,
+        0,
+        0
+      ],
+      "origin_rpy_rad": [
+        0,
+        0,
+        3.141592653589793
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "color": [
+        0.6,
+        0.68,
+        0.73
+      ]
+    },
+    {
+      "link": "upper_arm_link",
+      "file": "assets/ur_description/meshes/ur10e/visual/upperarm.dae",
+      "origin_xyz_m": [
+        0,
+        0,
+        0.1762
+      ],
+      "origin_rpy_rad": [
+        1.5707963267948966,
+        0,
+        -1.5707963267948966
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "color": [
+        0.6,
+        0.68,
+        0.73
+      ]
+    },
+    {
+      "link": "forearm_link",
+      "file": "assets/ur_description/meshes/ur10e/visual/forearm.dae",
+      "origin_xyz_m": [
+        0,
+        0,
+        0.0393
+      ],
+      "origin_rpy_rad": [
+        1.5707963267948966,
+        0,
+        -1.5707963267948966
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "color": [
+        0.6,
+        0.68,
+        0.73
+      ]
+    },
+    {
+      "link": "wrist_1_link",
+      "file": "assets/ur_description/meshes/ur10e/visual/wrist1.dae",
+      "origin_xyz_m": [
+        0,
+        0,
+        -0.135
+      ],
+      "origin_rpy_rad": [
+        1.5707963267948966,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "color": [
+        0.22,
+        0.53,
+        0.72
+      ]
+    },
+    {
+      "link": "wrist_2_link",
+      "file": "assets/ur_description/meshes/ur10e/visual/wrist2.dae",
+      "origin_xyz_m": [
+        0,
+        0,
+        -0.12
+      ],
+      "origin_rpy_rad": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "color": [
+        0.22,
+        0.53,
+        0.72
+      ]
+    },
+    {
+      "link": "wrist_3_link",
+      "file": "assets/ur_description/meshes/ur10e/visual/wrist3.dae",
+      "origin_xyz_m": [
+        0,
+        -0.0005,
+        -0.1168
+      ],
+      "origin_rpy_rad": [
+        1.5707963267948966,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "color": [
+        0.22,
+        0.53,
+        0.72
+      ]
+    }
+  ]
+}

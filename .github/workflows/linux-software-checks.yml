@@ -1,0 +1,33 @@
+name: Linux software checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  offline:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          lfs: false
+      - name: Install offline evaluation dependencies
+        run: sudo apt-get update -qq && sudo apt-get install -y python3-numpy python3-yaml
+      - name: Check explicit source package and historical evidence hashes
+        run: /usr/bin/python3 tools/prepare_ur12e_release.py
+      - name: Check shell syntax
+        run: find ur12e_slicer -name '*.sh' -print0 | xargs -0 -n1 bash -n
+      - name: Run deterministic software validation (no ROS or physical devices)
+        run: PATH=/usr/bin:/bin bash ur12e_slicer/run_navigation_linux.sh --offline-only
+      - name: Preserve generated reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: linux-offline-software-results
+          path: |
+            ur12e_slicer/output/linux_validation/
+            ur12e_slicer/output/navigation_offline/
+            ur12e_slicer/output/navigation_benchmark/metric_and_gate_checks.json

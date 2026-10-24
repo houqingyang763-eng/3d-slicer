@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "simulation_only": true,
+  "mrb_sha256": "a8530da23d08606b8805ef68579601b98eeefc791d1052bce279661ecfda1ac7",
+  "volume_dimensions_kji": [
+    130,
+    256,
+    256
+  ],
+  "T_base_image_preserved": true,
+  "target_image_RAS_mm": [
+    -5.999999999999814,
+    -1.5542914783920693e-13,
+    29.99999999999988
+  ],
+  "target_ijk": [
+    133.9286041259767,
+    86.78569793701183,
+    62.034754948853674
+  ],
+  "target_inside_volume": true,
+  "target_voxel_intensity": 96.0,
+  "fiducial_count": 6,
+  "heldout_count": 5,
+  "slicer_version": "5.12.4",
+  "boundary": "MR signal check only; synthetic target, no anatomical or physical accuracy claim"
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "path": "LARK_Datasets/Dataset 1 (Grid).csv",
+    "size": 5745605,
+    "lines": 99761,
+    "first_lines": [
+      "Trial,Device,Config,Point,Tracking,Fusion,Cams,Metric,Error",
+      "1,Ring,C0,01,Mono,Basic,5.0,FRE,0.5299351965244354",
+      "1,Ring,C0,01,Mono,Kalman,5.0,FRE,0.5460626797122135"
+    ]
+  },
+  {
+    "path": "LARK_Datasets/Dataset 2 (Head Phantom).csv",
+    "size": 2010283,
+    "lines": 34441,
+    "first_lines": [
+      "Trial,Device,Config,Point,Tracking,Fusion,Cams,Metric,Error",
+      "1,Ring,top,R1,Mono,Basic,5.0,FRE,0.29548129549734076",
+      "1,Ring,top,R1,Mono,Kalman,5.0,FRE,0.42466411833265766"
+    ]
+  },
+  {
+    "path": "LARK_Datasets/README.md",
+    "size": 3948,
+    "lines": 30,
+    "first_lines": [
+      "# LARK Registration-Error Results: Data Dictionary",
+      "",
+      "Two CSV files accompany the LARK multi-view video dataset. They contain the per-measurement registration-error results computed from the videos: every fiducial, target, and trajectory error, for both LARK tracking pipelines and the gold-standard reference tracker, across all trials, camera configurations, and filtering variants. These are the data underlying Table 1, Table C.1, and Figures 8 to 11 and C.1 of the paper."
+    ]
+  }
+]

@@ -1,4 +1,11 @@
+*.sh text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+# Preserve the byte hashes of public data and provenance-recorded evidence.
+data/** -text
+ur12e_slicer/reference_results/** -text
+ur12e_slicer/research/benchmark_evidence/** -text
 output/scenes/CT_threshold_practice.mrb filter=lfs diff=lfs merge=lfs -text
-tools/Slicer-5.12.4/bin/Qt5WebEngineCore.dll filter=lfs diff=lfs merge=lfs -text
-tools/Slicer-5.12.4/lib/Python/Lib/site-packages/SimpleITK/_SimpleITK.pyd filter=lfs diff=lfs merge=lfs -text
-work/downloads/Slicer-5.12.4-win-amd64.exe filter=lfs diff=lfs merge=lfs -text

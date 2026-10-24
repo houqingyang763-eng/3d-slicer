@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "version": "5.12.4",
+  "revision": "34645",
+  "os": "linux",
+  "architecture": "amd64",
+  "filename": "Slicer-5.12.4-linux-amd64.tar.gz",
+  "url": "https://slicer-packages.kitware.com/api/v1/file/6aa1bec1ce9de556d3010212/download",
+  "bytes": 498717156,
+  "sha256": "311a3d2a52046b344c44c160a7232d977d7b73cd4961dd5295eea1879c6aa370",
+  "sha512": "ac76c5061a8fff20d4e59732855f74360930fd4891450085bcbc6a8eb1a1f4ade9a1ca4fc633142661b714dbe8c4604306079f9546e52053faa5e6f99410cf76",
+  "official_metadata": "https://slicer-packages.kitware.com/api/v1/item/6aa1beb7ce9de556d3010204",
+  "official_checksums": "https://download.slicer.org/?version=5.12.4#checksums",
+  "verification": "Archive downloaded 2026-10-24; SHA512 matched official release metadata. SHA256 independently computed from that verified archive and recorded for reproducible restoration. No application started by restoration.",
+  "license": "Slicer license retained inside the upstream archive; see https://slicer.readthedocs.io/en/latest/user_guide/about.html#license"
+}

@@ -1,0 +1,17 @@
+test_fresh_feedback_from_current_launch_is_ready (test_linux_lifecycle.LaunchFeedbackFreshnessTest.test_fresh_feedback_from_current_launch_is_ready) ... ok
+test_recent_feedback_from_before_current_launch_is_not_ready (test_linux_lifecycle.LaunchFeedbackFreshnessTest.test_recent_feedback_from_before_current_launch_is_not_ready) ... ok
+test_bridge_alive_without_panel_is_running_but_not_ready (test_linux_lifecycle.LinuxLifecycleTest.test_bridge_alive_without_panel_is_running_but_not_ready) ... ok
+test_existing_unresponsive_frontend_is_not_closed_by_failed_start (test_linux_lifecycle.LinuxLifecycleTest.test_existing_unresponsive_frontend_is_not_closed_by_failed_start) ... ok
+test_failed_new_frontend_is_cleaned_without_stopping_reused_backend (test_linux_lifecycle.LinuxLifecycleTest.test_failed_new_frontend_is_cleaned_without_stopping_reused_backend) ... ok
+test_fresh_bridge_and_same_pid_panel_are_ready (test_linux_lifecycle.LinuxLifecycleTest.test_fresh_bridge_and_same_pid_panel_are_ready) ... ok
+test_fresh_panel_for_different_pid_is_not_ready (test_linux_lifecycle.LinuxLifecycleTest.test_fresh_panel_for_different_pid_is_not_ready) ... ok
+test_new_backend_failure_does_not_close_existing_frontend (test_linux_lifecycle.LinuxLifecycleTest.test_new_backend_failure_does_not_close_existing_frontend) ... ok
+test_reused_backend_failure_does_not_stop_reused_components (test_linux_lifecycle.LinuxLifecycleTest.test_reused_backend_failure_does_not_stop_reused_components) ... ok
+test_stale_panel_heartbeat_does_not_pass_fresh_bridge (test_linux_lifecycle.LinuxLifecycleTest.test_stale_panel_heartbeat_does_not_pass_fresh_bridge) ... ok
+test_stop_refuses_reused_pid_or_unrelated_startup_script (test_linux_lifecycle.LinuxLifecycleTest.test_stop_refuses_reused_pid_or_unrelated_startup_script) ... ok
+test_unresponsive_owned_frontend_can_stop_without_display_or_current_executable (test_linux_lifecycle.LinuxLifecycleTest.test_unresponsive_owned_frontend_can_stop_without_display_or_current_executable) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.020s
+
+OK

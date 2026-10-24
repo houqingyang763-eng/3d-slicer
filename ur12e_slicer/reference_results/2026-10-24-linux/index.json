@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "path_base": "this_directory",
+  "validation_run_id": "20261024T090044Z_4e8a81",
+  "moveit_integration_run_id": "20261024_170101_892aad",
+  "summary": "validation/summary.json",
+  "deployment_context": "deployment_context.json",
+  "offline_report": "offline/report.html",
+  "integration_report": "moveit_mock/report.html",
+  "integration_result": "moveit_mock/run.json",
+  "scene_reload": "checks/scene_reload_verification.json",
+  "screenshot": "linux_slicer_head.png",
+  "provenance": "provenance.json",
+  "historical_evidence_only": true,
+  "supplemental_checks": "supplemental_checks/summary.json"
+}

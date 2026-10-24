@@ -1,0 +1,207 @@
+{
+  "data": {
+    "id": "10.3929/ethz-c-000788527",
+    "type": "dois",
+    "attributes": {
+      "doi": "10.3929/ethz-c-000788527",
+      "prefix": "10.3929",
+      "suffix": "ethz-c-000788527",
+      "identifiers": [
+        {
+          "identifier": "http://hdl.handle.net/20.500.11850/788527",
+          "identifierType": "uri"
+        }
+      ],
+      "alternateIdentifiers": [
+        {
+          "alternateIdentifierType": "uri",
+          "alternateIdentifier": "http://hdl.handle.net/20.500.11850/788527"
+        }
+      ],
+      "creators": [
+        {
+          "name": "Furrer, Fadri",
+          "nameType": "Personal",
+          "givenName": "Fadri",
+          "familyName": "Furrer",
+          "affiliation": [],
+          "nameIdentifiers": []
+        },
+        {
+          "name": "Fehr, Marius",
+          "nameType": "Personal",
+          "givenName": "Marius",
+          "familyName": "Fehr",
+          "affiliation": [],
+          "nameIdentifiers": []
+        },
+        {
+          "name": "Novkovic, Tonci",
+          "nameType": "Personal",
+          "givenName": "Tonci",
+          "familyName": "Novkovic",
+          "affiliation": [],
+          "nameIdentifiers": []
+        },
+        {
+          "name": "Sommer, Hannes",
+          "nameType": "Personal",
+          "givenName": "Hannes",
+          "familyName": "Sommer",
+          "affiliation": [],
+          "nameIdentifiers": []
+        },
+        {
+          "name": "Gilitschenski, Igor",
+          "nameType": "Personal",
+          "givenName": "Igor",
+          "familyName": "Gilitschenski",
+          "affiliation": [],
+          "nameIdentifiers": []
+        },
+        {
+          "name": "Siegwart, Roland",
+          "nameType": "Personal",
+          "givenName": "Roland",
+          "familyName": "Siegwart",
+          "affiliation": [],
+          "nameIdentifiers": []
+        }
+      ],
+      "titles": [
+        {
+          "lang": "",
+          "title": "Hand-Eye Calibration Datasets"
+        }
+      ],
+      "publisher": "ETH Zurich",
+      "container": {},
+      "publicationYear": 2025,
+      "subjects": [],
+      "contributors": [
+        {
+          "name": "ETH Zurich",
+          "affiliation": [],
+          "contributorType": "DataManager",
+          "nameIdentifiers": []
+        },
+        {
+          "name": "ETH Zurich",
+          "affiliation": [],
+          "contributorType": "HostingInstitution",
+          "nameIdentifiers": []
+        }
+      ],
+      "dates": [
+        {
+          "date": "2025-12-02",
+          "dateType": "Accepted"
+        },
+        {
+          "date": "2025-12-02",
+          "dateType": "Available"
+        },
+        {
+          "date": "2025-12-02",
+          "dateType": "Available"
+        },
+        {
+          "date": "2025-12-02",
+          "dateType": "Issued"
+        }
+      ],
+      "language": null,
+      "types": {
+        "ris": "DATA",
+        "bibtex": "misc",
+        "citeproc": "dataset",
+        "schemaOrg": "Dataset",
+        "resourceType": "Dataset",
+        "resourceTypeGeneral": "Dataset"
+      },
+      "relatedIdentifiers": [],
+      "relatedItems": [],
+      "sizes": [],
+      "formats": [
+        "application/zip",
+        "text/plain",
+        "text/csv",
+        "application/pdf"
+      ],
+      "version": null,
+      "rightsList": [
+        {
+          "rights": "http://rightsstatements.org/page/InC-NC/1.0/"
+        },
+        {
+          "rights": "In Copyright - Non-Commercial Use Permitted"
+        }
+      ],
+      "descriptions": [],
+      "geoLocations": [],
+      "fundingReferences": [],
+      "xml": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHJlc291cmNlIHhtbG5zPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtNCIgeG1sbnM6ZHNwYWNlPSJodHRwOi8vd3d3LmRzcGFjZS5vcmcveG1sbnMvZHNwYWNlL2RpbSIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtNCBodHRwOi8vc2NoZW1hLmRhdGFjaXRlLm9yZy9tZXRhL2tlcm5lbC00L21ldGFkYXRhLnhzZCI+CiAgPGlkZW50aWZpZXIgaWRlbnRpZmllclR5cGU9IkRPSSI+MTAuMzkyOS9FVEhaLUMtMDAwNzg4NTI3PC9pZGVudGlmaWVyPgogIDxjcmVhdG9ycz4KICAgIDxjcmVhdG9yPgogICAgICA8Y3JlYXRvck5hbWU+RnVycmVyLCBGYWRyaTwvY3JlYXRvck5hbWU+CiAgICA8L2NyZWF0b3I+CiAgICA8Y3JlYXRvcj4KICAgICAgPGNyZWF0b3JOYW1lPkZlaHIsIE1hcml1czwvY3JlYXRvck5hbWU+CiAgICA8L2NyZWF0b3I+CiAgICA8Y3JlYXRvcj4KICAgICAgPGNyZWF0b3JOYW1lPk5vdmtvdmljLCBUb25jaTwvY3JlYXRvck5hbWU+CiAgICA8L2NyZWF0b3I+CiAgICA8Y3JlYXRvcj4KICAgICAgPGNyZWF0b3JOYW1lPlNvbW1lciwgSGFubmVzPC9jcmVhdG9yTmFtZT4KICAgIDwvY3JlYXRvcj4KICAgIDxjcmVhdG9yPgogICAgICA8Y3JlYXRvck5hbWU+R2lsaXRzY2hlbnNraSwgSWdvcjwvY3JlYXRvck5hbWU+CiAgICA8L2NyZWF0b3I+CiAgICA8Y3JlYXRvcj4KICAgICAgPGNyZWF0b3JOYW1lPlNpZWd3YXJ0LCBSb2xhbmQ8L2NyZWF0b3JOYW1lPgogICAgPC9jcmVhdG9yPgogIDwvY3JlYXRvcnM+CiAgPHRpdGxlcz4KICAgIDx0aXRsZSB4bWw6bGFuZz0iIj5IYW5kLUV5ZSBDYWxpYnJhdGlvbiBEYXRhc2V0czwvdGl0bGU+CiAgPC90aXRsZXM+CiAgPHB1Ymxpc2hlcj5FVEggWnVyaWNoPC9wdWJsaXNoZXI+CiAgPHB1YmxpY2F0aW9uWWVhcj4yMDI1PC9wdWJsaWNhdGlvblllYXI+CiAgPGNvbnRyaWJ1dG9ycz4KICAgIDxjb250cmlidXRvciBjb250cmlidXRvclR5cGU9IkRhdGFNYW5hZ2VyIj4KICAgICAgPGNvbnRyaWJ1dG9yTmFtZT5FVEggWnVyaWNoPC9jb250cmlidXRvck5hbWU+CiAgICA8L2NvbnRyaWJ1dG9yPgogICAgPGNvbnRyaWJ1dG9yIGNvbnRyaWJ1dG9yVHlwZT0iSG9zdGluZ0luc3RpdHV0aW9uIj4KICAgICAgPGNvbnRyaWJ1dG9yTmFtZT5FVEggWnVyaWNoPC9jb250cmlidXRvck5hbWU+CiAgICA8L2NvbnRyaWJ1dG9yPgogIDwvY29udHJpYnV0b3JzPgogIDxkYXRlcz4KICAgIDxkYXRlIGRhdGVUeXBlPSJBY2NlcHRlZCI+MjAyNS0xMi0wMjwvZGF0ZT4KICAgIDxkYXRlIGRhdGVUeXBlPSJBdmFpbGFibGUiPjIwMjUtMTItMDI8L2RhdGU+CiAgICA8ZGF0ZSBkYXRlVHlwZT0iQXZhaWxhYmxlIj4yMDI1LTEyLTAyPC9kYXRlPgogICAgPGRhdGUgZGF0ZVR5cGU9Iklzc3VlZCI+MjAyNS0xMi0wMjwvZGF0ZT4KICA8L2RhdGVzPgogIDxyZXNvdXJjZVR5cGUgcmVzb3VyY2VUeXBlR2VuZXJhbD0iRGF0YXNldCI+RGF0YXNldDwvcmVzb3VyY2VUeXBlPgogIDxhbHRlcm5hdGVJZGVudGlmaWVycz4KICAgIDxhbHRlcm5hdGVJZGVudGlmaWVyIGFsdGVybmF0ZUlkZW50aWZpZXJUeXBlPSJ1cmkiPmh0dHA6Ly9oZGwuaGFuZGxlLm5ldC8yMC41MDAuMTE4NTAvNzg4NTI3PC9hbHRlcm5hdGVJZGVudGlmaWVyPgogIDwvYWx0ZXJuYXRlSWRlbnRpZmllcnM+CiAgPGZvcm1hdHM+CiAgICA8Zm9ybWF0PmFwcGxpY2F0aW9uL3ppcDwvZm9ybWF0PgogICAgPGZvcm1hdD50ZXh0L3BsYWluPC9mb3JtYXQ+CiAgICA8Zm9ybWF0PnRleHQvY3N2PC9mb3JtYXQ+CiAgICA8Zm9ybWF0PmFwcGxpY2F0aW9uL3BkZjwvZm9ybWF0PgogIDwvZm9ybWF0cz4KICA8cmlnaHRzTGlzdD4KICAgIDxyaWdodHM+aHR0cDovL3JpZ2h0c3N0YXRlbWVudHMub3JnL3BhZ2UvSW5DLU5DLzEuMC88L3JpZ2h0cz4KICAgIDxyaWdodHM+SW4gQ29weXJpZ2h0IC0gTm9uLUNvbW1lcmNpYWwgVXNlIFBlcm1pdHRlZDwvcmlnaHRzPgogIDwvcmlnaHRzTGlzdD4KPC9yZXNvdXJjZT4=",
+      "url": "https://www.research-collection.ethz.ch/handle/20.500.11850/788527",
+      "contentUrl": null,
+      "metadataVersion": 0,
+      "schemaVersion": "http://datacite.org/schema/kernel-4",
+      "source": "mds",
+      "isActive": true,
+      "state": "findable",
+      "reason": null,
+      "viewCount": 0,
+      "viewsOverTime": [],
+      "downloadCount": 0,
+      "downloadsOverTime": [],
+      "referenceCount": 0,
+      "citationCount": 0,
+      "citationsOverTime": [],
+      "partCount": 0,
+      "partOfCount": 0,
+      "versionCount": 0,
+      "versionOfCount": 0,
+      "created": "2025-12-02T14:17:33Z",
+      "registered": "2025-12-02T14:17:59Z",
+      "published": "2025",
+      "updated": "2026-01-14T13:17:27Z"
+    },
+    "relationships": {
+      "client": {
+        "data": {
+          "id": "ethz.e-coll",
+          "type": "clients"
+        }
+      },
+      "provider": {
+        "data": {
+          "id": "stdp",
+          "type": "providers"
+        }
+      },
+      "media": {
+        "data": {
+          "id": "10.3929/ethz-c-000788527",
+          "type": "media"
+        }
+      },
+      "references": {
+        "data": []
+      },
+      "citations": {
+        "data": []
+      },
+      "parts": {
+        "data": []
+      },
+      "partOf": {
+        "data": []
+      },
+      "versions": {
+        "data": []
+      },
+      "versionOf": {
+        "data": []
+      }
+    }
+  }
+}

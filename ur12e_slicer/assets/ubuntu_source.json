@@ -1,0 +1,13 @@
+{
+  "Name": "Ubuntu-24.04",
+  "FriendlyName": "Ubuntu 24.04 LTS",
+  "Default": false,
+  "Amd64Url": {
+    "Url": "https://releases.ubuntu.com/24.04.5/ubuntu-24.04.5-wsl-amd64.wsl",
+    "Sha256": "bb415d824822c4b878125729af451a5d18fb13d1cf5cbed9a7393ad64ac6039e"
+  },
+  "Arm64Url": {
+    "Url": "https://cdimages.ubuntu.com/releases/24.04.5/release/ubuntu-24.04.5-wsl-arm64.wsl",
+    "Sha256": "74478b5024d9047397ba79d17c27f73caf85ada4988f88cffc2892d65e6a806b"
+  }
+}

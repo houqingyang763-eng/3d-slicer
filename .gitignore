@@ -1,0 +1,21 @@
+# Generated Python / JavaScript state, including junctions to local runtimes.
+__pycache__/
+*.py[cod]
+node_modules/
+.venv/
+venv/
+.local/
+.pytest_cache/
+.DS_Store
+Thumbs.db
+
+# Local communication sessions and installation caches.
+# Some old files in these directories are already tracked in Git history;
+# these rules do not delete or rewrite that history.
+/work/
+/tools/Slicer-*/
+/presentations/
+
+# New weekly outputs belong in the curated reference_results directory.
+# Existing historical root output files remain tracked.
+/output/

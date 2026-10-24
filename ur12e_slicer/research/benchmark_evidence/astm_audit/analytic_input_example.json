@@ -1,0 +1,58 @@
+{
+  "schema_version": "astm_bridge_analytic_fixture_v1",
+  "purpose": "Evaluator sanity example only; not ASTM acquisition or physical performance",
+  "units": {
+    "position": "mm",
+    "time": "s",
+    "angle": "deg"
+  },
+  "expected_acquisitions": 2,
+  "target": {
+    "id": "central_example",
+    "q_mm": [
+      0,
+      0,
+      0
+    ],
+    "ground_truth_source": "analytic fixture",
+    "ground_truth_uncertainty_mm": 0
+  },
+  "samples": [
+    {
+      "id": 1,
+      "valid": true,
+      "p_mm": [
+        1,
+        0,
+        0
+      ],
+      "status": "OK"
+    },
+    {
+      "id": 2,
+      "valid": true,
+      "p_mm": [
+        -1,
+        0,
+        0
+      ],
+      "status": "OK"
+    }
+  ],
+  "expected": {
+    "n_valid": 2,
+    "n_invalid": 0,
+    "bias_vector_mm": [
+      0,
+      0,
+      0
+    ],
+    "bias_norm_mm": 0,
+    "mean_point_error_mm": 1,
+    "point_rmse_mm": 1,
+    "precision_rms_mm": 1,
+    "max_point_error_mm": 1,
+    "span_mm": 2
+  },
+  "missing_data_rule": "null metric when no valid samples; preserve n_expected/n_valid/n_invalid and invalid reasons; do not replace missing by zero"
+}

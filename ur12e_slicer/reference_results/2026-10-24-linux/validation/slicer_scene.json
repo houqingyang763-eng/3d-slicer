@@ -1,0 +1,67 @@
+{
+  "id": "74fd4ab8-0f11-4f27-b463-839d18df0c1e",
+  "session": "7fd12dae-ff6b-4ed8-9855-9f6c07468697",
+  "ok": true,
+  "result": {
+    "schema_version": 1,
+    "mode": "simulation",
+    "source_result": "ur12e_slicer/output/navigation_benchmark/latest_result.json",
+    "created_at": "2026-10-24T17:01:04.051486+08:00",
+    "independent_truth_kind": "Independent simulation geometry, not a physical measurement",
+    "point_kind": "Synthetic geometric points on a public MR example; not anatomical annotations",
+    "T_base_image_mm": [
+      [
+        0.8365163037378079,
+        -0.5313260507268165,
+        -0.13391453020445493,
+        -832.6077078382908
+      ],
+      [
+        0.4829629131445341,
+        0.8303968041886693,
+        -0.27782723430252465,
+        -166.00355406843252
+      ],
+      [
+        0.25881904510252074,
+        0.16773125949652062,
+        0.9512512425641977,
+        315.6804906925613
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "slicer_version": "5.12.4",
+    "sends_robot_commands": false,
+    "clears_existing_scene": false,
+    "volume_path": "data/MR-head.nrrd",
+    "surface_threshold": 40.0,
+    "surface_points": 248326,
+    "surface_cells": 498417,
+    "surface_note": "Illustrative MR intensity isosurface with mild Gaussian smoothing and display-only decimation; not validated skin/skull segmentation",
+    "surface_gaussian_sigma_voxels": 0.85,
+    "surface_target_polygon_reduction": 0.82,
+    "robot_display": "Existing UR12e panel meshes, driven by ROS mock-hardware TF feedback",
+    "recorded_feedback_path_points": 40,
+    "simulated_optical_path_points": 0,
+    "artifacts": {
+      "scene": "ur12e_slicer/output/navigation_benchmark/latest_scene.mrb",
+      "head_screenshot": "ur12e_slicer/output/navigation_benchmark/latest_scene.png",
+      "platform_screenshot": "ur12e_slicer/output/navigation_benchmark/latest_platform.png",
+      "mri_screenshot": "ur12e_slicer/output/navigation_benchmark/latest_mri_slices.png"
+    },
+    "mri_slice_check": {
+      "slice_intersection_base_mm": [
+        -841.6442415668513,
+        -177.23614857637543,
+        342.6651136988721
+      ],
+      "image_source": "NAVBENCH_public_MR_head",
+      "target_kind": "Synthetic geometric checkpoint; not anatomical annotation"
+    }
+  }
+}

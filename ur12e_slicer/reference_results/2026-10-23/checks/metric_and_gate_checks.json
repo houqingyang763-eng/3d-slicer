@@ -1,0 +1,114 @@
+{
+  "passed": true,
+  "mode": "analytic_software_checks_not_ASTMid_or_hardware",
+  "checks": [
+    {
+      "id": "bias_zero_does_not_mean_zero_error",
+      "passed": true
+    },
+    {
+      "id": "constant_bias_five_mm_zero_jitter",
+      "passed": true
+    },
+    {
+      "id": "missing_is_null_not_zero",
+      "passed": true
+    },
+    {
+      "id": "valid_origin_is_not_missing",
+      "passed": true
+    },
+    {
+      "id": "all_pairs_translation_invariant",
+      "passed": true
+    },
+    {
+      "id": "multi_target_spread_is_not_fixed_point_precision",
+      "passed": true
+    },
+    {
+      "id": "calibration_invalidates_plan",
+      "passed": true
+    },
+    {
+      "id": "target_invalidates_plan",
+      "passed": true
+    },
+    {
+      "id": "head_invalidates_plan",
+      "passed": true
+    },
+    {
+      "id": "whole_packet_replay_cannot_renew_itself",
+      "passed": true
+    }
+  ],
+  "analytic_examples": {
+    "symmetric": {
+      "n_total": 2,
+      "n_valid": 2,
+      "n_invalid": 0,
+      "valid_fraction": 1.0,
+      "bias_vector_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bias_norm_mm": 0.0,
+      "mean_distance_mm": 1.0,
+      "rms_distance_mm": 1.0,
+      "max_distance_mm": 1.0,
+      "p95_distance_mm": 1.0,
+      "precision_rms_mm": 1.0,
+      "error_vector_dispersion_rms_mm": 1.0,
+      "span_mm": 2.0,
+      "constant_truth_point": true,
+      "distance_sd_population_mm": 0.0
+    },
+    "fixed_bias": {
+      "n_total": 2,
+      "n_valid": 2,
+      "n_invalid": 0,
+      "valid_fraction": 1.0,
+      "bias_vector_mm": [
+        3.0,
+        4.0,
+        0.0
+      ],
+      "bias_norm_mm": 5.0,
+      "mean_distance_mm": 5.0,
+      "rms_distance_mm": 5.0,
+      "max_distance_mm": 5.0,
+      "p95_distance_mm": 5.0,
+      "precision_rms_mm": 0.0,
+      "error_vector_dispersion_rms_mm": 0.0,
+      "span_mm": 0.0,
+      "constant_truth_point": true,
+      "distance_sd_population_mm": 0.0
+    },
+    "missing": {
+      "n_total": 1,
+      "n_valid": 0,
+      "n_invalid": 1,
+      "valid_fraction": 0.0,
+      "bias_vector_mm": null,
+      "bias_norm_mm": null,
+      "mean_distance_mm": null,
+      "rms_distance_mm": null,
+      "max_distance_mm": null,
+      "p95_distance_mm": null,
+      "precision_rms_mm": null,
+      "error_vector_dispersion_rms_mm": null,
+      "span_mm": null,
+      "constant_truth_point": true,
+      "distance_sd_population_mm": null
+    },
+    "pairs": {
+      "point_count": 3,
+      "pair_count": 3,
+      "mean_abs_distance_error_mm": 0.0,
+      "rms_distance_error_mm": 0.0,
+      "max_abs_distance_error_mm": 0.0
+    }
+  }
+}

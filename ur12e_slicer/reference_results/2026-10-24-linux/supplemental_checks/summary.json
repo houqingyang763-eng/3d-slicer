@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "kind": "supplemental Linux deployment software checks",
+  "offline_only_run_id": "20261024T090333Z_940920",
+  "installer": {
+    "passed": true,
+    "entry": "bootstrap/install_linux.sh (default online path)",
+    "user_kind": "root for system installation only",
+    "context": "Idempotent rerun with existing ROS apt dependencies; no application launched; not a fresh OS apt installation.",
+    "log": "install_online.log"
+  },
+  "offline_only": {
+    "passed": true,
+    "summary": "offline_only/summary.json",
+    "lifecycle_unit_tests": 12,
+    "resource_unit_tests": 4
+  },
+  "actual_start_reuse_stop": {
+    "passed": true,
+    "backend_pid_reused": 446,
+    "slicer_pid_reused": 725,
+    "start_first": "start_first.json",
+    "start_reused": "start_reused.json",
+    "stop_log": "stop.log",
+    "stopped_status": "stopped_status.json",
+    "backend_running_after_stop": false,
+    "slicer_running_after_stop": false
+  },
+  "stop_boundary": "Known MoveIt -11 during shutdown remains; stopped status proves process groups cleared, not all component exits normal.",
+  "verification_scope": "Current computer WSL2 + WSLg in isolated ordinary-user Linux checkout, synthetic optical stream and UR mock."
+}

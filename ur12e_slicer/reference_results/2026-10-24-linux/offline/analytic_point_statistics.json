@@ -1,0 +1,50 @@
+{
+  "n_total": 2,
+  "n_valid": 2,
+  "n_invalid": 0,
+  "valid_fraction": 1.0,
+  "bias_vector_mm": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "bias_norm_mm": 0.0,
+  "mean_distance_mm": 1.0,
+  "rms_distance_mm": 1.0,
+  "max_distance_mm": 1.0,
+  "p95_distance_mm": 1.0,
+  "precision_rms_mm": 1.0,
+  "error_vector_dispersion_rms_mm": 1.0,
+  "span_mm": 2.0,
+  "constant_truth_point": true,
+  "distance_sd_population_mm": 0.0,
+  "n_expected": 2,
+  "n_not_acquired": 0,
+  "source_target": {
+    "id": "central_example",
+    "q_mm": [
+      0,
+      0,
+      0
+    ],
+    "ground_truth_source": "analytic fixture",
+    "ground_truth_uncertainty_mm": 0
+  },
+  "conditions": {},
+  "evidence_boundary": "Statistics only; physical protocol and independent reference must be validated separately",
+  "mean_point_error_mm": 1.0,
+  "point_rmse_mm": 1.0,
+  "max_point_error_mm": 1.0,
+  "analytic_expected_checks": {
+    "n_valid": true,
+    "n_invalid": true,
+    "bias_vector_mm": true,
+    "bias_norm_mm": true,
+    "mean_point_error_mm": true,
+    "point_rmse_mm": true,
+    "precision_rms_mm": true,
+    "max_point_error_mm": true,
+    "span_mm": true
+  },
+  "analytic_expected_passed": true
+}

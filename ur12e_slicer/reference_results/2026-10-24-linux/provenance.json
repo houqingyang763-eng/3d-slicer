@@ -1,0 +1,465 @@
+{
+  "schema_version": 1,
+  "curated_at": "2026-10-24",
+  "kind": "Linux deployment software validation evidence",
+  "validation_run_id": "20261024T090044Z_4e8a81",
+  "moveit_integration_run_id": "20261024_170101_892aad",
+  "simulation_only": true,
+  "astm_conformity_claim": false,
+  "source_preserved_locally": true,
+  "transformation": "Copies from the isolated ordinary-user Linux validation checkout. CSV/HTML/truth and path-free records are byte-for-byte copies. JSON/log repository prefixes were normalized to repository-relative POSIX paths; summary report/log links were redirected to the curated neighboring files. Numeric, time, request ID and independent truth hash fields were preserved. Original and published SHA256 values are recorded per file. Screenshot is a byte-for-byte copy from the Windows capture directory of the actual Linux Slicer GUI, not a Windows Slicer rendering. Supplemental installation/start/stop files come from the parent of the isolated validation checkout; its absolute prefix was replaced by validation_checkout_parent/. The later offline-only summary links point to curated local logs and report. Small command logs were retained; no fresh-OS installation is claimed.",
+  "limitations": [
+    "Deployment software acceptance in WSL2 + WSLg; not a validation on another fresh physical Linux machine.",
+    "ROS apt dependencies were already installed; clean system installation remains separate.",
+    "Synthetic optical observations, public MR with synthetic targets and UR mock hardware only.",
+    "No physical tracking/robot accuracy, clinical validation or ASTM conformity claim.",
+    "A known MoveIt exit code -11 occurred during stopping. Recorded process groups were all cleared. This is not a claim that every component exited normally.",
+    "No MRB, installed application, cached archive or redundant per-case trajectories are included."
+  ],
+  "files": [
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/linux_validation/20261024T090044Z_4e8a81/bridge_tests.log",
+      "source_sha256": "0894c48b791a9bfc3eedd387e740a20dac0e13c7b09f2ed3f105946d2497fd9e",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/validation/bridge_tests.log",
+      "published_sha256": "0894c48b791a9bfc3eedd387e740a20dac0e13c7b09f2ed3f105946d2497fd9e",
+      "source_bytes": 1493,
+      "published_bytes": 1493,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/linux_validation/20261024T090044Z_4e8a81/geometry_tests.log",
+      "source_sha256": "a5c64a6e4809fea2140462b1625deffe4e1094f62f8da2cd86a246a1376d1627",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/validation/geometry_tests.log",
+      "published_sha256": "a5c64a6e4809fea2140462b1625deffe4e1094f62f8da2cd86a246a1376d1627",
+      "source_bytes": 3172,
+      "published_bytes": 3172,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/linux_validation/20261024T090044Z_4e8a81/metrics_and_gate.log",
+      "source_sha256": "be7ccdd4e4692da4ffe28ca2ecf04f35073f4ee2b2110d0f0a849e7c9f66eaff",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/validation/metrics_and_gate.log",
+      "published_sha256": "f7ef690bed781af8393ab64729630a5df523ece3bed7d52ffcf1deb861fa8f4e",
+      "source_bytes": 154,
+      "published_bytes": 113,
+      "path_strings_normalized": [
+        "text.repository_prefix"
+      ]
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/linux_validation/20261024T090044Z_4e8a81/moveit_navigation.log",
+      "source_sha256": "771555f9bf35d0c561fa8d9d0a21c7805c1f86f3d6204cf50f7dd955b5f60a49",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/validation/moveit_navigation.log",
+      "published_sha256": "cf8721198acf177a06d404968ecf9eef1f6e10490e5fb834748678d1b5b140c4",
+      "source_bytes": 1032,
+      "published_bytes": 991,
+      "path_strings_normalized": [
+        "text.repository_prefix"
+      ]
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/linux_validation/20261024T090044Z_4e8a81/offline_evaluation.log",
+      "source_sha256": "e467cb8ba7f6a1e9e49cb14a18234c3c6676535d1491f600dbaa3a604516cb8a",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/validation/offline_evaluation.log",
+      "published_sha256": "5e89075606d99e3a1ea5da3001613426c9376c06b6b220d93d49fcae3cdb988c",
+      "source_bytes": 238,
+      "published_bytes": 197,
+      "path_strings_normalized": [
+        "text.repository_prefix"
+      ]
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/linux_validation/20261024T090044Z_4e8a81/point_statistics.log",
+      "source_sha256": "b77874a19d28e93767ab9127d0c9617fff5c9f419a37275ac2f377ddd1ca974f",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/validation/point_statistics.log",
+      "published_sha256": "337f048a104aced9e355c8ea2b3307d875f8347a39ace3c0b6170462f537ee30",
+      "source_bytes": 197,
+      "published_bytes": 156,
+      "path_strings_normalized": [
+        "text.repository_prefix"
+      ]
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/linux_validation/20261024T090044Z_4e8a81/resource_checks.log",
+      "source_sha256": "9ba5e4097021d8a8ec59cd7bb030cca548336dc35bfeeddc742c5192042c41d6",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/validation/resource_checks.log",
+      "published_sha256": "9ba5e4097021d8a8ec59cd7bb030cca548336dc35bfeeddc742c5192042c41d6",
+      "source_bytes": 668,
+      "published_bytes": 668,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/linux_validation/20261024T090044Z_4e8a81/scene_reload.log",
+      "source_sha256": "c7d8d80b7c815918e9d8aac6f6895b7fef0e4a57473a2ce1d77ba5733a2051af",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/validation/scene_reload.log",
+      "published_sha256": "249f0581f9e8f8941c2b1901d320aa9657592834166c052d254eaace901f79d5",
+      "source_bytes": 1040,
+      "published_bytes": 999,
+      "path_strings_normalized": [
+        "text.repository_prefix"
+      ]
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/linux_validation/20261024T090044Z_4e8a81/slicer_scene.json",
+      "source_sha256": "0bfcb89e866450279279e534e285a885c39d983f33a38269004b923f9f90f895",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/validation/slicer_scene.json",
+      "published_sha256": "0de25dbea51c0df07fd5300c1fb4d8c80dc6b3ae9149ea6d3c29994981fba84d",
+      "source_bytes": 2566,
+      "published_bytes": 2321,
+      "path_strings_normalized": [
+        "$.result.source_result",
+        "$.result.volume_path",
+        "$.result.artifacts.scene",
+        "$.result.artifacts.head_screenshot",
+        "$.result.artifacts.platform_screenshot",
+        "$.result.artifacts.mri_screenshot"
+      ]
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/linux_validation/20261024T090044Z_4e8a81/summary.json",
+      "source_sha256": "c33e201ee61dd57db2958a22fd90778877fe6a501ddb8040f409b7372d1d8541",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/validation/summary.json",
+      "published_sha256": "c24757c0bb05e178c617be517efe83f8efb5468a4edcf0f128de36a2cb6047d3",
+      "source_bytes": 2022,
+      "published_bytes": 1577,
+      "path_strings_normalized": [
+        "$.checks[0].log",
+        "$.checks[1].log",
+        "$.checks[2].log",
+        "$.checks[3].log",
+        "$.checks[4].log",
+        "$.checks[5].log",
+        "$.checks[6].log",
+        "$.checks[8].log",
+        "$.offline_report",
+        "$.integration_result"
+      ]
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/navigation_offline/20261024T090044Z_4e8a81/run.json",
+      "source_sha256": "f7e89c4dde9b610bc0edb77ff4cc629fdbbd30d53907e40c1048edfd0b71d7a3",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/offline/run.json",
+      "published_sha256": "f7e89c4dde9b610bc0edb77ff4cc629fdbbd30d53907e40c1048edfd0b71d7a3",
+      "source_bytes": 151388,
+      "published_bytes": 151388,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/navigation_offline/20261024T090044Z_4e8a81/cases.csv",
+      "source_sha256": "4136a790eea21ebb7f682f66c3ce8cf83dc82c371914c8294bfbc1c7a5e824cc",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/offline/cases.csv",
+      "published_sha256": "4136a790eea21ebb7f682f66c3ce8cf83dc82c371914c8294bfbc1c7a5e824cc",
+      "source_bytes": 9735,
+      "published_bytes": 9735,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/navigation_offline/20261024T090044Z_4e8a81/report.html",
+      "source_sha256": "908bd3a9e1c3fcc9dedaddd421c829f4416abf3dfa974445a3bd2546127c366a",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/offline/report.html",
+      "published_sha256": "908bd3a9e1c3fcc9dedaddd421c829f4416abf3dfa974445a3bd2546127c366a",
+      "source_bytes": 4057,
+      "published_bytes": 4057,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/navigation_offline/20261024T090044Z_4e8a81/truth.json",
+      "source_sha256": "4a0787257e81a09b2222e0a782ee8d9ad4f5ce30f86f21033de21ceeb542bba7",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/offline/truth.json",
+      "published_sha256": "4a0787257e81a09b2222e0a782ee8d9ad4f5ce30f86f21033de21ceeb542bba7",
+      "source_bytes": 7359,
+      "published_bytes": 7359,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/navigation_offline/20261024T090044Z_4e8a81/fixture.json",
+      "source_sha256": "52d9b40e97dafb1db8da1985c65ea7072e8ef4a3405efa43215f283e570d451b",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/offline/fixture.json",
+      "published_sha256": "52d9b40e97dafb1db8da1985c65ea7072e8ef4a3405efa43215f283e570d451b",
+      "source_bytes": 10574,
+      "published_bytes": 10574,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/navigation_offline/20261024T090044Z_4e8a81/analytic_point_statistics.json",
+      "source_sha256": "205ddcd7b85cc20c39e5ffb939ba60b7dca6b0f75a04e9b314e8b6ee48ee0dc0",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/offline/analytic_point_statistics.json",
+      "published_sha256": "205ddcd7b85cc20c39e5ffb939ba60b7dca6b0f75a04e9b314e8b6ee48ee0dc0",
+      "source_bytes": 1172,
+      "published_bytes": 1172,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/navigation_benchmark/20261024_170101_892aad/run.json",
+      "source_sha256": "9535461fef9c174da96d56d255071d5354217882b97eb2dfdc6a5e71c16d6d0a",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/moveit_mock/run.json",
+      "published_sha256": "3ec3252f4808900850e99075a2a253db5100aad0539f0427117ddd821fb5ba27",
+      "source_bytes": 86101,
+      "published_bytes": 86061,
+      "path_strings_normalized": [
+        "$.reference_world_path"
+      ]
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/navigation_benchmark/20261024_170101_892aad/cases.csv",
+      "source_sha256": "fa83d5c9efd04c98c9591b071dcadce6b640cea88440962ad55687b6f999d15e",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/moveit_mock/cases.csv",
+      "published_sha256": "fa83d5c9efd04c98c9591b071dcadce6b640cea88440962ad55687b6f999d15e",
+      "source_bytes": 399,
+      "published_bytes": 399,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/navigation_benchmark/20261024_170101_892aad/report.html",
+      "source_sha256": "773b1fbf67b584eda113d0ec6d9d3fe4f1bb443c54576140353e28ae4e9cd908",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/moveit_mock/report.html",
+      "published_sha256": "773b1fbf67b584eda113d0ec6d9d3fe4f1bb443c54576140353e28ae4e9cd908",
+      "source_bytes": 1533,
+      "published_bytes": 1533,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/navigation_benchmark/20261024_170101_892aad/truth.json",
+      "source_sha256": "7206ac1dc20372b8e6c6f6848824cd6bd657ce512c899deb2f7f31265e55ea2e",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/moveit_mock/truth.json",
+      "published_sha256": "7206ac1dc20372b8e6c6f6848824cd6bd657ce512c899deb2f7f31265e55ea2e",
+      "source_bytes": 3045,
+      "published_bytes": 3045,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/navigation_benchmark/scene_reload_verification.json",
+      "source_sha256": "3329b583503ac2d48e2e5163e69dd49299ab8ddcce1398e7ba010b0d01201d2d",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/checks/scene_reload_verification.json",
+      "published_sha256": "3329b583503ac2d48e2e5163e69dd49299ab8ddcce1398e7ba010b0d01201d2d",
+      "source_bytes": 663,
+      "published_bytes": 663,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/navigation_benchmark/scene_metadata.json",
+      "source_sha256": "09a71c46ea8f1c941e4eb651ba9905cab665429f048f607205ccaa3b2cb27bf1",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/checks/scene_metadata.json",
+      "published_sha256": "0f812db2234b065268a92099251328c224412e621b81b18af072b4e17728d38f",
+      "source_bytes": 2313,
+      "published_bytes": 2068,
+      "path_strings_normalized": [
+        "$.source_result",
+        "$.volume_path",
+        "$.artifacts.scene",
+        "$.artifacts.head_screenshot",
+        "$.artifacts.platform_screenshot",
+        "$.artifacts.mri_screenshot"
+      ]
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/navigation_benchmark/metric_and_gate_checks.json",
+      "source_sha256": "38ae4ca17abd43dfd1da856c05a831f86f01e80bae6fac2283a52df735655b70",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/checks/metric_and_gate_checks.json",
+      "published_sha256": "38ae4ca17abd43dfd1da856c05a831f86f01e80bae6fac2283a52df735655b70",
+      "source_bytes": 2619,
+      "published_bytes": 2619,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "Windows working checkout",
+      "source_path": "work/linux_gui_validation/latest_scene_cjk.png",
+      "source_sha256": "872e12e05f96d9959b41a5d8635b5fdf69b54bfb1ec79ef04c5986d97e92ff81",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/linux_slicer_head.png",
+      "published_sha256": "872e12e05f96d9959b41a5d8635b5fdf69b54bfb1ec79ef04c5986d97e92ff81",
+      "source_bytes": 342492,
+      "published_bytes": 342492,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated Linux validation checkout parent",
+      "source_path": "install_online.log",
+      "source_sha256": "73446d921424f97a2def1609282dc28955c7c627e7b6857bb9c74b4981fe33b6",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/supplemental_checks/install_online.log",
+      "published_sha256": "36130b8b3127c6a3c9684ab7f345866d1d6b3c364ff5759b7f88528ac6fca6d9",
+      "source_bytes": 6916,
+      "published_bytes": 6793,
+      "path_strings_normalized": [
+        "text.repository_prefix"
+      ]
+    },
+    {
+      "source_checkout": "isolated Linux validation checkout parent",
+      "source_path": "start_first.json",
+      "source_sha256": "93eb1e989ad8b8175a5f3054219fe3c933cbe83c3f6768c1e44bc23598ae0b5c",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/supplemental_checks/start_first.json",
+      "published_sha256": "93eb1e989ad8b8175a5f3054219fe3c933cbe83c3f6768c1e44bc23598ae0b5c",
+      "source_bytes": 369,
+      "published_bytes": 369,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated Linux validation checkout parent",
+      "source_path": "start_reused.json",
+      "source_sha256": "ba88677630a0ef5c623a02f38dd7a2735b220e9a78bf253a888764111c82b25d",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/supplemental_checks/start_reused.json",
+      "published_sha256": "ba88677630a0ef5c623a02f38dd7a2735b220e9a78bf253a888764111c82b25d",
+      "source_bytes": 367,
+      "published_bytes": 367,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated Linux validation checkout parent",
+      "source_path": "stop.log",
+      "source_sha256": "32b62214e38d5dfa0a5f3c48e5f199173a570fbb31313ca740bc453df9608984",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/supplemental_checks/stop.log",
+      "published_sha256": "32b62214e38d5dfa0a5f3c48e5f199173a570fbb31313ca740bc453df9608984",
+      "source_bytes": 212,
+      "published_bytes": 212,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated Linux validation checkout parent",
+      "source_path": "stopped_status.json",
+      "source_sha256": "7056a4534ec73bad19bc14cc69ff30cf3fb388b25d65b7eb35b119fe71d5c269",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/supplemental_checks/stopped_status.json",
+      "published_sha256": "7056a4534ec73bad19bc14cc69ff30cf3fb388b25d65b7eb35b119fe71d5c269",
+      "source_bytes": 259,
+      "published_bytes": 259,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/linux_validation/20261024T090333Z_940920/bridge_tests.log",
+      "source_sha256": "eaff84f93cb404db9a4d6bb224bd57f03d3b3616290efeacf1a61bdde9a1fe27",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/supplemental_checks/offline_only/bridge_tests.log",
+      "published_sha256": "eaff84f93cb404db9a4d6bb224bd57f03d3b3616290efeacf1a61bdde9a1fe27",
+      "source_bytes": 1493,
+      "published_bytes": 1493,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/linux_validation/20261024T090333Z_940920/geometry_tests.log",
+      "source_sha256": "2e3a29caf862178b552752c7a49e9a6ee11aa79835c420a3ff61d6d76f877531",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/supplemental_checks/offline_only/geometry_tests.log",
+      "published_sha256": "2e3a29caf862178b552752c7a49e9a6ee11aa79835c420a3ff61d6d76f877531",
+      "source_bytes": 3172,
+      "published_bytes": 3172,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/linux_validation/20261024T090333Z_940920/lifecycle_tests.log",
+      "source_sha256": "047b9ab574594ce2e676204730e92166e5673e3cde228ed5c65ff5eb89b99f8e",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/supplemental_checks/offline_only/lifecycle_tests.log",
+      "published_sha256": "047b9ab574594ce2e676204730e92166e5673e3cde228ed5c65ff5eb89b99f8e",
+      "source_bytes": 2115,
+      "published_bytes": 2115,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/linux_validation/20261024T090333Z_940920/metrics_and_gate.log",
+      "source_sha256": "be7ccdd4e4692da4ffe28ca2ecf04f35073f4ee2b2110d0f0a849e7c9f66eaff",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/supplemental_checks/offline_only/metrics_and_gate.log",
+      "published_sha256": "f7ef690bed781af8393ab64729630a5df523ece3bed7d52ffcf1deb861fa8f4e",
+      "source_bytes": 154,
+      "published_bytes": 113,
+      "path_strings_normalized": [
+        "text.repository_prefix"
+      ]
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/linux_validation/20261024T090333Z_940920/offline_evaluation.log",
+      "source_sha256": "f99a85e630d8dc0018a58224a391b7aca3a00ec585a078a28db741deae2ce0bd",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/supplemental_checks/offline_only/offline_evaluation.log",
+      "published_sha256": "06fe2c425653eb93b1e30516ec5a490ea4657b504110dc438f3a64487e0621ec",
+      "source_bytes": 238,
+      "published_bytes": 197,
+      "path_strings_normalized": [
+        "text.repository_prefix"
+      ]
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/linux_validation/20261024T090333Z_940920/point_statistics.log",
+      "source_sha256": "b63582b100caf0da472e0b2f0e4496c76b345c2c7cb3d5ad66f58265f4564132",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/supplemental_checks/offline_only/point_statistics.log",
+      "published_sha256": "30eaa9c548d5e636d98913a8a17cfb2899561feacdfaee43b47dc8368571fae9",
+      "source_bytes": 197,
+      "published_bytes": 156,
+      "path_strings_normalized": [
+        "text.repository_prefix"
+      ]
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/linux_validation/20261024T090333Z_940920/resource_checks.log",
+      "source_sha256": "9ba5e4097021d8a8ec59cd7bb030cca548336dc35bfeeddc742c5192042c41d6",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/supplemental_checks/offline_only/resource_checks.log",
+      "published_sha256": "9ba5e4097021d8a8ec59cd7bb030cca548336dc35bfeeddc742c5192042c41d6",
+      "source_bytes": 668,
+      "published_bytes": 668,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/linux_validation/20261024T090333Z_940920/summary.json",
+      "source_sha256": "e776b5ce6cd646cd01ea3b577e95b27c9b2221365a42d22a53cab1b68c8d4a68",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/supplemental_checks/offline_only/summary.json",
+      "published_sha256": "593a37bdb08a65c7d34721e4d2ba634c4389c78fe94fdcad8b4d9fb312561bbf",
+      "source_bytes": 1640,
+      "published_bytes": 1263,
+      "path_strings_normalized": [
+        "$.checks[0].log",
+        "$.checks[1].log",
+        "$.checks[2].log",
+        "$.checks[3].log",
+        "$.checks[4].log",
+        "$.checks[5].log",
+        "$.checks[6].log",
+        "$.offline_report"
+      ]
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/navigation_offline/20261024T090333Z_940920/report.html",
+      "source_sha256": "908bd3a9e1c3fcc9dedaddd421c829f4416abf3dfa974445a3bd2546127c366a",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/supplemental_checks/offline_only/offline_report.html",
+      "published_sha256": "908bd3a9e1c3fcc9dedaddd421c829f4416abf3dfa974445a3bd2546127c366a",
+      "source_bytes": 4057,
+      "published_bytes": 4057,
+      "path_strings_normalized": []
+    },
+    {
+      "source_checkout": "isolated ordinary-user WSL2 Linux checkout",
+      "source_path": "ur12e_slicer/output/navigation_offline/20261024T090333Z_940920/cases.csv",
+      "source_sha256": "4136a790eea21ebb7f682f66c3ce8cf83dc82c371914c8294bfbc1c7a5e824cc",
+      "published_path": "ur12e_slicer/reference_results/2026-10-24-linux/supplemental_checks/offline_only/offline_cases.csv",
+      "published_sha256": "4136a790eea21ebb7f682f66c3ce8cf83dc82c371914c8294bfbc1c7a5e824cc",
+      "source_bytes": 9735,
+      "published_bytes": 9735,
+      "path_strings_normalized": []
+    }
+  ]
+}

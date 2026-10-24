@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "validation_run_id": "20261024T090044Z_4e8a81",
+  "moveit_integration_run_id": "20261024_170101_892aad",
+  "kind": "Linux deployment software acceptance in WSL2 with WSLg",
+  "linux_kernel": "6.18.54.1-microsoft-standard-WSL2",
+  "python": "3.12.3",
+  "ordinary_user": true,
+  "windows_state_or_build_or_model_copy_used": false,
+  "resource_restoration": {
+    "ros_apt": "existing installed Jazzy packages; not a fresh-machine apt installation",
+    "linux_slicer": "restored from cached official archive verified with SHA256 and SHA512",
+    "ur_description": "restored online from the pinned upstream ZIP with integrity checks"
+  },
+  "completed": {
+    "geometry_tests": 26,
+    "bridge_tests": 10,
+    "resource_checks": 4,
+    "metrics_and_gate_checks": 10,
+    "offline_cases": 72,
+    "moveit_executed_cases": 3,
+    "moveit_rejected_cases": 6,
+    "linux_slicer_gui": true,
+    "scene_reopened_in_separate_slicer": true,
+    "recorded_process_groups_cleared": true
+  },
+  "stop_note": "A known MoveIt exit code -11 occurred during stopping. Recorded process groups were all cleared. This is not a claim that every component exited normally.",
+  "boundary": [
+    "Deployment software acceptance in WSL2 + WSLg; not a validation on another fresh physical Linux machine.",
+    "ROS apt dependencies were already installed; clean system installation remains separate.",
+    "Synthetic optical observations, public MR with synthetic targets and UR mock hardware only.",
+    "No physical tracking/robot accuracy, clinical validation or ASTM conformity claim."
+  ],
+  "evidence_index": "index.json",
+  "supplemental": {
+    "summary": "supplemental_checks/summary.json",
+    "installer_default_online_idempotent_rerun": true,
+    "fresh_os_apt_install_tested": false,
+    "offline_only_run_id": "20261024T090333Z_940920",
+    "lifecycle_unit_tests": 12,
+    "actual_start_twice_pid_reuse": true,
+    "actual_stop_and_status_running_false": true
+  },
+  "isolated_source_snapshot": true,
+  "source_snapshot_note": "An explicit allowlisted source/data copy in an independent Linux directory; not a git clone. A real Git checkout is a separate verification step."
+}

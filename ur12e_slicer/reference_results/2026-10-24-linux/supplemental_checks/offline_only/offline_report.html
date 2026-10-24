@@ -1,0 +1,21 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8">
+<title>离线导航几何评价（模拟）</title><style>body{font:16px/1.65 system-ui,sans-serif;margin:32px auto;max-width:1250px;padding:0 24px;color:#152536}h1{font-size:27px}.note{background:#fff3cf;padding:15px;border-left:5px solid #d78c13}table{border-collapse:collapse;width:100%;font-size:14px}th,td{border:1px solid #d4dee8;padding:9px;text-align:left}th{background:#e9f1f7}code{background:#eef2f6;padding:2px 5px}small{color:#536579}</style>
+<h1>离线导航几何评价：全部结果均为模拟</h1>
+<p class="note">这些数值验证坐标链与评价程序，不代表 UR12e、光学定位仪或完整平台的实测精度，也不是 ASTM 符合性测试。假设机器人准确执行工具标记 M 的命令姿态；未加入机械误差、碰撞、延迟控制器或组织变形。</p>
+<p>固定 seed：20261023；独立留出目标：6；场景数：12；几何/拒绝解析检查：15/15 通过。长度 mm，角度 °。下表为每场景的留出目标均值，不能作为标准规定的统计口径。</p>
+<table><thead><tr><th>场景</th><th>有效/总数</th><th>配准 FRE</th><th>真值针尖误差</th><th>估计显示误差</th><th>真值轴角误差</th><th>有效性</th></tr></thead><tbody><tr><td>无扰动</td><td>6/6</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>有效</td></tr>
+<tr><td>一个配准点偏移 4 mm</td><td>6/6</td><td>1.1395</td><td>0.4986</td><td>0.0000</td><td>0.5142</td><td>有效</td></tr>
+<tr><td>全部配准点同向偏移 2.5 mm</td><td>6/6</td><td>0.0000</td><td>2.5000</td><td>0.0000</td><td>0.0000</td><td>有效</td></tr>
+<tr><td>相机至底座外参平移偏差 3 mm</td><td>6/6</td><td>0.0000</td><td>3.0000</td><td>3.0000</td><td>0.0000</td><td>有效</td></tr>
+<tr><td>工具标定偏差 2.5 mm / 3°</td><td>6/6</td><td>0.0000</td><td>2.5000</td><td>0.0000</td><td>3.0000</td><td>有效</td></tr>
+<tr><td>头模移动后重新生成目标</td><td>6/6</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>有效</td></tr>
+<tr><td>规划后头模移动，拒绝旧命令</td><td>0/6</td><td>—</td><td>—</td><td>—</td><td>—</td><td>head_pose_changed</td></tr>
+<tr><td>工具标记遮挡</td><td>0/6</td><td>—</td><td>—</td><td>—</td><td>—</td><td>tracking_invalid</td></tr>
+<tr><td>头部标记遮挡</td><td>0/6</td><td>—</td><td>—</td><td>—</td><td>—</td><td>tracking_invalid</td></tr>
+<tr><td>两路观测同样过期</td><td>0/6</td><td>—</td><td>—</td><td>—</td><td>—</td><td>stale_frame</td></tr>
+<tr><td>头部与工具观测时间不齐</td><td>0/6</td><td>—</td><td>—</td><td>—</td><td>—</td><td>frame_skew</td></tr>
+<tr><td>头模 20 mm/s，观测延迟 80 ms</td><td>6/6</td><td>0.0000</td><td>1.6000</td><td>0.0000</td><td>0.0000</td><td>有效</td></tr></tbody></table>
+<h2>如何读结果</h2><p>FRE 来自参与拟合的标记点；针尖目标误差来自完全未参与拟合的目标。全部标记同向偏移时，FRE 可以接近零，真实目标误差仍为 2.5 mm。注册或工具标定被命令与显示共同使用时，显示也可能接近零，而真实针尖已经偏离。</p>
+<p>动态例子指定头模速度 20 mm/s、观测滞后 0.080 s，因此独立解析位置误差为 1.600 mm。此例工具在命令位置静止，两路时间戳相同且仍在假设的新鲜度阈值内；显示不等于当前真值。遮挡、旧帧、时间不齐与头模移动使命令失效，误差记为 null，不计作 0。</p>
+<p>工具轴角只比较针的 +Z 方向；完整 SO(3) 角还包含绕针轴旋转，逐目标结果保存在 <a href="run.json">run.json</a> 和 <a href="cases.csv">cases.csv</a>。独立真值在 <a href="truth.json">truth.json</a>；输入及所有固定参数在 <a href="fixture.json">fixture.json</a>。未使用任何实测硬件性能参数。</p>
+<small>Truth SHA256: d44e69c7b810f628f9c82f7d29ab5078a1d807e57891c231109aa7b6fc6c918b<br>Environment: Python 3.12.3 / NumPy 1.26.4</small></html>

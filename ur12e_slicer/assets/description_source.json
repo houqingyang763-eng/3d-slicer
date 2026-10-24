@@ -1,0 +1,20 @@
+{
+  "repo": "https://github.com/UniversalRobots/Universal_Robots_ROS2_Description",
+  "branch": "jazzy",
+  "commit": "c2ae8652b6e9c1f9f3fedac48d63bef93d3cb9ba",
+  "archive": "https://codeload.github.com/UniversalRobots/Universal_Robots_ROS2_Description/zip/c2ae8652b6e9c1f9f3fedac48d63bef93d3cb9ba",
+  "archive_sha256": "0559bc33a91364f843f3957345d47092189cb222e75dfcbc6ddf138bc0003ce1",
+  "required_files_sha256": {
+    "LICENSE": "143077f9f6a8de5a99f78c2c2472801fb53cf240277ef661642f079b9acdfff8",
+    "urdf/ur_macro.xacro": "0a4a4723d4205340b5e0ac1cd9c73b099755728e11e65810f5cc9c2192b1efaf",
+    "config/ur12e/visual_parameters.yaml": "34b3187f5af1b4345236986b0cc50480db79d85a9d12a4b638a7c42da1a11199",
+    "config/ur12e/physical_parameters.yaml": "8cd32e5a38bcef6c6de59556e752bc2cc05ffe4247019d9591d6a9474eb27928",
+    "meshes/ur10e/visual/base.dae": "28226d95af8c1579a49fe69b62a00d9133a2a05258dad550bb9b583c80dc938f",
+    "meshes/ur10e/visual/shoulder.dae": "1c38a6afedfb8f064117da87b60c2dcb9ccd107f957e4c5e0a198f4c2bb63d36",
+    "meshes/ur10e/visual/upperarm.dae": "f9d2380d14127440f4a50ed79ab4e7562f86289cd6131016c3d49a3e7483e6ed",
+    "meshes/ur10e/visual/forearm.dae": "24d909834c380cceb0490181dae40bcdfcfa4a7fb0c6807d6e58794cdfadcf6e",
+    "meshes/ur10e/visual/wrist1.dae": "643717d042920313dd9daa81511bd9afa66a877625967e6dd8d359ec851b4237",
+    "meshes/ur10e/visual/wrist2.dae": "b820e8c8a4488563c7a21fe73bf2fa4038ec9f882dcf9db12e2d1df928253793",
+    "meshes/ur10e/visual/wrist3.dae": "52ace7588f131dc43b49ba88d1c83c1f871e6d00659ea84b1f437e2a7f1ab7fe"
+  }
+}

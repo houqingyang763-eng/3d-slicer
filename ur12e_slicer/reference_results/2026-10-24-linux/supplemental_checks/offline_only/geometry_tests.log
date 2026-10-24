@@ -1,0 +1,31 @@
+test_axis_versus_roll_are_distinct (test_geometry.GeometryOracles.test_axis_versus_roll_are_distinct) ... ok
+test_collinear_points_rejected (test_geometry.GeometryOracles.test_collinear_points_rejected) ... ok
+test_goal_chain_known_integer_coordinates (test_geometry.GeometryOracles.test_goal_chain_known_integer_coordinates) ... ok
+test_inputs_not_mutated (test_geometry.GeometryOracles.test_inputs_not_mutated) ... ok
+test_inverse_known_rotation_translation (test_geometry.GeometryOracles.test_inverse_known_rotation_translation) ... ok
+test_matrix_to_quaternion_half_turn (test_geometry.GeometryOracles.test_matrix_to_quaternion_half_turn) ... ok
+test_needle_axis_tilt_90 (test_geometry.GeometryOracles.test_needle_axis_tilt_90) ... ok
+test_optical_chain_known_tip_coordinates (test_geometry.GeometryOracles.test_optical_chain_known_tip_coordinates) ... ok
+test_quaternion_z_90_known_matrix (test_geometry.GeometryOracles.test_quaternion_z_90_known_matrix) ... ok
+test_rigid_fit_does_not_absorb_scale (test_geometry.GeometryOracles.test_rigid_fit_does_not_absorb_scale) ... ok
+test_rigid_registration_known_point_coordinates (test_geometry.GeometryOracles.test_rigid_registration_known_point_coordinates) ... ok
+test_camera_offset_visible_to_independent_optical_display (test_geometry.IndependentTruthEvaluation.test_camera_offset_visible_to_independent_optical_display) ... ok
+test_dynamic_error_matches_speed_times_delay (test_geometry.IndependentTruthEvaluation.test_dynamic_error_matches_speed_times_delay) ... ok
+test_fiducials_cannot_be_renamed_as_heldout (test_geometry.IndependentTruthEvaluation.test_fiducials_cannot_be_renamed_as_heldout) ... ok
+test_invalid_rows_have_no_error_or_goal (test_geometry.IndependentTruthEvaluation.test_invalid_rows_have_no_error_or_goal) ... ok
+test_reports_have_finite_values_and_separate_saved_truth (test_geometry.IndependentTruthEvaluation.test_reports_have_finite_values_and_separate_saved_truth) ... ok
+test_seed_and_truth_not_mutated (test_geometry.IndependentTruthEvaluation.test_seed_and_truth_not_mutated) ... ok
+test_shared_registration_bias_has_zero_fre_but_nonzero_tre (test_geometry.IndependentTruthEvaluation.test_shared_registration_bias_has_zero_fre_but_nonzero_tre) ... ok
+test_tool_bias_is_not_cancelled_in_truth (test_geometry.IndependentTruthEvaluation.test_tool_bias_is_not_cancelled_in_truth) ... ok
+test_different_clocks_rejected (test_geometry.ObservationGates.test_different_clocks_rejected) ... ok
+test_equal_but_old_frames_rejected (test_geometry.ObservationGates.test_equal_but_old_frames_rejected) ... ok
+test_fresh_but_skewed_frames_rejected (test_geometry.ObservationGates.test_fresh_but_skewed_frames_rejected) ... ok
+test_future_frame_rejected (test_geometry.ObservationGates.test_future_frame_rejected) ... ok
+test_missing_clock_rejected (test_geometry.ObservationGates.test_missing_clock_rejected) ... ok
+test_nonrigid_matrix_rejected (test_geometry.ObservationGates.test_nonrigid_matrix_rejected) ... ok
+test_occlusion_rejected (test_geometry.ObservationGates.test_occlusion_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 0.078s
+
+OK
