@@ -1,8 +1,21 @@
 # UR12e 与 3D Slicer 联动：任务清单
 
-更新日期：2026-10-24。状态：**基础联调完成；平台评价规范、MR 头模＋模拟光学坐标链、离线误差验证与真实 MoveIt/mock 执行已交付，新增 Linux 部署入口与交接文档。真实光学／机械臂精度尚未验证。** 新机器从 [Linux 部署与验收](DEPLOYMENT_LINUX.md)开始；Codex 先读根目录 [AGENTS.md](../AGENTS.md)。本轮研究结果见 [头模导航与评价成果](NAVIGATION_BENCHMARK_RESULTS_2026-10-23.md)。旧的 21／6／9 项只覆盖原 mock 场景，本轮新证据单独记录；Windows 原有使用步骤见 [使用与验收.md](使用与验收.md)。
+更新日期：2026-10-31。最新状态见 [给 GPT 的项目上下文](../PROJECT_CONTEXT.md)：**10 月 31 日两轮 URSim 基础控制均 5/5、Slicer 均 20/21，因仅录到 19 帧而未全通过；头模已恢复会话显示，完整 URSim 头部导航评价未重跑。** 10 月 27 日完整通过记录和之前的 mock 导航成绩保留为历史证据，真实光学／机械臂精度尚未验证。[三轮精选证据](reference_results/2026-10-31-ursim/README.md)包含各轮原始检查字段。新机器从 [Linux 部署与验收](DEPLOYMENT_LINUX.md)开始；URSim 另读 [专用说明](URSIM_LINUX.md)和 [10 月 27 日记录](URSIM_RESULTS_2026-10-27.md)。Codex 先读根目录 [AGENTS.md](../AGENTS.md)。头模研究结果见 [成果记录](NAVIGATION_BENCHMARK_RESULTS_2026-10-23.md)。旧的 21／6／9 项只覆盖原 mock 场景，各轮证据单独记录；Windows 原有使用步骤见 [使用与验收.md](使用与验收.md)。
 
 本目录是本项工作的统一入口。代码、配置、启动脚本、演示和结果记录随任务推进逐步加入；本清单允许修改、拆分和增补。完成项必须附可复现入口或结果证据。
+
+## 当前增量：URSim 虚拟控制柜
+
+博士生布置的本周机器人任务为搭建 URSim、编写并跑通基础控制程序；用户已确认沿用 ROS 2 / MoveIt，并提供真机 External Control 1.0.5 信息。实现复用上周 Slicer / MoveIt 程序，新增控制柜通信，不重做已通过的 mock 导航主线。
+
+- 来源：官方 PolyScope 5.23.0 固定 digest，容器选择 `ROBOT_MODEL=UR12`（官方脚本对 UR12e 的映射），External Control 1.0.5。照片组件号与包版本的对应关系仍待确认，不能称精确复刻真机软件。
+- 已实跑：本机 WSL2 中 Docker / URSim、External Control 主机 `192.168.62.1:50002`、Remote Control、ROS scaled controller、新鲜关节 / TF 和 Linux Slicer；相关离线回归通过。
+- 完整轮验证：`run_ursim_linux.sh --stop-after` 的 `20261027T044855Z_f8a2ba` 退出 0，基础控制 5 项和 Slicer 21 项同轮通过，`stop_passed=true`；停止检查时 backend / Slicer / GUI relay / 容器均不运行。首轮 DrvFS `ENODATA`、WSL 时钟回退和归档元数据失败均保留，处理经过见本轮记录。
+- 入口：`bootstrap/install_ursim.sh`、`start_ursim_linux.sh`、`status_ursim_linux.sh`、`run_ursim_linux.sh`、`stop_ursim_linux.sh`；首次先 `start_ursim_linux.sh --simulator-only` 完成 [GUI 配置](URSIM_LINUX.md)。
+
+真机仍缺实际本体校准、工具 / 负载、现场网络和机时，以及光学 / 影像标定与硬件联调。当前所有入口只连接本机仿真。
+
+URSim 高频控制文件和基础原始日志使用原生 Linux cache 的 `ursim/bridge`、`ursim/validation`；项目 `runtime/` 仅保留该模式的管理、心跳与任务桥。结果完成或失败后逐字节核对 SHA256 归档至 `output/ursim_validation/`，原始路径写入归档来源记录。mock 默认路径不变。Docker `137`、MoveIt `-11`、ros2_control `-15` 等退出记录与任务无残留分别解释。
 
 ## Linux 接手入口
 
@@ -19,7 +32,7 @@ bash ur12e_slicer/stop_linux.sh
 
 2026-10-24 已在 WSL2 / WSLg 的普通用户独立目录完成真正 Linux Slicer 与 ROS mock 的完整运行，见 [来源与范围](reference_results/2026-10-24-linux/PROVENANCE.md)。ROS apt 环境和已校验 Slicer 下载缓存有复用，未声称另一台全新实体机从零部署已通过；MoveIt 停止阶段 -11 仍保留为限制。
 
-下述 2026-10-21 至 23 的安装路径、Windows / WSL 入口和数值属于历史参考运行；Linux 接收方不应照搬 `/root`、`/mnt/c/Users/HOU` 或 `D:\\CodexEnvs`，也不能把历史结果当本机通过。
+下述 2026-10-21 至 23 的安装路径、Windows / WSL 入口和数值属于历史参考运行；Linux 接收方应使用本机普通用户可写的源码、HOME 与构建目录，不能照搬历史机器的绝对路径，也不能把历史结果当本机通过。
 
 ## 目标
 

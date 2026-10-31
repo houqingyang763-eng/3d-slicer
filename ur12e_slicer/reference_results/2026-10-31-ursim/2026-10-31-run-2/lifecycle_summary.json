@@ -1,0 +1,18 @@
+{
+  "passed": false,
+  "mode": "ursim_controller_integration",
+  "source": "ros2_ursim",
+  "run_id": "20261031T084234Z_fd2c4e",
+  "started_at": 1793436154.211252,
+  "no_slicer": false,
+  "control_runtime": "<user-cache>/ur12e_slicer/<project-key>/ursim/bridge",
+  "boundary": "Local URSim virtual controller; no physical accuracy or hardware safety result.",
+  "original_validation_directory": "<user-cache>/ur12e_slicer/<project-key>/ursim/validation/20261031T084234Z_fd2c4e",
+  "validation_exit_code": 0,
+  "integration_original_result": "<user-cache>/ur12e_slicer/<project-key>/ursim/validation/20261031T084234Z_fd2c4e/20261031_164240_b225dc/summary.json",
+  "integration_result": "output/ursim_validation/20261031T084234Z_fd2c4e/20261031_164240_b225dc/summary.json",
+  "slicer_result": "output/ursim_slicer_acceptance/run_20261031_164307_223359/results.json",
+  "slicer_passed": false,
+  "error": "Traceback (most recent call last):\n  File \"ur12e_slicer/bootstrap/ursim_lifecycle.py\", line 738, in run_checks\n    check_slicer_acceptance(folder, result)\n  File \"ur12e_slicer/bootstrap/ursim_lifecycle.py\", line 632, in check_slicer_acceptance\n    raise RuntimeError(\"Slicer URSim target/plan/execute/feedback acceptance did not pass; see \" + str(report_path))\nRuntimeError: Slicer URSim target/plan/execute/feedback acceptance did not pass; see ur12e_slicer/output/ursim_slicer_acceptance/run_20261031_164307_223359/results.json\n",
+  "finished_at": 1793436201.8865063
+}

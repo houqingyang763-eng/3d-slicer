@@ -17,6 +17,22 @@ import slicer
 import vtk
 
 PROJECT = Path(__file__).resolve().parents[1]
+SOURCES = {
+    "ros2_mock_hardware": {
+        "evidence_type": "real_slicer_ros2_moveit_mock_hardware_loop",
+        "feedback_check": "genuine_ros2_mock_feedback",
+        "output_name": "slicer_acceptance",
+        "description": "real ROS mock hardware",
+        "scope": "Mock hardware integration only; simulated coordinate relationship and simplified tool. No physical calibration or accuracy claim.",
+    },
+    "ros2_ursim": {
+        "evidence_type": "real_slicer_ros2_moveit_ursim_virtual_controller_loop",
+        "feedback_check": "genuine_ros2_ursim_feedback",
+        "output_name": "ursim_slicer_acceptance",
+        "description": "real ROS URSim virtual controller",
+        "scope": "URSim virtual-controller integration only; simulated coordinate relationship and simplified tool. No physical robot, optical tracking, physical accuracy, hardware safety or ASTM conformity result.",
+    },
+}
 
 
 def copy_json(value):
@@ -38,15 +54,24 @@ def pose_error(actual, target):
 
 
 class SlicerAcceptance:
-    def __init__(self):
+    def __init__(self, expected_source="ros2_mock_hardware"):
+        if expected_source not in SOURCES:
+            raise ValueError("Acceptance source must be ros2_mock_hardware or ros2_ursim")
+        self.expected_source = expected_source
+        self.source_details = SOURCES[expected_source]
         self.panel = slicer.ur12eSimulation
-        self.folder = PROJECT / "output" / "slicer_acceptance" / datetime.datetime.now().strftime("run_%Y%m%d_%H%M%S")
+        output_name = self.source_details["output_name"]
+        stamp_format = "run_%Y%m%d_%H%M%S_%f" if expected_source == "ros2_ursim" else "run_%Y%m%d_%H%M%S"
+        self.folder = PROJECT / "output" / output_name / datetime.datetime.now().strftime(stamp_format)
+        self.status_path = PROJECT / "output" / (output_name + "_status.json")
         self.folder.mkdir(parents=True, exist_ok=True)
         self.stage = "prepared"
         self.stage_started = time.monotonic()
         self.samples = []
-        self.report = {"evidence_type": "real_slicer_ros2_moveit_mock_hardware_loop",
+        self.report = {"evidence_type": self.source_details["evidence_type"],
+                       "source": expected_source, "expected_source": expected_source,
                        "simulation_only": True, "actual_robot_connected": False,
+                       "scope": self.source_details["scope"],
                        "slicer_version": slicer.app.applicationVersion,
                        "output_directory": str(self.folder), "checks": {}}
         self.timer = qt.QTimer()
@@ -55,8 +80,9 @@ class SlicerAcceptance:
         self.write_status()
 
     def write_status(self):
-        atomic_json(PROJECT / "output" / "slicer_acceptance_status.json",
+        atomic_json(self.status_path,
                     {"stage": self.stage, "timestamp": time.time(), "output_directory": str(self.folder),
+                     "expected_source": self.expected_source,
                      "report": self.report if self.stage in ("complete", "failed") else None})
 
     def transition(self, stage):
@@ -68,8 +94,8 @@ class SlicerAcceptance:
             raise RuntimeError("This acceptance instance has already started")
         self.panel.poll()
         state = self.panel.state
-        if not state or state.get("source") != "ros2_mock_hardware" or not state.get("ready") or time.time() - state["timestamp"] > 3:
-            raise RuntimeError("Fresh real ROS mock hardware state is required")
+        if not state or state.get("source") != self.expected_source or not state.get("ready") or time.time() - state["timestamp"] > 3:
+            raise RuntimeError("Fresh " + self.source_details["description"] + " state is required (expected source=" + self.expected_source + ")")
         if state.get("status") in ("planning", "executing"):
             raise RuntimeError("Another operation is active")
         self.report["initial_feedback"] = copy_json(state)
@@ -108,8 +134,8 @@ class SlicerAcceptance:
             if state:
                 self.samples.append({"observed_at": time.time(), "observed_monotonic_s": time.monotonic(),
                                      "stage": self.stage, "state": copy_json(state)})
-            if not state or state.get("source") != "ros2_mock_hardware" or not state.get("feedback_valid") or not state.get("ready"):
-                raise RuntimeError("Real ROS joint/TF/MoveIt readiness was lost during Slicer acceptance")
+            if not state or state.get("source") != self.expected_source or not state.get("feedback_valid") or not state.get("ready"):
+                raise RuntimeError("ROS joint/TF/MoveIt readiness or expected source " + self.expected_source + " was lost during Slicer acceptance")
             if time.time() - float(state.get("timestamp", 0)) > 2:
                 raise RuntimeError("ROS file feedback became stale during Slicer acceptance")
             if state.get("joint_state_age_s") is None or state.get("tf_age_s") is None or max(state["joint_state_age_s"], state["tf_age_s"]) > 1:
@@ -142,6 +168,12 @@ class SlicerAcceptance:
                     if state.get("status") == "error":
                         raise RuntimeError("MoveIt execution failed: " + state.get("message", ""))
                     if state.get("status") == "succeeded":
+                        if self.expected_source == "ros2_ursim":
+                            # End actual motion capture before starting the
+                            # unchanged hold window. PNG capture shares Qt's
+                            # thread with feedback polling and can delay it.
+                            self.stop_recording()
+                            self.report["recording_ended_before_feedback_hold"] = True
                         self.transition("feedback_hold")
                 if elapsed > 150:
                     raise TimeoutError("Slicer did not observe execution completion within 150 s")
@@ -192,7 +224,7 @@ class SlicerAcceptance:
         backend_target = state.get("target_pose") or {}
         target_matches = np.allclose(backend_target.get("position_m", [math.inf] * 3), target["position_m"], atol=1e-9, rtol=0) and abs(float(np.dot(backend_target.get("orientation_xyzw", [0] * 4), target["orientation_xyzw"]))) > 1-1e-9
         checks = {
-            "genuine_ros2_mock_feedback": state.get("source") == "ros2_mock_hardware" and state.get("ready") and state.get("feedback_valid"),
+            self.source_details["feedback_check"]: state.get("source") == self.expected_source and state.get("ready") and state.get("feedback_valid"),
             "slicer_target_roundtrip_unchanged": target == self.report["target_from_slicer_controls"],
             "moveit_plan_success": self.report["planned_feedback"]["plan"].get("moveit_error_code") == 1,
             "real_fk_preview_displayed": len(state["plan"].get("tcp_path_m", [])) >= 2 and bool(self.panel.plan_path.GetDisplayNode().GetVisibility()),
@@ -230,15 +262,15 @@ class SlicerAcceptance:
                             "hold_joint_drift_max_rad": hold_joint_drift_rad,
                             "scene_file": str(scene_file), "observed_sample_count": len(self.samples),
                             "engineering_thresholds": {"position_mm": 2, "orientation_rad": 0.03},
-                            "scope": "Mock hardware integration only; simulated coordinate relationship and simplified tool. No physical calibration or accuracy claim."})
+                            "scope": self.source_details["scope"]})
         atomic_json(self.folder / "results.json", self.report)
         atomic_json(self.folder / "observations.json", self.samples)
         self.transition("complete" if self.report["all_passed"] else "failed")
 
 
-def prepare():
+def prepare(expected_source="ros2_mock_hardware"):
     previous = getattr(slicer, "ur12eAcceptance", None)
     if previous and previous.timer.isActive():
         raise RuntimeError("An acceptance run is already active")
-    slicer.ur12eAcceptance = SlicerAcceptance()
+    slicer.ur12eAcceptance = SlicerAcceptance(expected_source=expected_source)
     return {"stage": "prepared", "output_directory": str(slicer.ur12eAcceptance.folder)}

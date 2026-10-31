@@ -1,6 +1,6 @@
 # Slicer ↔ ROS 2 共享文件协议 v1
 
-Windows Slicer 与 WSL 中的 ROS 2 访问同一个 `ur12e_slicer/runtime/`。两端分别先写同目录临时文件，再用原子替换更新 `target.json` 和 `state.json`；读取方不得把临时文件当作消息。此桥用于本项目的 mock hardware 阶段，执行状态必须来自真实 ROS 2/MoveIt 接口，不能用前端动画或插值代替。
+Linux Slicer 与 ROS 2 访问同一个控制目录：mock 默认为 `ur12e_slicer/runtime/`，URSim 为当前用户原生 Linux cache 下的 `ur12e_slicer/<项目哈希>/ursim/bridge/`，由管理器传入 `UR12E_CONTROL_RUNTIME_DIR`。URSim 的项目 `runtime/` 仍保存管理所有权、Slicer 心跳与任务队列，不再保存该模式的高频控制文件。两端分别先写控制目录内的临时文件，再用原子替换更新 `target.json` 和 `state.json`；读取方不得把临时文件当作消息。协议支持两个互斥的仿真来源：`ros2_mock_hardware`（默认 mock）和 `ros2_ursim`（固定本机虚拟控制柜）。执行状态必须来自对应的真实 ROS 2 / MoveIt 接口，不能用前端动画或插值代替。来源字段不证明实物连接，不能单独作为设备身份认证。
 
 ## 统一坐标与工具
 
@@ -76,6 +76,8 @@ Windows Slicer 与 WSL 中的 ROS 2 访问同一个 `ur12e_slicer/runtime/`。�
 
 这是**示意结构，不是执行结果**。初始字段可为 `null`/空列表；误差只有反馈新鲜且有目标时才计算。没有 TF 的连杆不出现在 `link_transforms`，不得补成零位姿。前端应以文件更新时间/`timestamp` 判断整个后台是否在线，不能仅依赖内部 `feedback_valid`。
 
+上述示例的 `source=ros2_mock_hardware` 属于 mock。URSim 使用同一 schema，但 `source=ros2_ursim`，消息说明指向 URSim virtual controller；两种来源的验收记录不得混写。URSim 启动器还核对本机 Docker socket、固定镜像、容器 / 网络身份和端点，再使用专属 launch。Slicer 根据实际来源显示标签，不以修改 JSON 来源字段替代这些检查。
+
 `link_transforms` 的键：`base_link`、`shoulder_link`、`upper_arm_link`、`forearm_link`、`wrist_1_link`、`wrist_2_link`、`wrist_3_link`、`tool0`、`needle_tip`；所有变换均是 `base → link`。其位置和四元数是该 link 在 base 中的位姿，可直接作为网格父变换。
 
 `status`：`waiting_for_robot`、`idle`、`planning`、`planned`、`executing`、`succeeded`、`error`。`message` 给出原因。`ready` 要求关节/TF 新鲜、针碰撞体就绪、规划服务及执行 action 可用；不会证明任意目标都可达。`succeeded` 表示 MoveIt action 与错误码均返回成功，仍须独立核对末端误差。
@@ -88,8 +90,8 @@ Windows Slicer 与 WSL 中的 ROS 2 访问同一个 `ur12e_slicer/runtime/`。�
 
 - `/joint_states`：关节实际模拟反馈；`/tf`、`/tf_static`：各 link 到 base 的变换。
 - `/plan_kinematic_path`：`moveit_msgs/srv/GetMotionPlan`。
-- `/execute_trajectory`：`moveit_msgs/action/ExecuteTrajectory`，显式 `controller_names=["joint_trajectory_controller"]`，与 mock 驱动的普通 JTC 一致。
+- `/execute_trajectory`：`moveit_msgs/action/ExecuteTrajectory`，显式选择后台配置的控制器；mock 为 `controller_names=["joint_trajectory_controller"]`，URSim 为 `["scaled_joint_trajectory_controller"]`，与各自驱动激活的控制器一致。
 - `/apply_planning_scene`：附加简化针碰撞几何；`/compute_fk`：真实规划预览采样。
-- `runtime/ros_events.jsonl`：追加记录接收/拒绝、规划返回、执行返回与当时末端误差；不能把纯协议测试日志当成 ROS 执行证据。
+- 控制目录中的 `ros_events.jsonl`：追加记录接收/拒绝、规划返回、执行返回与当时末端误差；mock 位于项目 `runtime/`，URSim 位于原生 Linux cache 的 `ursim/bridge/`。不能把纯协议测试日志当成 ROS 执行证据。
 
-启动时指定独立 `ROS_DOMAIN_ID=62`、`ROS_LOCALHOST_ONLY=1`。本阶段只支持随包提供的固定 mock launch，不将本桥接到真实机械臂或实验室既有控制网络。
+启动时指定独立 `ROS_DOMAIN_ID=62`、`ROS_LOCALHOST_ONLY=1`。只支持随包提供的固定 mock launch 或固定本机 Docker 端点的 URSim launch；两种后端共享 ROS domain 和前端管理，不同时运行，不将本桥接到真实机械臂或实验室既有控制网络。URSim 的来源、首次配置与独立入口见 [URSIM_LINUX.md](URSIM_LINUX.md)。

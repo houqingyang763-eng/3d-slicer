@@ -6,6 +6,18 @@
 
 GUI 依赖中的 `fonts-noto-cjk` 用于本项目中文面板与图中文字显示，属于项目需要的字体包；Slicer 官方系统库要求另列于来源清单。
 
+## 可选 URSim 入口（2026-10-27）
+
+默认 `install_linux.sh` / `linux_lifecycle.py` 仍服务于既有 mock 路线，不安装 Docker。使用 URSim 时，在已有 ROS / Slicer 基础环境上，以普通用户运行 `bash ur12e_slicer/bootstrap/install_ursim.sh`；它按需使用 sudo 安装 Docker，随后由 `prepare_ursim.py` 获取 `assets/ursim_source.json` 固定的官方镜像和 External Control 1.0.5，并核对摘要。加入 docker 组后需重新打开 Linux 登录会话；依赖 / 网络失败后保留本轮日志、修复原因再重跑。
+
+运行入口是上层 `start_ursim_linux.sh`、`status_ursim_linux.sh`、`stop_ursim_linux.sh` 和 `run_ursim_linux.sh`，由 `ursim_lifecycle.py` 管理固定本地 Docker 容器、内部桥、ROS 进程与 Slicer。首次 `start_ursim_linux.sh --simulator-only` 只启动虚拟示教器和回环 GUI relay，不启动 ROS / Slicer、不发送运动；完成 [URSim 首次配置](../URSIM_LINUX.md)再启动全栈。原 mock 与 URSim 共用 ROS domain 和前端管理，不同时运行。
+
+URSim 固定 `192.168.62.2`，驱动回连 `192.168.62.1`，仅使用本机 `/var/run/docker.sock`。管理器核对镜像 digest / image ID、项目标签、网络成员和 PID 身份；停止时保留日志、程序和所有权记录。Docker 29 的内部桥上 GUI 端口发布未能提供本机访问，本任务通过 `ursim_gui_proxy.py` 将 `127.0.0.1:6080` 转发到已核对的容器，不能扩大监听到实验室网络。WSL 启动保持脚本为 `ursim_wsl_session.sh`；Windows 包装器与本机配置规则见专用说明。
+
+URSim 高频控制目录为原生 Linux cache 下 `ur12e_slicer/<项目哈希>/ursim/bridge/`；基础验收原始日志为同级 `validation/`。项目 `runtime/` 继续保存管理所有权、心跳和任务队列。`run_ursim_linux.sh` 在成功或失败后将基础记录逐字节复制到项目 `output/ursim_validation/` 并核对 SHA256，`archive_provenance.json` 保留原始位置，避免依赖跨 DrvFS 的文件元数据复制。Slicer 通过管理器传入的 `UR12E_CONTROL_RUNTIME_DIR` 连接同一 ext4 控制目录。
+
+完整轮 `20261027T044855Z_f8a2ba` 已通过基础 5 项、Slicer 21 项和验收停止无残留检查；本机 WSL 双时钟修正、退出异常和失败记录见 [本轮记录](../URSIM_RESULTS_2026-10-27.md)。下方“当前证据”及安装命令保留的是原有 mock / Windows 历史路线。
+
 ## Windows / WSL 历史路线
 
 选定路线：Windows 保留 3D Slicer；WSL 2 中运行 Ubuntu 24.04、ROS 2 Jazzy、MoveIt 2、UR 官方驱动。Slicer 和 ROS 2 通过项目的 `runtime/target.json`、`runtime/state.json` 交换数据，首轮不依赖跨系统 DDS 发现或 TCP 桥。
@@ -33,10 +45,10 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File '.\ur12e_slicer\bootstra
 
 本机实际运行中，WSL 的 NAT／localhost 代理提示会写到 stderr；续装入口保留这些日志，但不会把它们作为 `wslpath` 的路径返回值解析。Linux 直连 GitHub 超时，因此首次安装 ROS 源配置包时，由 Windows 下载 `assets/ros_apt_source.json` 固定的官方发布包并核对官方 SHA256，再通过 `ROS_APT_SOURCE_DEB` 交给 Linux 安装。ROS 软件仍由官方签名 apt 源获取；已有源配置包时复用。
 
-需要手工执行时，在 Ubuntu 内运行：
+需要手工执行时，在 Ubuntu 内切到仓库根目录运行：
 
 ```bash
-bash '/mnt/c/Users/HOU/Desktop/3D  Slicer/ur12e_slicer/bootstrap/setup_ros2.sh'
+bash ur12e_slicer/bootstrap/setup_ros2.sh
 ```
 
 普通 Linux 用户安装系统依赖时需具有 `sudo` 权限。脚本只安装请求的软件包及其依赖，不运行全系统升级，不启动机械臂节点，不添加机器人连接，也不改用户 `.bashrc`。Ubuntu 软件源保持系统当前配置，ROS 源采用固定的官方 `ros2-apt-source` 1.3.0（deb 版本 `1.3.0~noble`）。
@@ -80,7 +92,7 @@ ros2 launch ur_moveit_config ur_moveit.launch.py ur_type:=ur12e launch_rviz:=fal
 
 官方 MoveIt 配置同时含 scaled 和普通两个轨迹控制器，默认偏向 scaled。项目执行 action 必须明确选择 `joint_trajectory_controller`；不能只修改驱动一侧的初始控制器便假定规划执行一致。普通控制器是官方 mock 示例采用的路线。
 
-mock 使用系统时间，不应设 `use_sim_time:=true`，因为这里没有 Gazebo `/clock`。默认不安装 Gazebo、Docker 或 URSim；若后续验收需要动力学或控制器程序行为，再引入相应模拟器。
+mock 使用系统时间，不应设 `use_sim_time:=true`，因为这里没有 Gazebo `/clock`。默认入口不安装 Gazebo、Docker 或 URSim；可选 URSim 控制柜入口见本页开头，它也使用系统时间，不提供动力学、接触或硬件停止性能证据。
 
 ## WSL 注意
 

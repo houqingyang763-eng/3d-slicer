@@ -1,8 +1,18 @@
 # Linux 部署、运行与验收
 
-更新日期：2026-10-24。目标环境为 **Ubuntu 24.04（Noble）、x86_64 / amd64 桌面系统**。本说明服务于接收仓库的操作者与 Codex。源码不依赖原作者的 Windows 路径或 Codex 私有运行时。
+更新日期：2026-10-27。目标环境为 **Ubuntu 24.04（Noble）、x86_64 / amd64 桌面系统**。本说明服务于接收仓库的操作者与 Codex。源码不依赖原作者的 Windows 路径或 Codex 私有运行时。
 
 当前交付验证的是 UR12e mock、真实 ROS / MoveIt 接口、Slicer 显示和合成导航误差评价。尚未接物理光学定位仪或真实机械臂；不能用结果表示实物精度、临床效果或 ASTM 标准符合性。
+
+## 0. 选择运行路线
+
+最新进展截至 2026-10-31：URSim 复跑基础控制通过、录帧项未过；头模已恢复会话显示。下文 10 月 27 日 URSim 全通过及 mock 成绩均按日期作为历史证据解释，最新详情见根目录 [PROJECT_CONTEXT.md](../PROJECT_CONTEXT.md)。
+
+下文保留默认 **mock 导航评价** 的安装、运行和历史验收。2026-10-27 新增的 **URSim 虚拟控制柜** 使用独立安装 / 启停 / 验收入口，详见 [URSIM_LINUX.md](URSIM_LINUX.md)。它仅额外引入本机 Docker，固定官方镜像、UR12e 型号和隔离容器 IP；现有 mock 用户不需要安装 Docker。两种后端共享 ROS domain 和前端管理，不能同时运行；URSim 的控制文件位于原生 Linux cache，mock 仍在项目 runtime。
+
+本机 URSim 完整轮 `20261027T044855Z_f8a2ba` 已通过基础控制 5 项、Linux Slicer 21 项和验收停止无残留检查，命令为 `run_ursim_linux.sh --stop-after`，见 [本轮记录](URSIM_RESULTS_2026-10-27.md)。误差由虚拟模型反馈计算，没有实物精度结论。下文 mock 的 72 / 3 / 6 项结果不迁移成 URSim 成绩。
+
+本次 Windows + WSL 专用发行版 `UR12e-Jazzy` 中，发现宿主同步与 `systemd-timesyncd` 双重校时导致 wall clock 约每 31 秒回退 0.832 秒；本机已停止并禁用该发行版的 `systemd-timesyncd`，宿主 Hyper-V 时间同步继续，随后 42 秒采样未见回退。该修正不放宽反馈新鲜度阈值，也不是原生 Ubuntu 的通用安装步骤。需要恢复本机原服务时，在该发行版运行 `sudo systemctl enable --now systemd-timesyncd`，再重新核对时钟与反馈；详情和日志见 URSim 专用说明。
 
 ## 1. 环境与依赖
 
@@ -17,7 +27,7 @@
 | 图形与中文 | Slicer 所需 Qt / XCB / OpenGL 系统库；`fonts-noto-cjk` 用于本项目中文标签，由安装入口准备 |
 | 构建 | colcon；安装步骤提供依赖；工作区必须由当前用户可写 |
 
-不需要 Windows、WSL、Docker、Gazebo、URSim 或 Node.js。没有图形环境时可先做离线评价和 mock 后台检查；这不等于完成 Slicer GUI 验收。其他 Linux 版本、arm64 和无显示服务器不在这次完整交付支持目标中。
+默认 mock 路线不需要 Windows、WSL、Docker、Gazebo、URSim 或 Node.js；可选 URSim 路线的额外依赖另见专用说明。没有图形环境时可先做离线评价和 mock 后台检查；这不等于完成 Slicer GUI 验收。其他 Linux 版本、arm64 和无显示服务器不在这次完整交付支持目标中。
 
 原作者的 Windows + WSL 参考运行曾使用 Ubuntu 24.04.5、ROS 2 Jazzy、MoveIt 2 2.12.4、UR 驱动 3.9.0、Slicer 5.12.4。ROS apt 仓库会更新；安装步骤记录本机实际包版本，并检查安装版是否支持 `ur12e`。不要将版本相近的 UR10e 改名使用。
 

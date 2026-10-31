@@ -1,6 +1,6 @@
 """UR12e simulation console. Run with Slicer's embedded Python.
 
-The displayed robot always comes from feedback in runtime/state.json.
+The displayed robot always comes from feedback in the selected control runtime.
 Targets and feedback use the version 1 file protocol documented in protocol.md.
 No robot driver or network control connection is opened by this frontend.
 """
@@ -21,10 +21,21 @@ import vtk
 
 PROJECT = Path(__file__).resolve().parents[1]
 RUNTIME = PROJECT / "runtime"
+CONTROL_RUNTIME = Path(os.environ.get("UR12E_CONTROL_RUNTIME_DIR", str(RUNTIME))).expanduser().resolve()
 OUTPUT = PROJECT / "output"
 LINK_ORDER = ["base_link", "shoulder_link", "upper_arm_link", "forearm_link",
               "wrist_1_link", "wrist_2_link", "wrist_3_link", "tool0"]
 BASE_TO_RAS_MM = np.eye(4)
+FEEDBACK_SOURCES = {
+    "ros2_mock_hardware": "ROS 2 mock hardware 仿真",
+    "ros2_ursim": "URSim 虚拟控制器仿真",
+}
+
+
+def feedback_source_label(source):
+    if not isinstance(source, str) or source not in FEEDBACK_SOURCES:
+        raise ValueError("This simulation console accepts ros2_mock_hardware or ros2_ursim feedback only")
+    return FEEDBACK_SOURCES[source]
 
 
 def atomic_json(path, value):
@@ -207,6 +218,7 @@ def collada_polydata(filename):
 class UR12ePanel:
     def __init__(self):
         RUNTIME.mkdir(parents=True, exist_ok=True)
+        CONTROL_RUNTIME.mkdir(parents=True, exist_ok=True)
         OUTPUT.mkdir(parents=True, exist_ok=True)
         self.state = None
         self.feedback_error = None
@@ -237,7 +249,8 @@ class UR12ePanel:
         self.session_info = {
             "pid": os.getpid(), "started_at": time.time(), "slicer_version": slicer.app.applicationVersion,
             "simulation_only": True, "base_to_ras_mm": BASE_TO_RAS_MM.tolist(),
-            "tool_tip_offset_m": [0, 0, 0.12], "frontend_script": str(Path(__file__).resolve())}
+            "tool_tip_offset_m": [0, 0, 0.12], "frontend_script": str(Path(__file__).resolve()),
+            "control_runtime": str(CONTROL_RUNTIME)}
         self.session_info["heartbeat"] = time.time()
         atomic_json(RUNTIME / "slicer_session.json", self.session_info)
 
@@ -464,6 +477,9 @@ class UR12ePanel:
         self.update_target()
 
     def send(self, command):
+        if (CONTROL_RUNTIME / "validation.lock").exists():
+            self.status_label.setText("外部控制验收正在运行，请等待验收释放控制。")
+            return None
         if self.feedback_error or not self.state or not self.state.get("ready", False) or time.time()-float(self.state.get("timestamp", 0)) > 5:
             self.status_label.setText("ROS 2 仿真尚未就绪；收到新鲜的实际状态后再提交目标。")
             return None
@@ -477,7 +493,7 @@ class UR12ePanel:
         request = dict(target, schema_version=1, request_id=uuid.uuid4().hex, command=command, timestamp=time.time())
         if command == "execute":
             request["plan_request_id"] = self.planned_request["request_id"]
-        atomic_json(RUNTIME / "target.json", request)
+        atomic_json(CONTROL_RUNTIME / "target.json", request)
         self.last_request = request
         self.execute_button.setEnabled(False)
         for _, button in self.submit_buttons:
@@ -491,15 +507,14 @@ class UR12ePanel:
                 self.session_info["heartbeat"] = time.time()
                 atomic_json(RUNTIME / "slicer_session.json", self.session_info)
                 self.last_heartbeat = time.time()
-            path = RUNTIME / "state.json"
+            path = CONTROL_RUNTIME / "state.json"
             if path.exists():
                 stamp = path.stat().st_mtime_ns
                 if stamp != self.last_state_stamp:
                     state = json.loads(path.read_text(encoding="utf-8"))
                     if state.get("schema_version") != 1:
                         raise ValueError("Unsupported feedback schema version")
-                    if state.get("source") != "ros2_mock_hardware":
-                        raise ValueError("This simulation console accepts ros2_mock_hardware feedback only")
+                    feedback_source_label(state.get("source"))
                     self.feedback_error = None
                     self.state = state
                     self.last_state_stamp = stamp
@@ -563,7 +578,8 @@ class UR12ePanel:
         labels = {"idle":"就绪", "waiting_for_robot":"等待机器人状态", "planning":"规划中", "planned":"规划成功，等待执行", "executing":"仿真执行中", "succeeded":"仿真执行完成", "error":"操作失败"}
         status = state.get("status", "unknown")
         fixture = state.get("source") == "test_fixture"
-        self.status_label.setText(("界面测试数据（非 ROS 反馈）\n" if fixture else "") + labels.get(status, status) + "\n" + str(state.get("message", "")))
+        source_text = "界面测试数据（非 ROS 反馈）" if fixture else feedback_source_label(state.get("source"))
+        self.status_label.setText(source_text + "\n" + labels.get(status, status) + "\n" + str(state.get("message", "")))
         self.plan_label.setText("规划：{}；轨迹点 {}".format(plan.get("status", "—"), plan.get("point_count", "—")))
         if status == "planned" and state.get("target_pose"):
             self.planned_request = dict(state["target_pose"], request_id=plan.get("request_id") or state.get("request_id"))
@@ -578,7 +594,9 @@ class UR12ePanel:
         elif self.mesh_transforms and links:
             self.model_label.setText("显示：UR 官方模型 / " + ("界面测试位姿" if fixture else "实际 TF 反馈"))
         annotation = slicer.app.layoutManager().threeDWidget(0).threeDView().cornerAnnotation()
-        annotation.SetText(2, ("FRONTEND TEST FIXTURE - NOT ROS FEEDBACK\n" if fixture else "UR12e | SIMULATION\n") + "Target: gold / Tool: cyan\n" + labels.get(status, status))
+        source_annotation = "FRONTEND TEST FIXTURE - NOT ROS FEEDBACK" if fixture else (
+            "UR12e | URSIM SIMULATION" if state.get("source") == "ros2_ursim" else "UR12e | MOCK HARDWARE SIMULATION")
+        annotation.SetText(2, source_annotation + "\nTarget: gold / Tool: cyan\n" + labels.get(status, status))
 
     def set_robot_opacity(self, value):
         nodes = [node for _, node, _ in self.joint_models] + self.fallback_models + [self.tool] + list(self.robot_models.values())

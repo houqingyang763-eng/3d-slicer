@@ -81,7 +81,19 @@ def verify_reference() -> int:
     packages = sorted((REPO / "ur12e_slicer/reference_results").glob("*/provenance.json"))
     if not packages:
         raise ValueError("No provenance-recorded reference package found")
-    return sum(verify_reference_package(path) for path in packages)
+    checked = sum(verify_reference_package(path) for path in packages)
+    # Compact controller evidence has no synthetic navigation truth contract.
+    # Verify its recorded files without inventing the older mock-only layout.
+    for manifest_path in sorted((REPO / "ur12e_slicer/reference_results").glob("*/evidence_manifest.json")):
+        payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+        if payload.get("schema_version") != 1 or payload.get("kind") != "ursim_curated_evidence":
+            raise ValueError(f"Unknown curated evidence schema: {manifest_path.name}")
+        for item in payload["files"]:
+            published = validate_path(item["published_path"])
+            if sha256(published) != item["published_sha256"]:
+                raise ValueError(f"Reference checksum mismatch: {item['published_path']}")
+            checked += 1
+    return checked
 
 
 def main() -> int:

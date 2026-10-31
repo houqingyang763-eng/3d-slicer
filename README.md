@@ -1,10 +1,12 @@
 # 3D Slicer 影像导航与 UR12e 仿真
 
-本仓库包含基础配准练习，以及 UR12e、ROS 2 / MoveIt 2、3D Slicer 的仿真联动和导航误差评价。当前交付以 **Ubuntu 24.04、x86_64 桌面系统**为部署目标。更新日期：2026-10-24。
+本仓库包含基础配准练习，以及 UR12e、ROS 2 / MoveIt 2、3D Slicer 的仿真联动和导航误差评价。当前交付以 **Ubuntu 24.04、x86_64 桌面系统**为部署目标。更新日期：2026-10-31。
+
+**想让 GPT 解释近期工作，先读 [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md)**，再看 [三轮精选 JSON 与头模截图](ur12e_slicer/reference_results/2026-10-31-ursim/README.md)。最新复跑为 10 月 31 日：两轮基础控制均 5/5，Slicer 均 20/21（录帧 19 帧未达至少 20 帧），外层没有全通过。头部显示已在当前会话恢复；整套 URSim 头部导航评价尚未重跑。下面的 10 月 27 日全通过属于历史记录。
 
 **接手的 Codex 先读 [AGENTS.md](AGENTS.md)，操作者按 [Linux 部署与验收](ur12e_slicer/DEPLOYMENT_LINUX.md)执行。** 安装、启动、运行和检查均使用仓库入口，不需要原作者的用户名、Windows 路径、WSL 镜像或 Codex 私有运行时。
 
-## 本周交付
+## 已交付的 mock 主线
 
 1. Slicer 目标设置 → 文件桥 → MoveIt 规划与 UR12e mock 执行 → 关节、工具反馈。
 2. 公共 MR 头部影像、非单位坐标变换、合成配准点与独立检查点、模拟光学观测。
@@ -12,6 +14,12 @@
 4. 参考平台调研、跨平台评价协议和可读的 JSON / CSV / HTML 结果。
 
 这些成果验证软件、几何和仿真链路。光学观测与真值是合成的；尚未连接物理定位仪或真实机械臂，没有完成实物精度测试或 ASTM 标准符合性测试。
+
+## 可选 URSim 控制器路线（2026-10-27）
+
+新增独立 URSim 入口，保留下面的默认 mock 路线。URSim 使用官方固定 PolyScope 5.23.0 Docker 镜像、UR12e 和 External Control 1.0.5，通过 ROS 2 / MoveIt 与现有 Slicer 文件桥连接。安装、首次虚拟示教器配置、Windows / WSL 启动保持和结果检查见 [URSim 部署与基础控制](ur12e_slicer/URSIM_LINUX.md)。仅这条可选路线需要 Docker。
+
+本机完整验收轮 `20261027T044855Z_f8a2ba` 已通过：基础控制 5 项、Slicer 21 项，以及验收停止时本任务组件无活动残留；见 [本轮过程与结果](ur12e_slicer/URSIM_RESULTS_2026-10-27.md)。误差由虚拟模型关节 / TF 反馈计算，不是实物精度。共享文件读取和 WSL 时钟问题的失败记录保留；URSim 高频控制与基础原始日志已迁至原生 Linux cache，完成后核对 SHA256 归档至项目输出。照片中的组件版本与所选 URSim 包的准确对应仍未确定。
 
 ## Linux 快速入口
 
@@ -44,7 +52,11 @@ python3 ur12e_slicer/navigation_benchmark/run_offline.py \
 
 | 入口 | 用途 |
 |---|---|
+| [给 GPT 的项目上下文](PROJECT_CONTEXT.md) | 最近做了什么、最新通过 / 失败、头模显示范围、下一步 |
+| [URSim 三轮精选证据](ur12e_slicer/reference_results/2026-10-31-ursim/README.md) | 10-27 与 10-31 的数值、全部检查结果、来源哈希和实际截图 |
 | [Linux 部署与验收](ur12e_slicer/DEPLOYMENT_LINUX.md) | 环境、安装、启动、结果检查、故障处理 |
+| [URSim 部署与基础控制](ur12e_slicer/URSIM_LINUX.md) | 可选 Docker 虚拟控制柜、首次 GUI 配置、独立启停与验收 |
+| [URSim 本轮过程与结果](ur12e_slicer/URSIM_RESULTS_2026-10-27.md) | 2026-10-27 本机验证、调试问题、结果范围和退出限制 |
 | [Codex 交接约定](AGENTS.md) | 工作目录、命令、证据边界和维护规则 |
 | [目标、已知与任务清单](ur12e_slicer/README.md) | 阶段目标与已完成 / 待完成内容 |
 | [本轮导航成果](ur12e_slicer/NAVIGATION_BENCHMARK_RESULTS_2026-10-23.md) | 2026-10-23 参考运行、数据与限制 |
@@ -59,8 +71,8 @@ python3 ur12e_slicer/navigation_benchmark/run_offline.py \
 
 | 位置 | 内容 |
 |---|---|
-| `ur12e_slicer/bootstrap/` | Linux 环境、资源恢复、mock 后台生命周期 |
-| `ur12e_slicer/ros2_ws/src/ur12e_slicer_bridge/` | ROS 2 Python 包和固定 mock launch |
+| `ur12e_slicer/bootstrap/` | Linux 环境、资源恢复、mock / URSim 生命周期 |
+| `ur12e_slicer/ros2_ws/src/ur12e_slicer_bridge/` | ROS 2 Python 包和独立固定 mock / 本机 URSim launch |
 | `ur12e_slicer/slicer/` | Slicer 面板、任务文件桥、头部影像结果查看器 |
 | `ur12e_slicer/navigation_benchmark/` | 不依赖 ROS 的坐标链、统计、执行前检查和离线试验 |
 | `ur12e_slicer/validation/` | ROS 实际执行检查、场景核查、环境与结果采集 |

@@ -1,0 +1,17 @@
+{
+  "head_nodes_before": [
+    "NAVBENCH_public_MR_head_display",
+    "NAVBENCH_public_MR_head_storage",
+    "NAVBENCH_public_MR_head",
+    "NAVBENCH_ImageRAS_to_robot_base_mm_SIMULATED_TRUTH",
+    "NAVBENCH_MR_intensity_surface_NOT_validated_segmentation",
+    "NAVBENCH_MR_intensity_surface_NOT_validated_segmentation_display"
+  ],
+  "head_surface": {
+    "reused_existing_head": true
+  },
+  "robot_feedback_source": "ros2_ursim",
+  "robot_commands_sent": false,
+  "head_transform_source": "existing navigation example simulated transform; display only",
+  "head_screenshot": "ur12e_slicer/output/demo_2026-10-31/head_and_ursim_closeup.png"
+}

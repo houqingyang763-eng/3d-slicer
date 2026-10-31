@@ -1,0 +1,39 @@
+{
+  "volume_dimensions_voxels": [
+    256,
+    256,
+    130
+  ],
+  "volume_spacing_mm": [
+    1.0,
+    1.0,
+    1.2999954223632812
+  ],
+  "head_surface_RAS_extents_mm": [
+    167.69969177246094,
+    233.23699951171875,
+    230.44070434570312
+  ],
+  "head_parent_scale_singular_values": [
+    1.0,
+    1.0,
+    0.9999999999999999
+  ],
+  "tool_length_mm": 120.0,
+  "tool_tip_image_RAS_mm": [
+    1.8320709050317419,
+    2.2114303371483857,
+    39.29134880555716
+  ],
+  "needle_surface_intersections": 5,
+  "distance_from_intersections_to_tip_mm": [
+    49.901781496357856,
+    42.26303228985531,
+    39.460218586347466,
+    37.38225191099732,
+    32.36900580897181
+  ],
+  "feedback_source": "ros2_ursim",
+  "upper_arm_joint_origin_distance_mm": 612.7000000000002,
+  "forearm_joint_origin_distance_mm": 597.4927823831852
+}

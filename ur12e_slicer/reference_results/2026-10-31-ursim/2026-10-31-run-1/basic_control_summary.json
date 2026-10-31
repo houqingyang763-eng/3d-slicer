@@ -1,0 +1,303 @@
+{
+  "schema_version": 1,
+  "run_id": "20261031_164106_a2183f",
+  "started_at": 1793436066.9762378,
+  "mode": "ursim_virtual_controller_basic_control",
+  "passed": true,
+  "limits": {
+    "position_error_m": 0.002,
+    "orientation_error_rad": 0.03,
+    "max_feedback_age_s": 1.0
+  },
+  "cases": [
+    {
+      "name": "01_bent_elbow_home",
+      "kind": "FollowJointTrajectory",
+      "passed": true,
+      "action": "/scaled_joint_trajectory_controller/follow_joint_trajectory",
+      "joint_names": [
+        "shoulder_pan_joint",
+        "shoulder_lift_joint",
+        "elbow_joint",
+        "wrist_1_joint",
+        "wrist_2_joint",
+        "wrist_3_joint"
+      ],
+      "from_rad": [
+        -1.6006999999999998,
+        -1.7271,
+        -2.2029999999999994,
+        -0.8079999999999998,
+        1.5951,
+        -0.030999999999999694
+      ],
+      "target_rad": [
+        0.0,
+        -1.3,
+        1.6,
+        -1.9,
+        -1.57,
+        0.0
+      ],
+      "duration_s": 15.0,
+      "goal_tolerance_rad": 0.02,
+      "accepted": true,
+      "action_status": 4,
+      "controller_error_code": 0,
+      "controller_error_string": "Goal successfully reached!",
+      "actual_joint_state": {
+        "received_at": 1793436083.658056,
+        "received_monotonic": 115.450558999,
+        "stamp_s": 1793436083.6536589,
+        "joint_names": [
+          "shoulder_pan_joint",
+          "shoulder_lift_joint",
+          "elbow_joint",
+          "wrist_1_joint",
+          "wrist_2_joint",
+          "wrist_3_joint"
+        ],
+        "joint_positions_rad": [
+          -2.2059408124164293e-05,
+          -1.3000058606216793,
+          1.5999475523523397,
+          -1.8999850286281337,
+          -1.569956360647133,
+          -3.5345222570981605e-07
+        ]
+      },
+      "absolute_joint_errors_rad": [
+        2.2059408124164293e-05,
+        5.860621679287803e-06,
+        5.24476476604363e-05,
+        1.4971371866234762e-05,
+        4.363935286710863e-05,
+        3.5345222570981605e-07
+      ],
+      "max_joint_error_rad": 5.24476476604363e-05,
+      "observed_joint_change_rad": 3.802947552352339
+    },
+    {
+      "name": "02_joint1_plus_0p05",
+      "kind": "FollowJointTrajectory",
+      "passed": true,
+      "action": "/scaled_joint_trajectory_controller/follow_joint_trajectory",
+      "joint_names": [
+        "shoulder_pan_joint",
+        "shoulder_lift_joint",
+        "elbow_joint",
+        "wrist_1_joint",
+        "wrist_2_joint",
+        "wrist_3_joint"
+      ],
+      "from_rad": [
+        -1.1830684490732324e-05,
+        -1.300003138764926,
+        1.5999717861648994,
+        -1.8999919607004472,
+        -1.569976523511933,
+        -1.516306182836047e-07
+      ],
+      "target_rad": [
+        0.05,
+        -1.3,
+        1.6,
+        -1.9,
+        -1.57,
+        0.0
+      ],
+      "duration_s": 3.0,
+      "goal_tolerance_rad": 0.02,
+      "accepted": true,
+      "action_status": 4,
+      "controller_error_code": 0,
+      "controller_error_string": "Goal successfully reached!",
+      "actual_joint_state": {
+        "received_at": 1793436086.6781433,
+        "received_monotonic": 118.470646471,
+        "stamp_s": 1793436086.6753857,
+        "joint_names": [
+          "shoulder_pan_joint",
+          "shoulder_lift_joint",
+          "elbow_joint",
+          "wrist_1_joint",
+          "wrist_2_joint",
+          "wrist_3_joint"
+        ],
+        "joint_positions_rad": [
+          0.04998339267948289,
+          -1.3000000000000016,
+          1.5999999990503937,
+          -1.8999999999993165,
+          -1.5699999998256668,
+          2.6645352591003757e-15
+        ]
+      },
+      "absolute_joint_errors_rad": [
+        1.6607320517114665e-05,
+        1.5543122344752192e-15,
+        9.496063935188204e-10,
+        6.834532939592464e-13,
+        1.7433321453097506e-10,
+        2.6645352591003757e-15
+      ],
+      "max_joint_error_rad": 1.6607320517114665e-05,
+      "observed_joint_change_rad": 0.04999522336397362
+    },
+    {
+      "name": "03_return_home",
+      "kind": "FollowJointTrajectory",
+      "passed": true,
+      "action": "/scaled_joint_trajectory_controller/follow_joint_trajectory",
+      "joint_names": [
+        "shoulder_pan_joint",
+        "shoulder_lift_joint",
+        "elbow_joint",
+        "wrist_1_joint",
+        "wrist_2_joint",
+        "wrist_3_joint"
+      ],
+      "from_rad": [
+        0.04998559972975134,
+        -1.3000000000000016,
+        1.599999999142054,
+        -1.8999999999994461,
+        -1.569999999868486,
+        2.6645352591003757e-15
+      ],
+      "target_rad": [
+        0.0,
+        -1.3,
+        1.6,
+        -1.9,
+        -1.57,
+        0.0
+      ],
+      "duration_s": 3.0,
+      "goal_tolerance_rad": 0.02,
+      "accepted": true,
+      "action_status": 4,
+      "controller_error_code": 0,
+      "controller_error_string": "Goal successfully reached!",
+      "actual_joint_state": {
+        "received_at": 1793436089.7417057,
+        "received_monotonic": 121.534208976,
+        "stamp_s": 1793436089.7393596,
+        "joint_names": [
+          "shoulder_pan_joint",
+          "shoulder_lift_joint",
+          "elbow_joint",
+          "wrist_1_joint",
+          "wrist_2_joint",
+          "wrist_3_joint"
+        ],
+        "joint_positions_rad": [
+          -4.211525907571456e-06,
+          -1.3000000000000016,
+          1.6000000000000005,
+          -1.8999999999999844,
+          -1.569999999999986,
+          2.6645352591003757e-15
+        ]
+      },
+      "absolute_joint_errors_rad": [
+        4.211525907571456e-06,
+        1.5543122344752192e-15,
+        4.440892098500626e-16,
+        1.554312234475219e-14,
+        1.3988810110276972e-14,
+        2.6645352591003757e-15
+      ],
+      "max_joint_error_rad": 4.211525907571456e-06,
+      "observed_joint_change_rad": 0.04998981125565891
+    },
+    {
+      "name": "04_tip_plus_z10mm_plan",
+      "request_id": "gate-20261031_164106_a2183f-04_tip_plus_z10mm_plan-d8d589",
+      "command": "plan",
+      "status": "planned",
+      "message": "Trajectory planned; no execution requested",
+      "plan": {
+        "request_id": "gate-20261031_164106_a2183f-04_tip_plus_z10mm_plan-d8d589",
+        "status": "succeeded",
+        "point_count": 7,
+        "planning_time_s": 0.029464389,
+        "moveit_error_code": 1,
+        "preview_message": "Needle-tip samples computed by MoveIt FK from the actual planned joint trajectory"
+      },
+      "execution": {
+        "status": "none"
+      },
+      "observed_statuses": [
+        "planning",
+        "planned"
+      ],
+      "max_joint_change_rad": 8.553158181712206e-13,
+      "passed": true
+    },
+    {
+      "name": "05_tip_plus_z10mm_execute",
+      "request_id": "gate-20261031_164106_a2183f-05_tip_plus_z10mm_execute-3c353e",
+      "command": "execute",
+      "status": "succeeded",
+      "message": "MoveIt reports successful URSim virtual controller execution; inspect separately measured pose errors",
+      "plan": {
+        "request_id": "gate-20261031_164106_a2183f-04_tip_plus_z10mm_plan-d8d589",
+        "status": "succeeded",
+        "point_count": 7,
+        "planning_time_s": 0.029464389,
+        "moveit_error_code": 1,
+        "preview_message": "Needle-tip samples computed by MoveIt FK from the actual planned joint trajectory"
+      },
+      "execution": {
+        "status": "succeeded",
+        "moveit_error_code": 1,
+        "action_status": 4
+      },
+      "observed_statuses": [
+        "executing",
+        "succeeded"
+      ],
+      "independent_position_error_m": 0.0015390957124555942,
+      "independent_orientation_error_rad": 0.026346845001435543,
+      "final_joint_change_rad": 0.032691000176242824,
+      "observed_joint_change_rad": 0.032721600762988245,
+      "fk_preview_points": 7,
+      "passed": true
+    }
+  ],
+  "source": "ros2_ursim",
+  "boundary": "URSim virtual controller, not mock hardware, physical robot, optical tracking or ASTM performance.",
+  "robot_ip": "192.168.62.2",
+  "container": "ur12e-slicer-ursim-264437902132",
+  "network": "ur12e-slicer-ursim-264437902132",
+  "joint_tolerance_rad": 0.02,
+  "current_step": "completed",
+  "project_key": "264437902132",
+  "final_actual_joint_state": {
+    "received_at": 1793436091.6798215,
+    "received_monotonic": 123.472324701,
+    "stamp_s": 1793436091.6713612,
+    "joint_names": [
+      "shoulder_pan_joint",
+      "shoulder_lift_joint",
+      "elbow_joint",
+      "wrist_1_joint",
+      "wrist_2_joint",
+      "wrist_3_joint"
+    ],
+    "joint_positions_rad": [
+      -0.005065999999308346,
+      -1.300063999999992,
+      1.5794070000028215,
+      -1.8673090000044823,
+      -1.5545640000021175,
+      0.01260199999826946
+    ]
+  },
+  "bridge_to_actual_joint_difference_rad": 1.8074075569529668e-10,
+  "joint_messages_received": 10398,
+  "action_feedback_messages_received": 418,
+  "finished_at": 1793436091.6842906,
+  "elapsed_s": 24.70805287361145
+}

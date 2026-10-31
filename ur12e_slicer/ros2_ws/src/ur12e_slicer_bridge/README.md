@@ -1,6 +1,6 @@
 # UR12e Slicer ROS 2 backend
 
-本包在 Ubuntu 24.04 / ROS 2 Jazzy 中运行，使用 UR 官方驱动的 mock hardware、MoveIt 2 现成规划服务和执行 action。Linux Slicer 与 ROS 通过同一项目目录内的 JSON 文件桥接；Windows + WSL 是保留的历史兼容环境。完整约定见上层 `ur12e_slicer/protocol.md`。
+本包在 Ubuntu 24.04 / ROS 2 Jazzy 中运行，使用 UR 官方驱动、MoveIt 2 现成规划服务和执行 action。默认后端为 mock hardware；可选后端为本机固定 Docker 端点的 URSim 虚拟控制柜。Linux Slicer 与 ROS 通过入口指定的控制目录进行 JSON 文件桥接；mock 为项目 `runtime/`，URSim 为原生 Linux cache 的 `ursim/bridge/`。完整约定见上层 `ur12e_slicer/protocol.md`。两种后端都未接入实物。
 
 ## 构建与启动
 
@@ -18,6 +18,8 @@ bash ur12e_slicer/status_linux.sh
 
 `mock.launch.py` 固定 `ur_type=ur12e`、`use_mock_hardware=true`、`robot_ip=127.0.0.1`，关闭 dashboard client 和工具通信，不暴露切换实物的参数。普通 `joint_trajectory_controller` 被激活，MoveIt 执行 goal 也明确选择它；不能只改驱动控制器而让 MoveIt 继续使用默认 scaled controller。
 
+`ursim.launch.py` 由 [URSim 专用入口](../../../URSIM_LINUX.md)启动，固定 `ur_type=ur12e`、`use_mock_hardware=false`、`robot_ip=192.168.62.2`、回连 `192.168.62.1`，只连接已核验身份的本机虚拟控制柜。它激活 `scaled_joint_trajectory_controller`，并将桥的 `controller_name` 同步设为该名称、`feedback_source` 设为 `ros2_ursim`。mock 仍使用 ordinary JTC 与 `ros2_mock_hardware`。此处 `false` 不代表开放真机入口；不接受外部 IP 参数。首次配置 External Control 1.0.5 后才运行全栈。
+
 ROS mock hardware 不使用 Gazebo 或 `/clock`，因此 `use_sim_time=false`。官方 MoveIt launch 本身等待机器人描述；桥接节点等待关节、TF 与服务，避免用固定 sleep 猜测系统就绪。命令准备最多等待 20 s；规划响应最多等待规划预算加 15 s；执行默认 120 s 超时并请求取消。错误写入 `state.message` 与日志。
 
 `config/bridge.yaml` 是针尖偏移、规划组/算法、误差容差和速度倍率的集中机器人侧配置。针是沿 tool0 +Z 的简化圆柱，当前不包含真实工具外形、组织模型或真实标定。RRTConnect 为首轮默认，不声称算法最优。
@@ -34,6 +36,8 @@ python3 -m compileall -q ur12e_slicer/ros2_ws/src/ur12e_slicer_bridge
 ```
 
 这些检查仅覆盖 JSON 契约、针尖方向换算、四元数误差与原子写入。2026-10-21 至 23 的 Windows + WSL 参考运行已完成真实 ROS 规划和 mock 执行，见 [本轮成果](../../../NAVIGATION_BENCHMARK_RESULTS_2026-10-23.md)。接收方仍需执行本机验收：`bash ur12e_slicer/run_navigation_linux.sh --no-slicer` 可验证 ROS 与导航链；无该实际返回记录时不能仅凭协议测试或旧报告宣称本机闭环通过。
+
+URSim 基础运行采用 `bash ur12e_slicer/run_ursim_linux.sh --no-slicer`，结果来源必须为 `ros2_ursim`；它检查控制柜身份、实际 FollowJointTrajectory、MoveIt 规划 / 执行和回传关节。带 Slicer 验收的运行去掉 `--no-slicer`。2026-10-27 完整轮 `20261027T044855Z_f8a2ba` 已通过基础控制 5 项、Slicer 21 项和验收停止无残留检查，见 [本轮记录](../../../URSIM_RESULTS_2026-10-27.md)。默认 mock 的历史通过记录不用于代替 URSim 本轮验收。
 
 ## 官方源码核对（2026-10-21）
 

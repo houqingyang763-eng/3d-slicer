@@ -1,0 +1,1091 @@
+{
+  "evidence_type": "real_slicer_ros2_moveit_ursim_virtual_controller_loop",
+  "source": "ros2_ursim",
+  "expected_source": "ros2_ursim",
+  "simulation_only": true,
+  "actual_robot_connected": false,
+  "scope": "URSim virtual-controller integration only; simulated coordinate relationship and simplified tool. No physical robot, optical tracking, physical accuracy, hardware safety or ASTM conformity result.",
+  "slicer_version": "5.12.4",
+  "output_directory": "ur12e_slicer/output/ursim_slicer_acceptance/run_20261031_164132_751079",
+  "checks": {
+    "genuine_ros2_ursim_feedback": true,
+    "slicer_target_roundtrip_unchanged": true,
+    "moveit_plan_success": true,
+    "real_fk_preview_displayed": true,
+    "cached_plan_linked_to_execution": true,
+    "final_backend_reply_matches_own_execution": true,
+    "final_backend_plan_matches_own_plan": true,
+    "final_backend_target_matches_slicer_command": true,
+    "moveit_execution_success": true,
+    "observed_joint_motion": true,
+    "position_error_at_most_2_mm": true,
+    "orientation_error_at_most_0_03_rad": true,
+    "feedback_hold_at_least_4_seconds": true,
+    "feedback_hold_contains_live_updates": true,
+    "feedback_hold_position_at_most_2_mm": true,
+    "feedback_hold_orientation_at_most_0_03_rad": true,
+    "slicer_tcp_transform_matches_feedback": true,
+    "official_robot_meshes_displayed": true,
+    "feedback_is_fresh": true,
+    "scene_saved": true,
+    "recorded_moving_demonstration": false
+  },
+  "initial_feedback": {
+    "schema_version": 1,
+    "source": "ros2_ursim",
+    "request_id": "gate-20261031_164106_a2183f-05_tip_plus_z10mm_execute-3c353e",
+    "status": "succeeded",
+    "message": "MoveIt reports successful URSim virtual controller execution; inspect separately measured pose errors",
+    "plan": {
+      "status": "succeeded",
+      "request_id": "gate-20261031_164106_a2183f-04_tip_plus_z10mm_plan-d8d589",
+      "point_count": 7,
+      "tcp_path_m": [
+        [
+          -0.8366251437444276,
+          -0.17433837109747716,
+          0.36921802796948683
+        ],
+        [
+          -0.8367415406481217,
+          -0.1742934357184059,
+          0.36996549209283497
+        ],
+        [
+          -0.837082405141986,
+          -0.17415825316439873,
+          0.3722135537575696
+        ],
+        [
+          -0.8375816181301542,
+          -0.1739495978047684,
+          0.37568267372926034
+        ],
+        [
+          -0.837913851982727,
+          -0.17380272236490868,
+          0.3781249298351799
+        ],
+        [
+          -0.8380364573309262,
+          -0.17374670751564425,
+          0.3790565666626607
+        ],
+        [
+          -0.8380377441217894,
+          -0.17374611412516788,
+          0.3790664367743515
+        ]
+      ],
+      "planning_time_s": 0.029464389,
+      "moveit_error_code": 1,
+      "joint_trajectory": {
+        "joint_names": [
+          "shoulder_pan_joint",
+          "shoulder_lift_joint",
+          "elbow_joint",
+          "wrist_1_joint",
+          "wrist_2_joint",
+          "wrist_3_joint"
+        ],
+        "points": [
+          {
+            "positions_rad": [
+              -4.085620730620576e-14,
+              -1.3000000000000016,
+              1.6000000000000005,
+              -1.8999999999999844,
+              -1.569999999999986,
+              2.6645352591003757e-15
+            ],
+            "time_from_start_s": 0.0
+          },
+          {
+            "positions_rad": [
+              -0.0003874329844405887,
+              -1.300004902305666,
+              1.598425172121628,
+              -1.8974999999999844,
+              -1.568819559972685,
+              0.0009637072969367193
+            ],
+            "time_from_start_s": 0.1
+          },
+          {
+            "positions_rad": [
+              -0.0015497319376397876,
+              -1.3000196092226588,
+              1.5937006884865104,
+              -1.8899999999999844,
+              -1.565278239890783,
+              0.0038548291877388875
+            ],
+            "time_from_start_s": 0.2
+          },
+          {
+            "positions_rad": [
+              -0.0033348369489343034,
+              -1.3000421966913578,
+              1.5864446384060953,
+              -1.8784812013743313,
+              -1.5598393395051273,
+              0.0082951293027212
+            ],
+            "time_from_start_s": 0.30000000000000004
+          },
+          {
+            "positions_rad": [
+              -0.0045854859345248215,
+              -1.3000580215277888,
+              1.581361031775086,
+              -1.8704111025704815,
+              -1.5560288324441924,
+              0.011406014544420792
+            ],
+            "time_from_start_s": 0.4
+          },
+          {
+            "positions_rad": [
+              -0.005061268951315872,
+              -1.3000640417528913,
+              1.5794270809008213,
+              -1.8673410037666316,
+              -1.554579205437859,
+              0.012589485192252269
+            ],
+            "time_from_start_s": 0.5
+          },
+          {
+            "positions_rad": [
+              -0.005066305776094512,
+              -1.3000641054853446,
+              1.579406607341782,
+              -1.8673085025020164,
+              -1.5545638591203834,
+              0.012602013874599935
+            ],
+            "time_from_start_s": 0.511401976
+          }
+        ]
+      },
+      "preview_message": "Needle-tip samples computed by MoveIt FK from the actual planned joint trajectory"
+    },
+    "execution": {
+      "status": "succeeded",
+      "moveit_error_code": 1,
+      "action_status": 4
+    },
+    "tool": {
+      "parent_frame": "tool0",
+      "tip_offset_m": [
+        0.0,
+        0.0,
+        0.12
+      ]
+    },
+    "timestamp": 1793436092.7630265,
+    "ready": true,
+    "joint_names": [
+      "shoulder_pan_joint",
+      "shoulder_lift_joint",
+      "elbow_joint",
+      "wrist_1_joint",
+      "wrist_2_joint",
+      "wrist_3_joint"
+    ],
+    "joint_positions_rad": [
+      -0.005065999999992243,
+      -1.300063999999992,
+      1.5794069999999998,
+      -1.8673089999999988,
+      -1.554564,
+      0.012602000000001112
+    ],
+    "joint_state_age_s": 0.000895924000005266,
+    "tf_age_s": 0.02937006950378418,
+    "link_transforms": {
+      "base_link": {
+        "position_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "orientation_xyzw": [
+          0.0,
+          0.0,
+          1.0,
+          -6.123233995736766e-17
+        ]
+      },
+      "shoulder_link": {
+        "position_m": [
+          0.0,
+          0.0,
+          0.1807
+        ],
+        "orientation_xyzw": [
+          0.0,
+          0.0,
+          -0.0025329972913380834,
+          0.9999967919572152
+        ]
+      },
+      "upper_arm_link": {
+        "position_m": [
+          0.0,
+          0.0,
+          0.1807
+        ],
+        "orientation_xyzw": [
+          0.5639847472287915,
+          0.42652222098716974,
+          -0.4293738822100825,
+          0.5618167576472692
+        ]
+      },
+      "forearm_link": {
+        "position_m": [
+          -0.16385664548872947,
+          0.0008301047463346461,
+          0.7710825883740907
+        ],
+        "orientation_xyzw": [
+          0.6999692224497492,
+          -0.10021520705783867,
+          0.09666789214826525,
+          0.7004679282630001
+        ]
+      },
+      "wrist_1_link": {
+        "position_m": [
+          -0.7141267267590666,
+          -0.17053443788917913,
+          0.613492435807194
+        ],
+        "orientation_xyzw": [
+          -0.496964944066606,
+          -0.503016743728702,
+          0.5055279024762124,
+          -0.49441029491248406
+        ]
+      },
+      "wrist_2_link": {
+        "position_m": [
+          -0.8339575237355126,
+          -0.16992736985419207,
+          0.6155501200372584
+        ],
+        "orientation_xyzw": [
+          -0.5009396788265915,
+          -0.49038252759112727,
+          0.5070815103946176,
+          0.5014506522344563
+        ]
+      },
+      "wrist_3_link": {
+        "position_m": [
+          -0.8359678453026267,
+          -0.17180900433793922,
+          0.4990326511372417
+        ],
+        "orientation_xyzw": [
+          0.7132270814865682,
+          0.7008334835577318,
+          -0.011810006120458847,
+          -0.0002869040282623303
+        ]
+      },
+      "tool0": {
+        "position_m": [
+          -0.8359678453026267,
+          -0.17180900433793922,
+          0.4990326511372417
+        ],
+        "orientation_xyzw": [
+          0.7132270814865683,
+          0.7008334835577317,
+          -0.011810006120458795,
+          -0.00028690402826230107
+        ]
+      },
+      "needle_tip": {
+        "position_m": [
+          -0.8380376744579564,
+          -0.17374633713973803,
+          0.3790661451912785
+        ],
+        "orientation_xyzw": [
+          0.7132270814865683,
+          0.7008334835577317,
+          -0.011810006120458795,
+          -0.00028690402826230107
+        ]
+      }
+    },
+    "tcp_pose": {
+      "frame_id": "base",
+      "position_m": [
+        -0.8380376744579564,
+        -0.17374633713973803,
+        0.3790661451912785
+      ],
+      "orientation_xyzw": [
+        0.7132270814865683,
+        0.7008334835577317,
+        -0.011810006120458795,
+        -0.00028690402826230107
+      ]
+    },
+    "target_pose": {
+      "frame_id": "base",
+      "position_m": [
+        -0.8366251437441853,
+        -0.17433837109864098,
+        0.3792180279694866
+      ],
+      "orientation_xyzw": [
+        0.7070272332372367,
+        0.7070354549230471,
+        -0.010606203830787343,
+        -0.010043175939786328
+      ]
+    },
+    "position_error_m": 0.00153909570987553,
+    "orientation_error_rad": 0.0263468448457368,
+    "feedback_valid": true,
+    "needle_collision_ready": true,
+    "needle_collision_message": "Simplified needle attached"
+  },
+  "started_at": 1793436092.7726548,
+  "target_from_slicer_controls": {
+    "frame_id": "base",
+    "position_m": [
+      -0.838,
+      -0.1737,
+      0.3541
+    ],
+    "orientation_xyzw": [
+      0.6946597975523858,
+      0.7192426147540477,
+      -0.011732720948755803,
+      -0.00041236558708695353
+    ]
+  },
+  "target_control_values_mm_deg": [
+    -838.0,
+    -173.7,
+    354.1,
+    -179.0,
+    0.9,
+    92.0
+  ],
+  "plan_request": {
+    "frame_id": "base",
+    "position_m": [
+      -0.838,
+      -0.1737,
+      0.3541
+    ],
+    "orientation_xyzw": [
+      0.6946597975523858,
+      0.7192426147540477,
+      -0.011732720948755803,
+      -0.00041236558708695353
+    ],
+    "schema_version": 1,
+    "request_id": "65d34bfe225d40ab80124c4a037ae61f",
+    "command": "plan",
+    "timestamp": 1793436095.8299448
+  },
+  "planned_feedback": {
+    "schema_version": 1,
+    "source": "ros2_ursim",
+    "request_id": "65d34bfe225d40ab80124c4a037ae61f",
+    "status": "planned",
+    "message": "Trajectory planned; no execution requested",
+    "plan": {
+      "status": "succeeded",
+      "request_id": "65d34bfe225d40ab80124c4a037ae61f",
+      "point_count": 7,
+      "tcp_path_m": [
+        [
+          -0.8380376744579563,
+          -0.17374633713973808,
+          0.37906614519127857
+        ],
+        [
+          -0.8380741415348336,
+          -0.17381497357185557,
+          0.3773239377260219
+        ],
+        [
+          -0.8381564132877163,
+          -0.17402099715966152,
+          0.37210246530017216
+        ],
+        [
+          -0.838203521711778,
+          -0.17435491035214873,
+          0.36366722190671064
+        ],
+        [
+          -0.8381640187034641,
+          -0.1746254053288243,
+          0.3568611041760123
+        ],
+        [
+          -0.838119311238921,
+          -0.1747583212473538,
+          0.35352622080454427
+        ],
+        [
+          -0.8381132882451385,
+          -0.1747731644528776,
+          0.35315420557938176
+        ]
+      ],
+      "planning_time_s": 0.022135520000000002,
+      "moveit_error_code": 1,
+      "joint_trajectory": {
+        "joint_names": [
+          "shoulder_pan_joint",
+          "shoulder_lift_joint",
+          "elbow_joint",
+          "wrist_1_joint",
+          "wrist_2_joint",
+          "wrist_3_joint"
+        ],
+        "points": [
+          {
+            "positions_rad": [
+              -0.005065999999992243,
+              -1.300063999999992,
+              1.5794069999999998,
+              -1.8673089999999988,
+              -1.554564,
+              0.012602000000001112
+            ],
+            "time_from_start_s": 0.0
+          },
+          {
+            "positions_rad": [
+              -0.005130864479764238,
+              -1.2991352300423282,
+              1.5813034288473395,
+              -1.8698089999999987,
+              -1.554043433115023,
+              0.010180472903063866
+            ],
+            "time_from_start_s": 0.1
+          },
+          {
+            "positions_rad": [
+              -0.005325457919080219,
+              -1.2963489201693372,
+              1.5869927153893588,
+              -1.8773089999999986,
+              -1.5524817324600921,
+              0.0029158916122521087
+            ],
+            "time_from_start_s": 0.2
+          },
+          {
+            "positions_rad": [
+              -0.005640458356241393,
+              -1.291838548025529,
+              1.5962023154363636,
+              -1.8894497139264974,
+              -1.549953711008047,
+              -0.008843735487419811
+            ],
+            "time_from_start_s": 0.30000000000000004
+          },
+          {
+            "positions_rad": [
+              -0.005895229959307352,
+              -1.2881905697818858,
+              1.6036510180118817,
+              -1.8992690944241715,
+              -1.5479090532808157,
+              -0.018354893867521913
+            ],
+            "time_from_start_s": 0.4
+          },
+          {
+            "positions_rad": [
+              -0.006020272602829324,
+              -1.2864001314535698,
+              1.6073068628927198,
+              -1.9040884749218459,
+              -1.5469055293235388,
+              -0.023022998053749494
+            ],
+            "time_from_start_s": 0.5
+          },
+          {
+            "positions_rad": [
+              -0.006034230208768078,
+              -1.2862002777721344,
+              1.6077149384162592,
+              -1.9046264275111449,
+              -1.546793513202068,
+              -0.023544064762491664
+            ],
+            "time_from_start_s": 0.546387609
+          }
+        ]
+      },
+      "preview_message": "Needle-tip samples computed by MoveIt FK from the actual planned joint trajectory"
+    },
+    "execution": {
+      "status": "none"
+    },
+    "tool": {
+      "parent_frame": "tool0",
+      "tip_offset_m": [
+        0.0,
+        0.0,
+        0.12
+      ]
+    },
+    "timestamp": 1793436096.2630365,
+    "ready": true,
+    "joint_names": [
+      "shoulder_pan_joint",
+      "shoulder_lift_joint",
+      "elbow_joint",
+      "wrist_1_joint",
+      "wrist_2_joint",
+      "wrist_3_joint"
+    ],
+    "joint_positions_rad": [
+      -0.005065999999992243,
+      -1.300063999999992,
+      1.5794069999999998,
+      -1.8673089999999988,
+      -1.554564,
+      0.012602000000001112
+    ],
+    "joint_state_age_s": 0.0010367419999965932,
+    "tf_age_s": 0.04536604881286621,
+    "link_transforms": {
+      "base_link": {
+        "position_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "orientation_xyzw": [
+          0.0,
+          0.0,
+          1.0,
+          -6.123233995736766e-17
+        ]
+      },
+      "shoulder_link": {
+        "position_m": [
+          0.0,
+          0.0,
+          0.1807
+        ],
+        "orientation_xyzw": [
+          0.0,
+          0.0,
+          -0.0025329972913380834,
+          0.9999967919572152
+        ]
+      },
+      "upper_arm_link": {
+        "position_m": [
+          0.0,
+          0.0,
+          0.1807
+        ],
+        "orientation_xyzw": [
+          0.5639847472287915,
+          0.42652222098716974,
+          -0.4293738822100825,
+          0.5618167576472692
+        ]
+      },
+      "forearm_link": {
+        "position_m": [
+          -0.16385664548872947,
+          0.0008301047463346461,
+          0.7710825883740907
+        ],
+        "orientation_xyzw": [
+          0.6999692224497492,
+          -0.10021520705783867,
+          0.09666789214826525,
+          0.7004679282630001
+        ]
+      },
+      "wrist_1_link": {
+        "position_m": [
+          -0.7141267267590666,
+          -0.17053443788917913,
+          0.613492435807194
+        ],
+        "orientation_xyzw": [
+          -0.496964944066606,
+          -0.503016743728702,
+          0.5055279024762124,
+          -0.49441029491248406
+        ]
+      },
+      "wrist_2_link": {
+        "position_m": [
+          -0.8339575237355126,
+          -0.16992736985419207,
+          0.6155501200372584
+        ],
+        "orientation_xyzw": [
+          -0.5009396788265915,
+          -0.49038252759112727,
+          0.5070815103946176,
+          0.5014506522344563
+        ]
+      },
+      "wrist_3_link": {
+        "position_m": [
+          -0.8359678453026267,
+          -0.17180900433793922,
+          0.4990326511372417
+        ],
+        "orientation_xyzw": [
+          0.7132270814865682,
+          0.7008334835577318,
+          -0.011810006120458847,
+          -0.0002869040282623303
+        ]
+      },
+      "tool0": {
+        "position_m": [
+          -0.8359678453026267,
+          -0.17180900433793922,
+          0.4990326511372417
+        ],
+        "orientation_xyzw": [
+          0.7132270814865683,
+          0.7008334835577317,
+          -0.011810006120458795,
+          -0.00028690402826230107
+        ]
+      },
+      "needle_tip": {
+        "position_m": [
+          -0.8380376744579564,
+          -0.17374633713973803,
+          0.3790661451912785
+        ],
+        "orientation_xyzw": [
+          0.7132270814865683,
+          0.7008334835577317,
+          -0.011810006120458795,
+          -0.00028690402826230107
+        ]
+      }
+    },
+    "tcp_pose": {
+      "frame_id": "base",
+      "position_m": [
+        -0.8380376744579564,
+        -0.17374633713973803,
+        0.3790661451912785
+      ],
+      "orientation_xyzw": [
+        0.7132270814865683,
+        0.7008334835577317,
+        -0.011810006120458795,
+        -0.00028690402826230107
+      ]
+    },
+    "target_pose": {
+      "frame_id": "base",
+      "position_m": [
+        -0.838,
+        -0.1737,
+        0.3541
+      ],
+      "orientation_xyzw": [
+        0.6946597975523858,
+        0.7192426147540477,
+        -0.011732720948755803,
+        -0.00041236558708695353
+      ]
+    },
+    "position_error_m": 0.024966216617807742,
+    "orientation_error_rad": 0.052295346282755395,
+    "feedback_valid": true,
+    "needle_collision_ready": true,
+    "needle_collision_message": "Simplified needle attached"
+  },
+  "execute_request": {
+    "frame_id": "base",
+    "position_m": [
+      -0.838,
+      -0.1737,
+      0.3541
+    ],
+    "orientation_xyzw": [
+      0.6946597975523858,
+      0.7192426147540477,
+      -0.011732720948755803,
+      -0.00041236558708695353
+    ],
+    "schema_version": 1,
+    "request_id": "b65375064005433e82367c174aba64cf",
+    "command": "execute",
+    "timestamp": 1793436100.9137883,
+    "plan_request_id": "65d34bfe225d40ab80124c4a037ae61f"
+  },
+  "recording_directory": "ur12e_slicer/output/ursim_slicer_acceptance/run_20261031_164132_751079/frames",
+  "recording_frame_count": 19,
+  "recording_ended_before_feedback_hold": true,
+  "feedback_hold_duration_s": 4.070493988999999,
+  "all_passed": false,
+  "final_feedback": {
+    "schema_version": 1,
+    "source": "ros2_ursim",
+    "request_id": "b65375064005433e82367c174aba64cf",
+    "status": "succeeded",
+    "message": "MoveIt reports successful URSim virtual controller execution; inspect separately measured pose errors",
+    "plan": {
+      "status": "succeeded",
+      "request_id": "65d34bfe225d40ab80124c4a037ae61f",
+      "point_count": 7,
+      "tcp_path_m": [
+        [
+          -0.8380376744579563,
+          -0.17374633713973808,
+          0.37906614519127857
+        ],
+        [
+          -0.8380741415348336,
+          -0.17381497357185557,
+          0.3773239377260219
+        ],
+        [
+          -0.8381564132877163,
+          -0.17402099715966152,
+          0.37210246530017216
+        ],
+        [
+          -0.838203521711778,
+          -0.17435491035214873,
+          0.36366722190671064
+        ],
+        [
+          -0.8381640187034641,
+          -0.1746254053288243,
+          0.3568611041760123
+        ],
+        [
+          -0.838119311238921,
+          -0.1747583212473538,
+          0.35352622080454427
+        ],
+        [
+          -0.8381132882451385,
+          -0.1747731644528776,
+          0.35315420557938176
+        ]
+      ],
+      "planning_time_s": 0.022135520000000002,
+      "moveit_error_code": 1,
+      "joint_trajectory": {
+        "joint_names": [
+          "shoulder_pan_joint",
+          "shoulder_lift_joint",
+          "elbow_joint",
+          "wrist_1_joint",
+          "wrist_2_joint",
+          "wrist_3_joint"
+        ],
+        "points": [
+          {
+            "positions_rad": [
+              -0.005065999999992243,
+              -1.300063999999992,
+              1.5794069999999998,
+              -1.8673089999999988,
+              -1.554564,
+              0.012602000000001112
+            ],
+            "time_from_start_s": 0.0
+          },
+          {
+            "positions_rad": [
+              -0.005130864479764238,
+              -1.2991352300423282,
+              1.5813034288473395,
+              -1.8698089999999987,
+              -1.554043433115023,
+              0.010180472903063866
+            ],
+            "time_from_start_s": 0.1
+          },
+          {
+            "positions_rad": [
+              -0.005325457919080219,
+              -1.2963489201693372,
+              1.5869927153893588,
+              -1.8773089999999986,
+              -1.5524817324600921,
+              0.0029158916122521087
+            ],
+            "time_from_start_s": 0.2
+          },
+          {
+            "positions_rad": [
+              -0.005640458356241393,
+              -1.291838548025529,
+              1.5962023154363636,
+              -1.8894497139264974,
+              -1.549953711008047,
+              -0.008843735487419811
+            ],
+            "time_from_start_s": 0.30000000000000004
+          },
+          {
+            "positions_rad": [
+              -0.005895229959307352,
+              -1.2881905697818858,
+              1.6036510180118817,
+              -1.8992690944241715,
+              -1.5479090532808157,
+              -0.018354893867521913
+            ],
+            "time_from_start_s": 0.4
+          },
+          {
+            "positions_rad": [
+              -0.006020272602829324,
+              -1.2864001314535698,
+              1.6073068628927198,
+              -1.9040884749218459,
+              -1.5469055293235388,
+              -0.023022998053749494
+            ],
+            "time_from_start_s": 0.5
+          },
+          {
+            "positions_rad": [
+              -0.006034230208768078,
+              -1.2862002777721344,
+              1.6077149384162592,
+              -1.9046264275111449,
+              -1.546793513202068,
+              -0.023544064762491664
+            ],
+            "time_from_start_s": 0.546387609
+          }
+        ]
+      },
+      "preview_message": "Needle-tip samples computed by MoveIt FK from the actual planned joint trajectory"
+    },
+    "execution": {
+      "status": "succeeded",
+      "moveit_error_code": 1,
+      "action_status": 4
+    },
+    "tool": {
+      "parent_frame": "tool0",
+      "tip_offset_m": [
+        0.0,
+        0.0,
+        0.12
+      ]
+    },
+    "timestamp": 1793436106.26316,
+    "ready": true,
+    "joint_names": [
+      "shoulder_pan_joint",
+      "shoulder_lift_joint",
+      "elbow_joint",
+      "wrist_1_joint",
+      "wrist_2_joint",
+      "wrist_3_joint"
+    ],
+    "joint_positions_rad": [
+      -0.006034000000000539,
+      -1.2862000000000018,
+      1.6077150000000016,
+      -1.9046259999999933,
+      -1.5467940000000056,
+      -0.023543999999994014
+    ],
+    "joint_state_age_s": 0.0010540970000079142,
+    "tf_age_s": 0.019473791122436523,
+    "link_transforms": {
+      "base_link": {
+        "position_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "orientation_xyzw": [
+          0.0,
+          0.0,
+          1.0,
+          -6.123233995736766e-17
+        ]
+      },
+      "shoulder_link": {
+        "position_m": [
+          0.0,
+          0.0,
+          0.1807
+        ],
+        "orientation_xyzw": [
+          0.0,
+          0.0,
+          -0.003016995423068034,
+          0.9999954488589521
+        ]
+      },
+      "upper_arm_link": {
+        "position_m": [
+          0.0,
+          0.0,
+          0.1807
+        ],
+        "orientation_xyzw": [
+          0.5671322983469975,
+          0.4223280197597643,
+          -0.4257423869148384,
+          0.5645736620508472
+        ]
+      },
+      "forearm_link": {
+        "position_m": [
+          -0.17202467103005287,
+          0.0010380093420946962,
+          0.7687541855081109
+        ],
+        "orientation_xyzw": [
+          0.6976449188105363,
+          -0.11528906002042032,
+          0.11107739731977034,
+          0.6983278683413072
+        ]
+      },
+      "wrist_1_link": {
+        "position_m": [
+          -0.7153281121777287,
+          -0.1698368282451237,
+          0.5881419331091243
+        ],
+        "orientation_xyzw": [
+          -0.49842736890412936,
+          -0.5015677003454855,
+          0.5045660619352242,
+          -0.4953918540313595
+        ]
+      },
+      "wrist_2_link": {
+        "position_m": [
+          -0.8351668429490793,
+          -0.16911371254333815,
+          0.5896178093890331
+        ],
+        "orientation_xyzw": [
+          -0.5043182591612891,
+          -0.48939341280884374,
+          0.5075684628815182,
+          0.4985292734272804
+        ]
+      },
+      "wrist_3_link": {
+        "position_m": [
+          -0.8366185204996439,
+          -0.17190220649982962,
+          0.473110215500292
+        ],
+        "orientation_xyzw": [
+          0.7007725765939351,
+          0.7132572281405032,
+          -0.012898997356942311,
+          0.003941860780027829
+        ]
+      },
+      "tool0": {
+        "position_m": [
+          -0.8366185204996439,
+          -0.17190220649982962,
+          0.473110215500292
+        ],
+        "orientation_xyzw": [
+          0.7007725765939351,
+          0.7132572281405032,
+          -0.0128989973569424,
+          0.003941860780027906
+        ]
+      },
+      "needle_tip": {
+        "position_m": [
+          -0.8381131692003537,
+          -0.17477324274846942,
+          0.35315387687610567
+        ],
+        "orientation_xyzw": [
+          0.7007725765939351,
+          0.7132572281405032,
+          -0.0128989973569424,
+          0.003941860780027906
+        ]
+      }
+    },
+    "tcp_pose": {
+      "frame_id": "base",
+      "position_m": [
+        -0.8381131692003537,
+        -0.17477324274846942,
+        0.35315387687610567
+      ],
+      "orientation_xyzw": [
+        0.7007725765939351,
+        0.7132572281405032,
+        -0.0128989973569424,
+        0.003941860780027906
+      ]
+    },
+    "target_pose": {
+      "frame_id": "base",
+      "position_m": [
+        -0.838,
+        -0.1737,
+        0.3541
+      ],
+      "orientation_xyzw": [
+        0.6946597975523858,
+        0.7192426147540477,
+        -0.011732720948755803,
+        -0.00041236558708695353
+      ]
+    },
+    "position_error_m": 0.0014352025050906729,
+    "orientation_error_rad": 0.019340231346379546,
+    "feedback_valid": true,
+    "needle_collision_ready": true,
+    "needle_collision_message": "Simplified needle attached"
+  },
+  "completed_at": 1793436107.220996,
+  "position_error_mm_independent": 1.435202505090673,
+  "orientation_error_deg_independent": 1.1081136309541657,
+  "display_transform_max_abs_difference": 0.0,
+  "max_observed_joint_delta_rad": 0.03731699999999449,
+  "execution_observed_sample_count": 24,
+  "hold_observed_sample_count": 21,
+  "hold_distinct_feedback_updates": 21,
+  "hold_position_error_max_mm_independent": 1.435202505090673,
+  "hold_orientation_error_max_rad_independent": 0.019340231346379546,
+  "hold_joint_drift_max_rad": 0.0,
+  "scene_file": "ur12e_slicer/output/ursim_slicer_acceptance/run_20261031_164132_751079/UR12e_closed_loop.mrb",
+  "observed_sample_count": 37,
+  "engineering_thresholds": {
+    "position_mm": 2,
+    "orientation_rad": 0.03
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "mode": "ursim_controller_integration",
+  "source": "ros2_ursim",
+  "run_id": "20261027T044855Z_f8a2ba",
+  "started_at": 1793076535.0720768,
+  "no_slicer": false,
+  "control_runtime": "<user-cache>/ur12e_slicer/<project-key>/ursim/bridge",
+  "boundary": "Local URSim virtual controller; no physical accuracy or hardware safety result.",
+  "original_validation_directory": "<user-cache>/ur12e_slicer/<project-key>/ursim/validation/20261027T044855Z_f8a2ba",
+  "validation_exit_code": 0,
+  "integration_original_result": "<user-cache>/ur12e_slicer/<project-key>/ursim/validation/20261027T044855Z_f8a2ba/20261027_124939_313242/summary.json",
+  "integration_result": "output/ursim_validation/20261027T044855Z_f8a2ba/20261027_124939_313242/summary.json",
+  "slicer_result": "output/ursim_slicer_acceptance/run_20261027_125004_106100/results.json",
+  "slicer_check_count": 21,
+  "slicer_passed": true,
+  "stop_passed": true,
+  "finished_at": 1793076652.7446926
+}

@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "kind": "ursim_curated_evidence",
+  "curated_at": "2026-10-31",
+  "simulation_only": true,
+  "physical_robot_connected": false,
+  "source_preserved_locally": true,
+  "scope": "Historical WSL2/WSLg controller integration and display evidence; not a new run at publication time. October 31 full checks failed only on recorded frame count. Head placement is the existing simulated transform, not a physical registration or a URSim navigation acceptance.",
+  "files": [
+    {
+      "source_path": "ur12e_slicer/output/ursim_validation/20261027T044855Z_f8a2ba/lifecycle_summary.json",
+      "source_sha256": "c8de65d60cd4ca583979618f0f3eb29dbe5165de2c235b0907bff116ffcb7f10",
+      "source_bytes": 1007,
+      "published_path": "ur12e_slicer/reference_results/2026-10-31-ursim/2026-10-27-full-pass/lifecycle_summary.json",
+      "published_sha256": "4b157454aded674ffbb24f9ef3a282c8683c0b1eca660c2043959686889cd004",
+      "published_bytes": 978,
+      "transformation": "JSON reserialized; machine-specific path strings normalized; numeric, boolean and check fields preserved"
+    },
+    {
+      "source_path": "ur12e_slicer/output/ursim_validation/20261027T044855Z_f8a2ba/20261027_124939_313242/summary.json",
+      "source_sha256": "e0869d4cd997015ced6841bfdda4cb6b1a0e263563e92625dd2e7e98c9536aeb",
+      "source_bytes": 8870,
+      "published_path": "ur12e_slicer/reference_results/2026-10-31-ursim/2026-10-27-full-pass/basic_control_summary.json",
+      "published_sha256": "0242ef2f1c6fb7013379479a50e801f2119b8cd1c1a970e8a6e6968f0277d949",
+      "published_bytes": 8871,
+      "transformation": "JSON reserialized; machine-specific path strings normalized; numeric, boolean and check fields preserved"
+    },
+    {
+      "source_path": "ur12e_slicer/output/ursim_slicer_acceptance/run_20261027_125004_106100/results.json",
+      "source_sha256": "28b75eadd898e46d82725de31b27db0c73e562389c5cd8759734e4b3f59ff91f",
+      "source_bytes": 28128,
+      "published_path": "ur12e_slicer/reference_results/2026-10-31-ursim/2026-10-27-full-pass/slicer_results.json",
+      "published_sha256": "dbb1603db22c6c94af64f0d0d5faea638177480dcb19343a8503072c7953f2d9",
+      "published_bytes": 28021,
+      "transformation": "JSON reserialized; machine-specific path strings normalized; numeric, boolean and check fields preserved"
+    },
+    {
+      "source_path": "ur12e_slicer/output/ursim_validation/20261031T084059Z_f5ee4e/lifecycle_summary.json",
+      "source_sha256": "c03f984dcff3b9f1300937b93bc8e7639c741001584afaba7bfb149aacf42153",
+      "source_bytes": 1622,
+      "published_path": "ur12e_slicer/reference_results/2026-10-31-ursim/2026-10-31-run-1/lifecycle_summary.json",
+      "published_sha256": "fb74131d384b5a88dea79d86f7cc764d3b5fd659ade224baed5d4da3187787af",
+      "published_bytes": 1485,
+      "transformation": "JSON reserialized; machine-specific path strings normalized; numeric, boolean and check fields preserved"
+    },
+    {
+      "source_path": "ur12e_slicer/output/ursim_validation/20261031T084059Z_f5ee4e/20261031_164106_a2183f/summary.json",
+      "source_sha256": "46cdfff3835ec6a24d699b583e5211218a0f7879783740c32d70eb13796c7006",
+      "source_bytes": 8871,
+      "published_path": "ur12e_slicer/reference_results/2026-10-31-ursim/2026-10-31-run-1/basic_control_summary.json",
+      "published_sha256": "53c81c20b6412f4c0d244bad8b5bd5cfad2a4283ddaa0da237356fd17e9d02ed",
+      "published_bytes": 8872,
+      "transformation": "JSON reserialized; machine-specific path strings normalized; numeric, boolean and check fields preserved"
+    },
+    {
+      "source_path": "ur12e_slicer/output/ursim_slicer_acceptance/run_20261031_164132_751079/results.json",
+      "source_sha256": "7afaa1ba5a5e6a86b5f2b63e78d252a946ea63123ae4e1dc0866c04961941bff",
+      "source_bytes": 28538,
+      "published_path": "ur12e_slicer/reference_results/2026-10-31-ursim/2026-10-31-run-1/slicer_results.json",
+      "published_sha256": "4e085dc74bfba56e25b6ff1c7d8913b05c27fbda8534851d790be10f48429c98",
+      "published_bytes": 28431,
+      "transformation": "JSON reserialized; machine-specific path strings normalized; numeric, boolean and check fields preserved"
+    },
+    {
+      "source_path": "ur12e_slicer/output/ursim_validation/20261031T084234Z_fd2c4e/lifecycle_summary.json",
+      "source_sha256": "2c0fff7d2f6af9760ec8fb2f3e155a4102c5ca643c69f1914723f6c5216b93b8",
+      "source_bytes": 1622,
+      "published_path": "ur12e_slicer/reference_results/2026-10-31-ursim/2026-10-31-run-2/lifecycle_summary.json",
+      "published_sha256": "83b32b7866fe98053e8b2a316e8da1672d93f481603d492e9bd19225b7600b3e",
+      "published_bytes": 1485,
+      "transformation": "JSON reserialized; machine-specific path strings normalized; numeric, boolean and check fields preserved"
+    },
+    {
+      "source_path": "ur12e_slicer/output/ursim_validation/20261031T084234Z_fd2c4e/20261031_164240_b225dc/summary.json",
+      "source_sha256": "c23245bcfcb4ed075a8acfb942e7e32277aae744d4462c7a8440f69b70a6aa77",
+      "source_bytes": 8893,
+      "published_path": "ur12e_slicer/reference_results/2026-10-31-ursim/2026-10-31-run-2/basic_control_summary.json",
+      "published_sha256": "f37adea4e13c38d64a60dcb4babe349dd03e64343efd82838e7e30c504bf9d0d",
+      "published_bytes": 8894,
+      "transformation": "JSON reserialized; machine-specific path strings normalized; numeric, boolean and check fields preserved"
+    },
+    {
+      "source_path": "ur12e_slicer/output/ursim_slicer_acceptance/run_20261031_164307_223359/results.json",
+      "source_sha256": "1047785fa540fa5a7c6603ced43e5779c4b701323c019d4a5e173cf04fe5c46b",
+      "source_bytes": 29440,
+      "published_path": "ur12e_slicer/reference_results/2026-10-31-ursim/2026-10-31-run-2/slicer_results.json",
+      "published_sha256": "8ab92231c20c01c79b306454b242dfa23f575611d3ab7a365a3dd3052be67b01",
+      "published_bytes": 29333,
+      "transformation": "JSON reserialized; machine-specific path strings normalized; numeric, boolean and check fields preserved"
+    },
+    {
+      "source_path": "ur12e_slicer/output/demo_2026-10-31/head_display_summary.json",
+      "source_sha256": "910abb924402a51eca23fe5f9f8994b4b64ddfee10a409b0f822768c81544d65",
+      "source_bytes": 680,
+      "published_path": "ur12e_slicer/reference_results/2026-10-31-ursim/head-display/head_display_summary.json",
+      "published_sha256": "89a01bd55fd0c5be62782eda1536a70e32a6ff15c975153d78216691b29160cd",
+      "published_bytes": 645,
+      "transformation": "JSON reserialized; machine-specific path strings normalized; numeric, boolean and check fields preserved"
+    },
+    {
+      "source_path": "ur12e_slicer/output/demo_2026-10-31/head_geometry_measurements.json",
+      "source_sha256": "251c24ab39bd4931ac5d07e95c09409b718d6ce7b2241fb0133fe9f8fa9be33e",
+      "source_bytes": 819,
+      "published_path": "ur12e_slicer/reference_results/2026-10-31-ursim/head-display/head_geometry_measurements.json",
+      "published_sha256": "2c8938cc5d5c00b918deadfeb0aebd9fb894a3e344c7ad1b86f2c3151bb4f51b",
+      "published_bytes": 820,
+      "transformation": "JSON reserialized; machine-specific path strings normalized; numeric, boolean and check fields preserved"
+    },
+    {
+      "source_path": "ur12e_slicer/output/demo_2026-10-31/show_head_display.py",
+      "source_sha256": "9d98d2bd75c0eb7e3fbe9243c18002df5edcf86e621a58c47c84880f55213c6e",
+      "source_bytes": 2579,
+      "published_path": "ur12e_slicer/reference_results/2026-10-31-ursim/head-display/show_head_display.py",
+      "published_sha256": "9d98d2bd75c0eb7e3fbe9243c18002df5edcf86e621a58c47c84880f55213c6e",
+      "published_bytes": 2579,
+      "transformation": "byte-for-byte copy"
+    },
+    {
+      "source_path": "ur12e_slicer/output/demo_2026-10-31/measure_head_geometry.py",
+      "source_sha256": "4f88471abb693bf6c303074bb2db35634aeb7d9b2d3d11c297374cbb68ff9d6c",
+      "source_bytes": 1793,
+      "published_path": "ur12e_slicer/reference_results/2026-10-31-ursim/head-display/measure_head_geometry.py",
+      "published_sha256": "4f88471abb693bf6c303074bb2db35634aeb7d9b2d3d11c297374cbb68ff9d6c",
+      "published_bytes": 1793,
+      "transformation": "byte-for-byte copy"
+    },
+    {
+      "source_path": "ur12e_slicer/output/demo_2026-10-31/head_and_ursim_closeup.png",
+      "source_sha256": "1b65b4a05ef76d9f77890a5d913c50a16bf1dd0afdeee90061c180a0a7275b5e",
+      "source_bytes": 880801,
+      "published_path": "ur12e_slicer/reference_results/2026-10-31-ursim/head-display/head_and_ursim_closeup.png",
+      "published_sha256": "1b65b4a05ef76d9f77890a5d913c50a16bf1dd0afdeee90061c180a0a7275b5e",
+      "published_bytes": 880801,
+      "transformation": "byte-for-byte copy"
+    },
+    {
+      "source_path": "ur12e_slicer/output/demo_2026-10-31/head_and_ursim_platform.png",
+      "source_sha256": "4805db3c496e4d2ff7107719f24e53f81c94f97ea8ff8661c7af78b62d1e6588",
+      "source_bytes": 729875,
+      "published_path": "ur12e_slicer/reference_results/2026-10-31-ursim/head-display/head_and_ursim_platform.png",
+      "published_sha256": "4805db3c496e4d2ff7107719f24e53f81c94f97ea8ff8661c7af78b62d1e6588",
+      "published_bytes": 729875,
+      "transformation": "byte-for-byte copy"
+    },
+    {
+      "source_path": "ur12e_slicer/output/github_publish_2026-10-31/offline_checks.log",
+      "source_sha256": "b8c2ffd8557144f3f7fd06396204763438863bd6b39f9dad7b17821139c99970",
+      "source_bytes": 12783,
+      "published_path": "ur12e_slicer/reference_results/2026-10-31-ursim/publication/offline_checks.log",
+      "published_sha256": "b8c2ffd8557144f3f7fd06396204763438863bd6b39f9dad7b17821139c99970",
+      "published_bytes": 12783,
+      "transformation": "byte-for-byte copy"
+    }
+  ]
+}

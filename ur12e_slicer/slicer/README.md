@@ -1,6 +1,10 @@
 # Slicer 前端
 
+截至 2026-10-31：默认 URSim 入口只加载机器人；头模通过会话脚本恢复为静态影像背景，机器人继续读取实时 URSim 反馈。它尚不是整套 URSim 头部导航验收。当天两轮实际 Slicer 检查均 20/21（19 帧不足 20 帧），见 [最新上下文](../../PROJECT_CONTEXT.md)与 [精选证据 / 显示脚本](../reference_results/2026-10-31-ursim/README.md)。
+
 Linux 接手先按 [部署说明](../DEPLOYMENT_LINUX.md)安装。完整启动为 `bash ur12e_slicer/start_linux.sh`，由统一入口启动 ROS mock 与 Linux Slicer 5.12.4；`SLICER_EXECUTABLE` 可覆盖本机完整 Slicer 安装中的 `Slicer` 文件。`--backend-only` 跳过 GUI，但不能据此声称前端已验证。
+
+可选 URSim 后端使用 `bash ur12e_slicer/start_ursim_linux.sh`，首次必须先完成 [虚拟示教器配置](../URSIM_LINUX.md)。它复用本面板和文件协议，来源显示为 `ros2_ursim`；mock 仍为 `ros2_mock_hardware`。面板由后台真实关节 / TF 更新，两后端共享 ROS domain 和前端管理，不并行运行。URSim `--simulator-only` 只打开虚拟示教器所需服务，不启动本 Slicer 面板；`--backend-only` 启动 ROS 而跳过本面板。
 
 Windows 兼容入口为 `Open_UR12e_Slicer.cmd` 或 `Start_UR12e_Slicer.ps1`，需要此前部署的 Windows Slicer。它们只负责前端；ROS 2 后端由原 Windows / WSL 统一入口启动，不是 Linux 的安装方法。
 
@@ -16,7 +20,7 @@ Windows 兼容入口为 `Open_UR12e_Slicer.cmd` 或 `Start_UR12e_Slicer.ps1`，�
 
 ## 状态与模型
 
-前端原子写 `runtime/target.json`，读取 `runtime/state.json`；完整协议见 [protocol.md](../protocol.md)。后台须 `ready=true` 且反馈时间在 5 秒内才允许提交；执行按钮还要求当前目标与成功计划一致。后端启动前遗留请求不会当作新请求执行。
+前端在当前控制目录原子写 `target.json`、读取 `state.json`；mock 默认为项目 `runtime/`，URSim 由管理器通过 `UR12E_CONTROL_RUNTIME_DIR` 指向原生 Linux cache 的 `ursim/bridge/`。项目 `runtime/` 中的 Slicer 心跳、任务队列和所有权记录保持原位。完整协议见 [protocol.md](../protocol.md)。后台须 `ready=true` 且反馈时间在 5 秒内才允许提交；执行按钮还要求当前目标与成功计划一致。后端启动前遗留请求不会当作新请求执行。
 
 机器人与工具的位置从实际回传的 `link_transforms`／`tcp_pose` 更新，无反馈时不显示机器人，也不计算到位误差。心跳中断时保留最后反馈、降低透明度并提示过期；不能据此确认到位。`tcp_path_m` 只在后台提供真实规划轨迹的 FK 采样时绘制。
 
@@ -27,6 +31,8 @@ Windows 兼容入口为 `Open_UR12e_Slicer.cmd` 或 `Start_UR12e_Slicer.ps1`，�
 2026-10-21 在 Windows Slicer 5.12.4 中通过 13 项前端检查。检查使用隔离目录下的明确测试数据，包括官方网格、坐标与四元数、请求协议、计划与目标对应、过期提示、场景及帧保存。测试图有 `FRONTEND TEST FIXTURE - NOT ROS FEEDBACK` 水印。它单独不能证明 ROS 2、MoveIt 2、规划成功或仿真闭环。
 
 后续 Windows + WSL 参考运行已完成真实 MoveIt/mock 联动、MR 头部和模拟光学链，见 [本轮成果](../NAVIGATION_BENCHMARK_RESULTS_2026-10-23.md)。Linux 新机器运行 `bash ur12e_slicer/run_navigation_linux.sh` 后查看本机新结果；完整入口包括场景生成和独立进程重开 MRB，不能拿旧截图代替本机 GUI 检查。尚未接入真机或物理光学设备。
+
+2026-10-27 完整轮 `20261027T044855Z_f8a2ba` 的基础控制 5 项和 Slicer 21 项通过，含停止检查。Slicer 本轮位置残差 1.705336 mm、整体角残差 0.013216 rad，4.170 秒保持内有 21 次不同反馈更新；这些由虚拟模型关节 / TF 反馈计算，见 [本轮记录](../URSIM_RESULTS_2026-10-27.md)。URSim 整轮检查使用 `run_ursim_linux.sh`；不带 `--no-slicer` 时还运行本轮 Slicer 验收，外层须记录 `slicer_passed=true` 并引用新的 `output/ursim_slicer_acceptance/` 结果。它没有自动把历史头部导航场景迁移为本轮 URSim 实验。
 
 头部结果查看器说明见 [NAVIGATION_BENCHMARK_VIEWER.md](NAVIGATION_BENCHMARK_VIEWER.md)。`.cmd` / `.ps1` 只适用于 Windows；Linux 使用统一运行入口生成 / 打开当前结果。
 

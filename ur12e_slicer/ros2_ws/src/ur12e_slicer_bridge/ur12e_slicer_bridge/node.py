@@ -27,6 +27,16 @@ JOINTS = ["shoulder_pan_joint", "shoulder_lift_joint", "elbow_joint",
           "wrist_1_joint", "wrist_2_joint", "wrist_3_joint"]
 LINKS = ["base_link", "shoulder_link", "upper_arm_link", "forearm_link",
          "wrist_1_link", "wrist_2_link", "wrist_3_link", "tool0"]
+FEEDBACK_SOURCES = {
+    "ros2_mock_hardware": "mock hardware",
+    "ros2_ursim": "URSim virtual controller",
+}
+
+
+def validate_feedback_source(value):
+    if not isinstance(value, str) or value not in FEEDBACK_SOURCES:
+        raise ValueError("feedback_source must be ros2_mock_hardware or ros2_ursim; physical hardware is not enabled")
+    return value
 
 
 def ros_pose(position, quaternion):
@@ -46,6 +56,7 @@ class FileBridge(Node):
         super().__init__("ur12e_slicer_bridge")
         defaults = {
             "runtime_dir": "", "base_frame": "base", "tool_frame": "tool0",
+            "feedback_source": "ros2_mock_hardware",
             "tip_offset_m": [0.0, 0.0, 0.12], "planning_group": "ur_manipulator",
             "pipeline_id": "ompl", "planner_id": "",
             "controller_name": "joint_trajectory_controller", "planning_time_s": 5.0,
@@ -56,6 +67,8 @@ class FileBridge(Node):
         for key, value in defaults.items():
             self.declare_parameter(key, value)
         self.p = lambda name: self.get_parameter(name).value
+        self.feedback_source = validate_feedback_source(self.p("feedback_source"))
+        self.backend_description = FEEDBACK_SOURCES[self.feedback_source]
         if not self.p("runtime_dir"):
             raise ValueError("runtime_dir must be the absolute shared ur12e_slicer/runtime directory")
         if self.p("base_frame") != "base" or self.p("tool_frame") != "tool0":
@@ -99,15 +112,16 @@ class FileBridge(Node):
         self.operation_started = 0.0
         self.stage_started = 0.0
         self.state = {
-            "schema_version": 1, "source": "ros2_mock_hardware", "request_id": None,
+            "schema_version": 1, "source": self.feedback_source, "request_id": None,
             "status": "waiting_for_robot", "message": "Waiting for observed joint states, TF and MoveIt. Submit a fresh command after startup.",
             "plan": {"status": "none", "request_id": None, "point_count": 0, "tcp_path_m": []},
             "execution": {"status": "none"},
             "tool": {"parent_frame": "tool0", "tip_offset_m": list(offset)},
         }
-        self.record("bridge_started", {"runtime_dir": str(self.runtime), "startup_target_ignored": self.target_file.exists()})
+        self.record("bridge_started", {"runtime_dir": str(self.runtime), "source": self.feedback_source,
+                    "controller_name": self.p("controller_name"), "startup_target_ignored": self.target_file.exists()})
         self.create_timer(1.0 / float(self.p("feedback_hz")), self.tick)
-        self.get_logger().info(f"ROS mock-hardware bridge using {self.runtime}; target is needle tip, +Z {offset[2]} m from tool0")
+        self.get_logger().info(f"ROS {self.backend_description} bridge using {self.runtime}; target is needle tip, +Z {offset[2]} m from tool0")
 
     def fingerprint(self):
         try:
@@ -380,10 +394,10 @@ class FileBridge(Node):
             return
         goal = ExecuteTrajectory.Goal()
         goal.trajectory = self.cached_trajectory
-        # Jazzy's official MoveIt yaml defaults to scaled JTC. Explicitly select the
-        # ordinary JTC activated by mock.launch.py, avoiding that mismatch.
+        # Select the controller actually activated by this backend: ordinary JTC
+        # for mock.launch.py, scaled JTC for ursim.launch.py.
         goal.controller_names = [self.p("controller_name")]
-        self.state.update({"status": "executing", "message": "Executing trajectory through MoveIt on mock hardware"})
+        self.state.update({"status": "executing", "message": f"Executing trajectory through MoveIt on {self.backend_description}"})
         self.state["execution"] = {"status": "requesting"}
         self.stage_started = time.monotonic()
         token = self.token
@@ -418,7 +432,7 @@ class FileBridge(Node):
                 self.fail(f"MoveIt execution failed: action_status={result.status}, error_code={code}")
                 return
             self.state["execution"]["status"] = "succeeded"
-            self.state.update({"status": "succeeded", "message": "MoveIt reports successful mock-hardware execution; inspect separately measured pose errors"})
+            self.state.update({"status": "succeeded", "message": f"MoveIt reports successful {self.backend_description} execution; inspect separately measured pose errors"})
             _, tcp, _, _, fresh = self.feedback()
             errors = {}
             if fresh and tcp:

@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "selected_at": "2026-10-27",
+  "scope": "Local UR12e URSim software integration; not physical robot acceptance",
+  "image": {
+    "repository": "universalrobots/ursim_e-series",
+    "tag": "5.23.0",
+    "digest": "sha256:f1211a7feb4252135b1439f603f4e17ff826b4b71574f3963c868efe0498b4a9",
+    "platform": "linux/amd64",
+    "source": "https://hub.docker.com/v2/repositories/universalrobots/ursim_e-series/tags/5.23.0",
+    "robot_model_environment": "UR12",
+    "driver_ur_type": "ur12e",
+    "compatibility_evidence": "https://github.com/UniversalRobots/Universal_Robots_Client_Library/blob/71fa9ba88b7a036b5a6d2f73909a8bfb81fa07a9/scripts/start_ursim.sh",
+    "selection_reason": "Official start_ursim script identifies ur12e as e-series with minimum 5.22.0. Exact equivalence to the supplied physical-controller component version screenshot is unverified."
+  },
+  "external_control": {
+    "version": "1.0.5",
+    "filename": "externalcontrol-1.0.5.jar",
+    "url": "https://github.com/UniversalRobots/Universal_Robots_ExternalControl_URCap/releases/download/v1.0.5/externalcontrol-1.0.5.jar",
+    "sha256": "31a59bd939c339a8ce4f2912d7b51299d81469608ba64a070697b105ea18e0a3",
+    "bytes": 35300,
+    "digest_provenance": "Computed from the official GitHub release asset on 2026-10-27, independently matched after the local verified-TLS download. The historical GitHub asset has no published digest field."
+  },
+  "program_template": {
+    "url": "https://raw.githubusercontent.com/UniversalRobots/Universal_Robots_Client_Library/71fa9ba88b7a036b5a6d2f73909a8bfb81fa07a9/tests/resources/dockerursim/programs/e-series/external_control.urp",
+    "sha256": "12b27317134f5101b652482f92f02585aae33b192ed840f04a67db683f609cf5",
+    "note": "Only the External Control program-node structure is reused. The bundled UR5 kinematics and robot serial metadata are removed. UR12's generated installation is configured and saved in its actual PolyScope GUI."
+  },
+  "physical_controller_report": {
+    "source": "User-supplied doctoral-student reply and photograph, 2026-10-27",
+    "external_control_reported_installed": "1.0.5",
+    "baseline": "14.0.514",
+    "polyscope_component": "74.27.218",
+    "controller_component": "99.4.47",
+    "firmware_component": "61.0.133",
+    "platform_component": "0.1.1",
+    "ursim_package_equivalence": "not established"
+  }
+}
