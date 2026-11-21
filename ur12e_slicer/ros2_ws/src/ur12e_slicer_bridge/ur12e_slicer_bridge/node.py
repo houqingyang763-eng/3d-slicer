@@ -1,15 +1,18 @@
 """Use real MoveIt service/action and observed joint/TF feedback; no ROS emulation."""
+from concurrent.futures import ThreadPoolExecutor
+import errno
 import json
 import math
 from pathlib import Path
 import signal
+from threading import Event
 import time
+import uuid
 
 import rclpy
 from action_msgs.msg import GoalStatus
-from geometry_msgs.msg import Pose
 from moveit_msgs.action import ExecuteTrajectory
-from moveit_msgs.msg import AttachedCollisionObject, Constraints, MoveItErrorCodes, OrientationConstraint, PlanningScene, PositionConstraint, RobotState
+from moveit_msgs.msg import AttachedCollisionObject, MoveItErrorCodes, PlanningScene, RobotState
 from moveit_msgs.srv import ApplyPlanningScene, GetMotionPlan, GetPositionFK
 from rclpy.action import ActionClient
 from rclpy.executors import ExternalShutdownException
@@ -20,6 +23,7 @@ from sensor_msgs.msg import JointState
 from shape_msgs.msg import SolidPrimitive
 from tf2_ros import Buffer, TransformException, TransformListener
 
+from .planning import needle_plan_request, ros_pose
 from .protocol import Target, atomic_json, pose_error, shifted_pose
 
 
@@ -39,13 +43,6 @@ def validate_feedback_source(value):
     return value
 
 
-def ros_pose(position, quaternion):
-    value = Pose()
-    value.position.x, value.position.y, value.position.z = map(float, position)
-    value.orientation.x, value.orientation.y, value.orientation.z, value.orientation.w = map(float, quaternion)
-    return value
-
-
 def json_pose(value):
     return {"position_m": [value.position.x, value.position.y, value.position.z],
             "orientation_xyzw": [value.orientation.x, value.orientation.y, value.orientation.z, value.orientation.w]}
@@ -56,6 +53,7 @@ class FileBridge(Node):
         super().__init__("ur12e_slicer_bridge")
         defaults = {
             "runtime_dir": "", "base_frame": "base", "tool_frame": "tool0",
+            "head_assets_dir": "", "head_planning_strategy": "geometry",
             "feedback_source": "ros2_mock_hardware",
             "tip_offset_m": [0.0, 0.0, 0.12], "planning_group": "ur_manipulator",
             "pipeline_id": "ompl", "planner_id": "",
@@ -118,6 +116,20 @@ class FileBridge(Node):
             "execution": {"status": "none"},
             "tool": {"parent_frame": "tool0", "tip_offset_m": list(offset)},
         }
+        self.head = None
+        self.head_pending = None
+        self.head_worker = None
+        if self.p("head_assets_dir"):
+            if self.feedback_source != "ros2_mock_hardware":
+                raise ValueError("Static-head planning requires the fixed local mock backend")
+            from .head_planning import HeadPlanner
+            from .anatomy_scene import HeadScene
+            self.head = HeadScene(self, self.p("head_assets_dir"))
+            self.head_solver = HeadPlanner(self)
+            self.head_worker = ThreadPoolExecutor(max_workers=1, thread_name_prefix="head_planning")
+            self.head_result_ready = self.create_guard_condition(self.finish_head_plan)
+            self.state["anatomy"] = self.head.state
+            self.create_timer(.02, self.poll_head_command)
         self.record("bridge_started", {"runtime_dir": str(self.runtime), "source": self.feedback_source,
                     "controller_name": self.p("controller_name"), "startup_target_ignored": self.target_file.exists()})
         self.create_timer(1.0 / float(self.p("feedback_hz")), self.tick)
@@ -174,12 +186,14 @@ class FileBridge(Node):
         try:
             transforms, tcp, joint_age, tf_age, fresh = self.feedback()
             self.ensure_needle_scene()
-            self.read_target(fresh)
-            if self.active and self.state["status"] == "waiting_for_robot":
-                if fresh and self.scene_ready and self.plan_client.service_is_ready():
-                    self.start_plan()
-                elif time.monotonic() - self.operation_started > 20:
-                    self.fail("No fresh robot feedback/needle scene/planning service within 20 s")
+            if self.head:
+                if self.head.poll_pose():
+                    self.invalidate_head_plan()
+                self.head.update(transforms)
+            else:
+                self.read_target(fresh)
+            head_ready = self.head_ready()
+            self.start_waiting_plan(transforms, fresh, head_ready)
             if self.active and self.state["status"] == "planning" and time.monotonic() - self.stage_started > self.p("planning_time_s") + 15:
                 self.fail("Planning service timed out")
             if self.active and self.state["status"] == "executing":
@@ -188,6 +202,7 @@ class FileBridge(Node):
                 elif not fresh:
                     self.fail("Observed robot feedback became stale during execution", cancel=True)
             ready = fresh and self.scene_ready and self.plan_client.service_is_ready() and self.execute_client.server_is_ready()
+            ready = ready and head_ready
             if self.active is None and self.state["request_id"] is None:
                 self.state["status"] = "idle" if ready else "waiting_for_robot"
                 self.state["message"] = "Ready for a fresh target" if ready else "Waiting for joint states, TF, needle scene and MoveIt"
@@ -205,6 +220,29 @@ class FileBridge(Node):
             atomic_json(self.state_file, self.state)
         except (OSError, ValueError, RuntimeError) as exc:
             self.get_logger().error(f"Bridge tick error: {exc}")
+
+    def head_ready(self):
+        return self.head is None or (self.head.ready and self.head_solver.validity_client.service_is_ready())
+
+    def start_waiting_plan(self, transforms, fresh, head_ready):
+        if self.active and self.state["status"] == "waiting_for_robot":
+            if fresh and self.scene_ready and head_ready and self.plan_client.service_is_ready():
+                self.start_plan(transforms)
+            elif time.monotonic() - self.operation_started > 20:
+                self.fail("No fresh robot feedback/needle scene/planning service within 20 s")
+
+    def poll_head_command(self):
+        try:
+            fingerprint = self.fingerprint()
+            if fingerprint is None or fingerprint == self.file_fingerprint:
+                return
+            if self.head.poll_pose():
+                self.invalidate_head_plan()
+            transforms, _, _, _, fresh = self.feedback()
+            self.read_target(fresh, fingerprint)
+            self.start_waiting_plan(transforms, fresh, self.head_ready())
+        except (OSError, ValueError, RuntimeError) as exc:
+            self.get_logger().error(f"Head command poll error: {exc}")
 
     def ensure_needle_scene(self):
         if self.scene_pending and time.monotonic() - self.scene_attempt > 10:
@@ -253,14 +291,21 @@ class FileBridge(Node):
         except Exception as exc:
             self.get_logger().error(f"Cannot add simplified needle: {exc}")
 
-    def read_target(self, fresh):
-        fingerprint = self.fingerprint()
+    def read_target(self, fresh, fingerprint=None):
+        fingerprint = self.fingerprint() if fingerprint is None else fingerprint
         if fingerprint is None or fingerprint == self.file_fingerprint:
             return
         self.file_fingerprint = fingerprint
         data = {}
         try:
-            data = json.loads(self.target_file.read_text(encoding="utf-8-sig"))
+            try:
+                data = json.loads(self.target_file.read_text(encoding="utf-8-sig"))
+            except OSError as exc:
+                if exc.errno not in (errno.ENOENT, errno.ENODATA):
+                    raise
+                # A DrvFS rename can briefly deny access during atomic replacement.
+                self.file_fingerprint = None
+                return
             target = Target.from_json(data, time.time(), self.p("command_max_age_s"))
             if target.request_id in self.seen:
                 return
@@ -270,6 +315,11 @@ class FileBridge(Node):
                 self.record("request_rejected", {"request_id": target.request_id, "reason": "busy"})
                 self.get_logger().warning(f"Rejected {target.request_id}: another command is active")
                 return
+            if self.head:
+                if data.get("head_revision") != self.head.revision or not self.head.ready:
+                    raise ValueError("Head scene revision is stale or unconfirmed; replan against the current head")
+                if target.command != "plan":
+                    raise ValueError("Static-head mock mode accepts plan commands only")
             self.active = self.last_target = target
             self.token += 1
             self.operation_started = time.monotonic()
@@ -292,50 +342,12 @@ class FileBridge(Node):
                 self.state.update({"request_id": request_id, "status": "error", "message": str(exc)})
             self.record("request_rejected", {"request_id": request_id, "reason": str(exc)})
 
-    def start_plan(self):
+    def start_plan(self, transforms):
         target = self.active
-        request = GetMotionPlan.Request()
-        motion = request.motion_plan_request
-        motion.group_name = self.p("planning_group")
-        motion.pipeline_id = self.p("pipeline_id")
-        motion.planner_id = self.p("planner_id")
-        motion.num_planning_attempts = 1
-        motion.allowed_planning_time = float(self.p("planning_time_s"))
-        motion.max_velocity_scaling_factor = float(self.p("velocity_scaling"))
-        motion.max_acceleration_scaling_factor = float(self.p("acceleration_scaling"))
-        motion.start_state.is_diff = True
-        motion.start_state.joint_state = self.last_joint_msg
-        motion.workspace_parameters.header.frame_id = "base"
-        motion.workspace_parameters.min_corner.x = motion.workspace_parameters.min_corner.y = motion.workspace_parameters.min_corner.z = -2.0
-        motion.workspace_parameters.max_corner.x = motion.workspace_parameters.max_corner.y = motion.workspace_parameters.max_corner.z = 2.0
-        # Constrain the actual needle point on tool0. Constraining a flange point
-        # computed with the target orientation would permit extra tip displacement
-        # when MoveIt uses the allowed orientation tolerance.
-        position = PositionConstraint()
-        position.header.frame_id = "base"
-        position.link_name = "tool0"
-        position.target_point_offset.x, position.target_point_offset.y, position.target_point_offset.z = map(float, self.p("tip_offset_m"))
-        position.weight = 1.0
-        sphere = SolidPrimitive()
-        sphere.type = SolidPrimitive.SPHERE
-        sphere.dimensions = [float(self.p("position_tolerance_m"))]
-        position.constraint_region.primitives = [sphere]
-        position.constraint_region.primitive_poses = [ros_pose(target.position_m, [0.0, 0.0, 0.0, 1.0])]
-        orientation = OrientationConstraint()
-        orientation.header.frame_id = "base"
-        orientation.link_name = "tool0"
-        orientation.orientation = ros_pose([0.0, 0.0, 0.0], target.orientation_xyzw).orientation
-        # With rotation-vector parameterization, bounding each component by
-        # global_budget/sqrt(3) also bounds the full rotation-vector norm.
-        axis_tolerance = float(self.p("orientation_tolerance_rad")) / math.sqrt(3.0)
-        orientation.absolute_x_axis_tolerance = orientation.absolute_y_axis_tolerance = orientation.absolute_z_axis_tolerance = axis_tolerance
-        orientation.parameterization = OrientationConstraint.ROTATION_VECTOR
-        orientation.weight = 1.0
-        constraints = Constraints()
-        constraints.name = "needle_tip_target_v1"
-        constraints.position_constraints = [position]
-        constraints.orientation_constraints = [orientation]
-        motion.goal_constraints = [constraints]
+        if self.head:
+            self.start_head_plan(target, transforms["tool0"]["orientation_xyzw"])
+            return
+        request = needle_plan_request(self.p, self.last_joint_msg, target.position_m, target.orientation_xyzw)
         self.state["status"] = "planning"
         self.state["message"] = "MoveIt planning service is computing a collision-checked trajectory"
         self.state["plan"]["status"] = "planning"
@@ -355,23 +367,149 @@ class FileBridge(Node):
                 self.state["plan"].update({"status": "failed", "moveit_error_code": code})
                 self.fail(f"MoveIt planning failed: error_code={code}, trajectory_points={len(points)}")
                 return
-            self.cached_target = target
-            self.cached_trajectory = response.trajectory
-            trajectory = response.trajectory.joint_trajectory
-            self.state["plan"].update({"status": "succeeded", "request_id": target.request_id,
-                                      "point_count": len(points), "planning_time_s": response.planning_time,
-                                      "moveit_error_code": code, "tcp_path_m": [],
-                                      "joint_trajectory": {"joint_names": list(trajectory.joint_names),
-                                         "points": [{"positions_rad": list(p.positions), "time_from_start_s": p.time_from_start.sec + p.time_from_start.nanosec * 1e-9} for p in points]}})
-            self.record("plan_result", {"request_id": target.request_id, "point_count": len(points), "moveit_error_code": code, "planning_time_s": response.planning_time})
-            self.preview_fk(target.request_id, trajectory)
-            if target.command == "plan_execute":
-                self.start_execute()
-            else:
-                self.state.update({"status": "planned", "message": "Trajectory planned; no execution requested"})
-                self.active = None
+            self.accept_plan(response, target)
         except Exception as exc:
             self.fail(f"Planning callback failed: {exc}")
+
+    def accept_plan(self, response, target):
+        trajectory = response.trajectory.joint_trajectory
+        points = trajectory.points
+        code = response.error_code.val
+        self.cached_target = target
+        self.cached_trajectory = response.trajectory
+        self.state["plan"].update({"status": "succeeded", "request_id": target.request_id,
+                                  "point_count": len(points), "planning_time_s": response.planning_time,
+                                  "moveit_error_code": code,
+                                  "joint_trajectory": {"joint_names": list(trajectory.joint_names),
+                                     "points": [{"positions_rad": list(p.positions), "time_from_start_s": p.time_from_start.sec + p.time_from_start.nanosec * 1e-9} for p in points]}})
+        self.record("plan_result", {"request_id": target.request_id, "point_count": len(points),
+                                   "moveit_error_code": code, "planning_time_s": response.planning_time})
+        if not self.head:
+            self.preview_fk(target.request_id, trajectory)
+        if target.command == "plan_execute":
+            self.start_execute()
+        else:
+            message = "Needle sweep and whole-arm collision checks passed" if self.head else "Trajectory planned; no execution requested"
+            self.state.update(status="planned", message=message)
+            self.active = None
+
+    def invalidate_head_plan(self):
+        self.cached_target = self.cached_trajectory = None
+        self.cancel_head_plan()
+        self.state["ready"] = False
+        if self.active:
+            self.fail("Head pose changed during planning; request a new plan")
+        if self.state["plan"].get("request_id"):
+            self.state["plan"].update(status="invalidated", point_count=0, tcp_path_m=[], clearance=None,
+                                      head_report=None, joint_trajectory=None)
+            self.state.update(status="error", message="Head pose changed; previous plan invalidated")
+        self.record("anatomy_plan_invalidated", {"revision": self.head.revision})
+
+    def cancel_head_plan(self):
+        if self.head_pending is not None:
+            future, cancelled, *_ = self.head_pending
+            self.head_pending = None
+            cancelled.set()
+            future.cancel()
+
+    def start_head_plan(self, target, start_orientation):
+        import numpy as np
+        from .anatomy_geometry import CLEARANCE_MM, JOINT_NAMES
+        from .head_planning import HEAD_PLANNER_ID, STRATEGIES, HeadRequest
+
+        strategy = self.p("head_planning_strategy")
+        if strategy not in STRATEGIES:
+            self.fail(f"Invalid head_planning_strategy: {strategy}")
+            return
+        verdict = self.head.goal_clearance(target)
+        plan = self.state["plan"]
+        plan.update(head_revision=self.head.revision, strategy=strategy)
+        if verdict["lower_mm"] < CLEARANCE_MM:
+            plan["clearance"] = {"passed": False, "reason": "goal_blocked", "margin_mm": CLEARANCE_MM, "closest": verdict}
+            self.record("anatomy_goal_rejected", {"request_id": target.request_id, "witness": verdict})
+            self.fail(f"Goal rejected by anatomy clearance: {verdict['structure']} / {verdict['part']}")
+            return
+
+        request = needle_plan_request(self.p, self.last_joint_msg, target.position_m, target.orientation_xyzw)
+        motion = request.motion_plan_request
+        motion.planner_id = motion.planner_id or HEAD_PLANNER_ID
+        bounds = np.array([mesh["bounds_base_mm"] for mesh in self.head.state["readback"].values()])
+        context = HeadRequest(request, strategy, np.array([self.joints[name] for name in JOINT_NAMES]),
+                              tuple(start_orientation), np.asarray(target.position_m) * 1000, target.orientation_xyzw,
+                              self.p("position_tolerance_m"), self.p("orientation_tolerance_rad"),
+                              self.head.kinematics, self.head.clearance, np.linalg.inv(self.head.base_from_head_mm()),
+                              np.array([bounds[:, 0].min(axis=0), bounds[:, 1].max(axis=0)]))
+        plan["status"] = "planning"
+        self.state.update(status="planning", message="Planning and checking the whole needle and robot against the head")
+        self.stage_started = time.monotonic()
+        cancelled = Event()
+        future = self.head_worker.submit(self.head_solver.solve, context, cancelled)
+        self.head_pending = (future, cancelled, self.token, target, self.head.revision, context.start_rad)
+
+        def wake_bridge(_):
+            if not cancelled.is_set() and rclpy.ok():
+                self.head_result_ready.trigger()
+
+        future.add_done_callback(wake_bridge)
+
+    def finish_head_plan(self):
+        from .head_planning import JOINT_NAMES, START_TOLERANCE_RAD
+
+        if not self.head_pending or not self.head_pending[0].done():
+            return
+        future, _, token, target, revision, start = self.head_pending
+        self.head_pending = None
+        if self.active is None or token != self.token:
+            return
+        try:
+            if self.head.poll_pose():
+                self.invalidate_head_plan()
+                return
+            if not self.head.ready or revision != self.head.revision:
+                self.fail("Head scene is no longer confirmed")
+                return
+            if (not self.feedback()[-1] or any(abs(self.joints[name] - value) >= START_TOLERANCE_RAD
+                                                for name, value in zip(JOINT_NAMES, start))):
+                self.fail("Observed robot state changed while planning")
+                return
+            candidate, search = future.result()
+            self.state["plan"]["head_search"] = search
+            self.record("anatomy_search_result", {"request_id": target.request_id, "head_revision": revision, **search})
+            if candidate is None:
+                if search["attempts"]:
+                    last = search["attempts"][-1]
+                    self.state["plan"]["moveit_error_code"] = last["moveit_error_code"]
+                    self.fail(f"No verified head path: {last['reason']}")
+                else:
+                    self.fail("No verified head path within the planning time")
+                return
+
+            verdict = candidate.proof
+            filename = f"head_plan_{uuid.uuid4().hex}.json"
+            verdict.update(request_id=target.request_id, head_revision=revision,
+                           asset_sha256=self.head.state["asset_sha256"], whole_arm=candidate.whole_arm,
+                           metrics=candidate.metrics, route=candidate.route)
+            atomic_json(self.runtime / filename, verdict)
+            if self.head.poll_pose():
+                self.invalidate_head_plan()
+                return
+            summary = {key: verdict[key] for key in ("passed", "reason", "margin_mm", "certified_minimum_lower_mm",
+                                                      "sample_count", "interval_count")}
+            summary["closest"] = {key: value for key, value in verdict["closest"].items() if key != "links_base_mm"}
+            self.state["plan"].update(clearance=summary, head_report=filename, whole_arm=candidate.whole_arm,
+                                      metrics=candidate.metrics)
+            self.record("anatomy_sweep_result", {"request_id": target.request_id, "head_revision": revision, **summary})
+            self.state["plan"]["tcp_path_m"] = [[value / 1000 for value in frame["tip_base_mm"]]
+                                                for frame in verdict["frames"]]
+            search["operation_wall_s"] = time.monotonic() - self.operation_started
+            self.accept_plan(candidate.response, target)
+        except Exception as error:
+            self.fail(f"Head planning failed: {error}")
+        finally:
+            try:
+                atomic_json(self.state_file, self.state)
+            except OSError as error:
+                self.get_logger().error(f"Cannot publish head plan result: {error}")
 
     def start_execute(self):
         target = self.active
@@ -489,6 +627,7 @@ class FileBridge(Node):
 
     def fail(self, message, cancel=False):
         request_id = self.active.request_id if self.active else self.state.get("request_id")
+        self.cancel_head_plan()
         if cancel and self.goal_handle is not None:
             self.goal_handle.cancel_goal_async()
         if self.state["status"] == "executing":
@@ -517,6 +656,9 @@ def main(args=None):
         # Allow node destruction to finish instead of interrupting its cleanup.
         signal.signal(signal.SIGINT, signal.SIG_IGN)
         if node is not None:
+            if node.head_worker is not None:
+                node.cancel_head_plan()
+                node.head_worker.shutdown(wait=False, cancel_futures=True)
             if node.goal_handle is not None and rclpy.ok():
                 node.goal_handle.cancel_goal_async()
             node.destroy_node()

@@ -12,6 +12,10 @@ Windows 兼容入口为 `Open_UR12e_Slicer.cmd` 或 `Start_UR12e_Slicer.ps1`，�
 
 ## 坐标约定
 
+头部避碰使用 `start_linux.sh --anatomy`。界面包含脑、颅骨和原 MR 视图选择，可设置头位、回放规划轨迹及跳到最近姿态。规划通过后显示采用的路线、后端耗时、净距下界和全臂复核结果。头位更新后由 ROS 回读确认并刷新计划版本。[操作与验收](../validation/HEAD_ANATOMY.md)
+
+禁入区验收通过本任务 Slicer 队列生成同一视角的三张 PNG。球与轨迹从 UR `base` 米转换到 Slicer RAS 毫米。红点表示完整机器人判为碰撞时的针尖采样位置。[采集方法与结果](../validation/VIRTUAL_KEEPOUT.md)
+
 - Slicer 世界位置为 RAS 毫米；发送协议为 UR `base` 下的米，四元数顺序为 `[x,y,z,w]`。
 - 首轮已知模拟关系 `BASE_TO_RAS_MM = I`：`p_RAS_mm = 1000 p_base_m`。两套坐标同轴同原点，仅作仿真联调；没有声称影像与真实机器人已经配准。
 - 界面的 Roll/Pitch/Yaw 是固定轴 XYZ，组合为 `Rz(yaw) Ry(pitch) Rx(roll)`。

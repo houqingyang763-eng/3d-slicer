@@ -18,6 +18,8 @@ bash ur12e_slicer/status_linux.sh
 
 `mock.launch.py` 固定 `ur_type=ur12e`、`use_mock_hardware=true`、`robot_ip=127.0.0.1`，关闭 dashboard client 和工具通信，不暴露切换实物的参数。普通 `joint_trajectory_controller` 被激活，MoveIt 执行 goal 也明确选择它；不能只改驱动控制器而让 MoveIt 继续使用默认 scaled controller。
 
+`start_linux.sh --keepout` 为 mock 的 `ur_manipulator` 启用更细的 OMPL 碰撞采样。禁入区验收与文件桥共用 `planning.py` 中的针尖约束构造，验收直接调用规划服务固定起点。[禁入区实验](../../../validation/VIRTUAL_KEEPOUT.md)
+
 `ursim.launch.py` 由 [URSim 专用入口](../../../URSIM_LINUX.md)启动，固定 `ur_type=ur12e`、`use_mock_hardware=false`、`robot_ip=192.168.62.2`、回连 `192.168.62.1`，只连接已核验身份的本机虚拟控制柜。它激活 `scaled_joint_trajectory_controller`，并将桥的 `controller_name` 同步设为该名称、`feedback_source` 设为 `ros2_ursim`。mock 仍使用 ordinary JTC 与 `ros2_mock_hardware`。此处 `false` 不代表开放真机入口；不接受外部 IP 参数。首次配置 External Control 1.0.5 后才运行全栈。
 
 ROS mock hardware 不使用 Gazebo 或 `/clock`，因此 `use_sim_time=false`。官方 MoveIt launch 本身等待机器人描述；桥接节点等待关节、TF 与服务，避免用固定 sleep 猜测系统就绪。命令准备最多等待 20 s；规划响应最多等待规划预算加 15 s；执行默认 120 s 超时并请求取消。错误写入 `state.message` 与日志。
@@ -25,6 +27,8 @@ ROS mock hardware 不使用 Gazebo 或 `/clock`，因此 `use_sim_time=false`。
 `config/bridge.yaml` 是针尖偏移、规划组/算法、误差容差和速度倍率的集中机器人侧配置。针是沿 tool0 +Z 的简化圆柱，当前不包含真实工具外形、组织模型或真实标定。RRTConnect 为首轮默认，不声称算法最优。
 
 ## 本机核查范围
+
+静态头部只规划档由 `start_linux.sh --anatomy` 启动。`head_planning_strategy=geometry` 默认按已确认的头模包络排序直达和绕行候选，必要时回退到 `HeadRRTConnect`。设为 `ompl` 可比较同一复核下的单次 RRTConnect。两条路线都对最终轨迹验证整针扫掠以及全臂的加密碰撞样本。Slicer 使用同一场景版本及模型哈希加载回放。[头部避碰工程](../../../validation/HEAD_ANATOMY.md)
 
 纯协议测试不依赖 ROS。从仓库根目录：
 

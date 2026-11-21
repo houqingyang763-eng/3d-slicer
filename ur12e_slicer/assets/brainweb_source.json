@@ -1,0 +1,11 @@
+{
+  "subject": "BrainWeb subject 04, discrete model",
+  "publisher": "McConnell Brain Imaging Centre, McGill University",
+  "source_page": "https://brainweb.bic.mni.mcgill.ca/cgi/brainweb1?alias=subject04_crisp&download=1",
+  "raw_sha256": "15ed050087af721f369ec873aa89dfe2599aa833da63fab2401f99e58fe47ee7",
+  "raw_bytes": 56873096,
+  "dimensions_zyx": [362, 434, 362],
+  "spacing_mm": 0.5,
+  "brain_labels": [2, 3],
+  "skull_labels": [7, 11]
+}

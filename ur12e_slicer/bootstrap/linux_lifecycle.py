@@ -66,14 +66,16 @@ def slicer_status():
         # An independently opened Slicer must not be claimed by this launcher.
         ours = ours and state.get("task") == "ur12e_slicer" and str(PROJECT).encode() in proc["command"]
         panel_ready = False
+        anatomy_loaded = False
         try:
             panel = read_json(RUNTIME / "slicer_session.json")
             panel_age = time.time() - panel["heartbeat"]
             panel_ready = panel.get("pid") == state["pid"] and 0 <= panel_age < 10
+            anatomy_loaded = panel_ready and panel.get("anatomy_loaded", False)
         except (OSError, ValueError, KeyError):
             result["detail"] = "Control panel heartbeat is absent or invalid."
         result.update(running=bool(ours), ready=bool(ours and 0 <= age < 10 and panel_ready),
-                      pid=state["pid"], heartbeat_age_s=age, group=owner["group"])
+                      pid=state["pid"], heartbeat_age_s=age, group=owner["group"], anatomy_loaded=anatomy_loaded)
     except (OSError, ValueError, KeyError):
         pass
     return result
@@ -152,22 +154,39 @@ def stop_all(backend_only=False):
     print("Stopped: no live processes remain in the recorded task groups.", flush=True)
 
 
-def start_all(backend_only=False):
+def start_all(backend_only=False, keepout=False, anatomy=False):
     # Fail before starting the backend if a requested GUI cannot be launched.
     executable = None if backend_only else slicer_executable()
     logs = RUNTIME / "linux_logs"
     logs.mkdir(parents=True, exist_ok=True)
     before = backend_status()
+    if before["running"] and bool(before.get("anatomy")) != anatomy:
+        raise RuntimeError("The running mock uses a different anatomy mode. Stop it before switching modes.")
+    if anatomy and not (PROJECT / ".local/head_anatomy/manifest.json").is_file():
+        raise RuntimeError("Prepare BrainWeb head assets with bootstrap/prepare_anatomy.py first.")
+    if before["running"] and keepout and not before.get("keepout"):
+        raise RuntimeError("The running mock uses the standard profile. Stop it before starting with --keepout.")
     created_backend = not before["running"]
     created_frontend = False
     try:
         if created_backend:
+            command = ["bash", str(PROJECT / "bootstrap/run_simulation.sh")]
+            if keepout:
+                command.append("--keepout")
+            if anatomy:
+                command.append("--anatomy")
             with (logs / ("backend_" + stamp() + ".log")).open("wb") as stream:
-                subprocess.Popen(["bash", str(PROJECT / "bootstrap/run_simulation.sh")],
+                subprocess.Popen(command,
                                  cwd=REPO, stdout=stream, stderr=subprocess.STDOUT,
                                  stdin=subprocess.DEVNULL, close_fds=True)
         backend = wait_ready(backend_status, 180, "ROS mock backend")
-        frontend = slicer_status()
+        def frontend_status():
+            status = slicer_status()
+            if anatomy and not status.get("anatomy_loaded"):
+                status["ready"] = False
+            return status
+
+        frontend = frontend_status()
         if not backend_only and not frontend["ready"]:
             if frontend["running"]:
                 raise RuntimeError("Owned Slicer is running without a fresh heartbeat; stop it before restarting.")
@@ -186,7 +205,7 @@ def start_all(backend_only=False):
                 raise RuntimeError("Slicer launcher exited immediately; inspect its log.")
             write_json(RUNTIME / "linux_slicer.json", {"pid": child.pid, "group": child.pid,
                        "start_ticks": proc["start_ticks"], "executable": str(executable)})
-            frontend = wait_ready(slicer_status, 120, "Slicer panel")
+            frontend = wait_ready(frontend_status, 120, "Slicer panel")
         print(json.dumps({"backend": backend, "slicer": frontend, "simulation_only": True}, indent=2), flush=True)
     except BaseException:
         # Only clean components created by this failed start. Reused graphs remain.
@@ -278,6 +297,8 @@ def main():
     commands = parser.add_subparsers(dest="command", required=True)
     start = commands.add_parser("start", help="Build/start the mock graph and Slicer, reusing healthy instances")
     start.add_argument("--backend-only", action="store_true", help="No GUI, ROS mock only")
+    start.add_argument("--keepout", action="store_true", help="Use finer OMPL collision resolution for the virtual keep-out experiment")
+    start.add_argument("--anatomy", action="store_true", help="Start plan-only static brain/skull planning and Slicer replay")
     stop = commands.add_parser("stop", help="Stop only the recorded task's process groups")
     stop.add_argument("--backend-only", action="store_true")
     commands.add_parser("status", help="Read-only JSON readiness and heartbeat status")
@@ -298,7 +319,7 @@ def main():
         except BlockingIOError:
             raise RuntimeError("Another Linux lifecycle/validation command owns this project; wait for it to finish.")
         if args.command == "start":
-            start_all(args.backend_only)
+            start_all(args.backend_only, keepout=args.keepout, anatomy=args.anatomy)
         elif args.command == "stop":
             stop_all(args.backend_only)
         else:

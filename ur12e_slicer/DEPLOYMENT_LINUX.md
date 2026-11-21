@@ -117,6 +117,14 @@ ROS 使用 `ROS_DOMAIN_ID=62`、`ROS_LOCALHOST_ONLY=1`，仅本机 mock；普通
 
 Slicer 基础面板支持设置目标、规划、执行缓存计划和查看反馈。目标不是预先保证可达；先用当前针尖附近目标，再由真实 MoveIt 规划判断。通用面板基础场景与头部导航评价场景是两个使用入口，头部链由下一节评价程序构造。
 
+### 虚拟禁入区规划对照
+
+先用 `bash ur12e_slicer/start_linux.sh --keepout` 启动 mock，再运行 `bash ur12e_slicer/run_keepout_linux.sh`。无 GUI 时给两个命令分别加 `--backend-only` 和 `--no-slicer`。实验结束后用 `stop_linux.sh` 清理本任务进程。[三组条件与输出说明](validation/VIRTUAL_KEEPOUT.md)
+
+### 脑模与颅骨避碰
+
+安装可选的 `python3-scipy` 与 `python3-vtk9`，使用 `prepare_anatomy.py` 准备经哈希校验的 BrainWeb 模型。`start_linux.sh --anatomy` 启动 Slicer 与 mock，默认使用头部几何规划，必要时回退到 RRTConnect。`run_anatomy_linux.sh` 验收真实 Slicer 和 MoveIt 链路。无 GUI 时可用 `--backend-only` 启动并运行文件桥速度对照。[完整步骤](validation/HEAD_ANATOMY.md)
+
 ## 6. 跑完整导航评价
 
 ```bash

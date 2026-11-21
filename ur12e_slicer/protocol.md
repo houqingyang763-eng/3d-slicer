@@ -88,8 +88,15 @@ Linux Slicer 与 ROS 2 访问同一个控制目录：mock 默认为 `ur12e_slice
 
 ## ROS 接口和证据
 
+### 静态脑模与颅骨规划
+
+以 start_linux.sh --anatomy 启动时，state.json 增加 anatomy 状态。session 标识本次桥进程，revision 标识当前头位，confirmed_revision 表示两个对象已经回读核对。头位消息 head_pose.json 包含 session、一次性 revision、UR base 下的 position_m 与 orientation_xyzw。更新触发已规划路径失效。
+
+头部档的 `target.json` 使用 `command=plan`，另外携带当前 `head_revision`。`plan.clearance` 保存整针复核结果、碰撞见证或净距下界，`plan.whole_arm` 保存最终关节路径的全臂加密碰撞复核。`plan.head_search` 记录候选次序、被拒原因、所选路线及后端耗时。`plan.head_report` 指向本轮回放数据，含实际规划轨迹的复核帧与各连杆变换。头位变更使正在处理和已经发布的旧版本计划失效。该档的轨迹用于 mock 几何验证与 Slicer 回放。[数据与验收](validation/HEAD_ANATOMY.md)
+
 - `/joint_states`：关节实际模拟反馈；`/tf`、`/tf_static`：各 link 到 base 的变换。
 - `/plan_kinematic_path`：`moveit_msgs/srv/GetMotionPlan`。
+- `/compute_cartesian_path` 与 `/check_state_validity`：头部档的笛卡尔候选求解与最终全臂碰撞复核。
 - `/execute_trajectory`：`moveit_msgs/action/ExecuteTrajectory`，显式选择后台配置的控制器；mock 为 `controller_names=["joint_trajectory_controller"]`，URSim 为 `["scaled_joint_trajectory_controller"]`，与各自驱动激活的控制器一致。
 - `/apply_planning_scene`：附加简化针碰撞几何；`/compute_fk`：真实规划预览采样。
 - 控制目录中的 `ros_events.jsonl`：追加记录接收/拒绝、规划返回、执行返回与当时末端误差；mock 位于项目 `runtime/`，URSim 位于原生 Linux cache 的 `ursim/bridge/`。不能把纯协议测试日志当成 ROS 执行证据。

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Manage this demo's boxes using real MoveIt planning-scene services.
+"""Manage this demo's primitives using real MoveIt planning-scene services.
 
 Run inside UR12e-Jazzy with ROS Jazzy sourced, ROS_DOMAIN_ID=62 and
 ROS_LOCALHOST_ONLY=1. The JSON displayed by Slicer is a GetPlanningScene
@@ -22,6 +22,7 @@ from rclpy.time import Time
 
 PROJECT = Path(__file__).resolve().parents[1]
 PREFIX = "ur12e_demo_"
+PRIMITIVE_TYPES = {SolidPrimitive.BOX: "box", SolidPrimitive.SPHERE: "sphere"}
 
 
 def atomic_json(path, value):
@@ -59,7 +60,7 @@ def compose(parent, child):
 
 
 class SceneTool:
-    def __init__(self, snapshot=None):
+    def __init__(self, snapshot=None, *, prefix=PREFIX):
         if os.environ.get("ROS_DOMAIN_ID") != "62" or os.environ.get("ROS_LOCALHOST_ONLY") != "1":
             raise RuntimeError("Use this task's ROS_DOMAIN_ID=62 and ROS_LOCALHOST_ONLY=1")
         self.node = rclpy.create_node("ur12e_demo_scene_tool")
@@ -69,6 +70,7 @@ class SceneTool:
         self.tf = Buffer()
         self.listener = TransformListener(self.tf, self.node)
         self.snapshot_path = Path(snapshot) if snapshot else PROJECT / "runtime" / "obstacle_scene.json"
+        self.prefix = prefix
         self.last_scene = None
 
     def call(self, client, request, timeout=15):
@@ -103,34 +105,45 @@ class SceneTool:
         self.last_scene = self.call(self.get_client, request).scene
         objects = []
         for item in self.last_scene.world.collision_objects:
-            if not item.id.startswith(PREFIX):
+            if not item.id.startswith(self.prefix):
                 continue
             object_pose = self.base_pose(item.header.frame_id, item.pose)
             primitives = []
             for primitive, local in zip(item.primitives, item.primitive_poses):
-                if primitive.type != SolidPrimitive.BOX:
-                    raise RuntimeError("This task's obstacle display accepts confirmed box primitives only")
-                primitives.append({"type": "box", "dimensions_m": list(primitive.dimensions),
+                if primitive.type not in PRIMITIVE_TYPES:
+                    raise RuntimeError("Unexpected primitive in the demo's MoveIt obstacle readback")
+                primitives.append({"type": PRIMITIVE_TYPES[primitive.type], "dimensions_m": list(primitive.dimensions),
                                    "pose_base": compose(object_pose, pose_json(local))})
             objects.append({"id": item.id, "readback_frame": item.header.frame_id,
                             "readback_object_pose": pose_json(item.pose), "primitives": primitives})
         result = {"schema_version": 1, "source": "moveit_get_planning_scene", "timestamp": time.time(),
                   "frame_id": "base", "operation": operation, "simulation_only": True,
                   "objects": objects,
+                  "world_object_ids": sorted(item.id for item in self.last_scene.world.collision_objects),
                   "attached_object_ids": [item.object.id for item in self.last_scene.robot_state.attached_collision_objects]}
         atomic_json(self.snapshot_path, result)
         return result
 
     def add_box(self, identifier, center, dimensions):
-        if not identifier.startswith(PREFIX):
-            raise ValueError("Only this demo's ur12e_demo_ object IDs are permitted")
-        if len(center) != 3 or len(dimensions) != 3 or any(not math.isfinite(x) for x in center+dimensions) or any(x <= 0 for x in dimensions):
-            raise ValueError("Box center and positive dimensions must be finite 3-vectors")
+        if len(dimensions) != 3:
+            raise ValueError("A box requires three dimensions")
+        return self._add_primitive(identifier, center, SolidPrimitive.BOX, dimensions)
+
+    def add_sphere(self, identifier, center, radius):
+        return self._add_primitive(identifier, center, SolidPrimitive.SPHERE, [radius])
+
+    def _add_primitive(self, identifier, center, primitive_type, dimensions):
+        if not identifier.startswith(self.prefix):
+            raise ValueError(f"Only {self.prefix} object IDs are permitted")
+        if len(center) != 3 or not all(math.isfinite(x) for x in center):
+            raise ValueError("Obstacle center must be a finite 3-vector")
+        if not all(math.isfinite(x) and x > 0 for x in dimensions):
+            raise ValueError("Obstacle dimensions must be finite and positive")
         item = CollisionObject()
         item.id, item.header.frame_id, item.operation = identifier, "base", CollisionObject.ADD
         item.pose.position.x, item.pose.position.y, item.pose.position.z = map(float, center)
         item.pose.orientation.w = 1.0
-        shape = SolidPrimitive(type=SolidPrimitive.BOX, dimensions=list(map(float, dimensions)))
+        shape = SolidPrimitive(type=primitive_type, dimensions=list(map(float, dimensions)))
         local = Pose()
         local.orientation.w = 1.0
         item.primitives, item.primitive_poses = [shape], [local]
@@ -138,15 +151,18 @@ class SceneTool:
         readback = self.snapshot("add:"+identifier)
         own = next((obj for obj in readback["objects"] if obj["id"] == identifier), None)
         if not own or len(own["primitives"]) != 1:
-            raise RuntimeError("Applied box is absent from actual GetPlanningScene readback")
-        box = own["primitives"][0]
-        if max(abs(a-b) for a, b in zip(box["dimensions_m"], dimensions)) > 1e-9 or max(abs(a-b) for a, b in zip(box["pose_base"]["position_m"], center)) > 1e-8:
-            raise RuntimeError("Actual box readback differs from the requested base geometry")
+            raise RuntimeError("Applied obstacle is absent from actual GetPlanningScene readback")
+        primitive = own["primitives"][0]
+        if (primitive["type"] != PRIMITIVE_TYPES[primitive_type] or
+                len(primitive["dimensions_m"]) != len(dimensions) or
+                math.dist(primitive["dimensions_m"], dimensions) > 1e-9 or
+                math.dist(primitive["pose_base"]["position_m"], center) > 1e-8):
+            raise RuntimeError("Actual obstacle readback differs from the requested base geometry")
         return readback
 
     def remove(self, identifier):
-        if not identifier.startswith(PREFIX):
-            raise ValueError("Only this demo's ur12e_demo_ object IDs are permitted")
+        if not identifier.startswith(self.prefix):
+            raise ValueError(f"Only {self.prefix} object IDs are permitted")
         before = self.snapshot("inspect_before_remove:"+identifier)
         if not any(obj["id"] == identifier for obj in before["objects"]):
             return before
@@ -155,7 +171,7 @@ class SceneTool:
         self.apply(item)
         readback = self.snapshot("remove:"+identifier)
         if any(obj["id"] == identifier for obj in readback["objects"]):
-            raise RuntimeError("MoveIt readback still contains the removed box")
+            raise RuntimeError("MoveIt readback still contains the removed obstacle")
         return readback
 
     def apply(self, item):
@@ -166,9 +182,9 @@ class SceneTool:
         if not self.call(self.apply_client, request).success:
             raise RuntimeError("Real MoveIt ApplyPlanningScene rejected the change")
 
-    def validity(self, joint_names, positions):
+    def validity(self, joint_names, positions, *, group_name="ur_manipulator"):
         request = GetStateValidity.Request()
-        request.group_name = "ur_manipulator"
+        request.group_name = group_name
         request.robot_state.is_diff = True
         request.robot_state.joint_state.name = list(joint_names)
         request.robot_state.joint_state.position = list(map(float, positions))

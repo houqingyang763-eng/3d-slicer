@@ -1,9 +1,11 @@
 """Jazzy UR official driver + MoveIt, deliberately limited to mock hardware."""
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
-from launch_ros.actions import Node
+from launch.substitutions import LaunchConfiguration, NotEqualsSubstitution, PathJoinSubstitution
+from launch_ros.actions import Node, SetParameter, SetParametersFromFile
+from launch_ros.parameter_descriptions import ParameterValue
 from launch_ros.substitutions import FindPackageShare
 
 
@@ -26,10 +28,19 @@ def generate_launch_description():
     )
     bridge = Node(
         package="ur12e_slicer_bridge", executable="file_bridge", name="ur12e_slicer_bridge", output="screen",
-        parameters=[PathJoinSubstitution([package, "config", "bridge.yaml"]), {"runtime_dir": runtime}],
+        parameters=[PathJoinSubstitution([package, "config", "bridge.yaml"]),
+                    {"runtime_dir": runtime, "head_assets_dir": ParameterValue(LaunchConfiguration("head_assets_dir"),
+                                                                                value_type=str)}],
     )
     return LaunchDescription([
         DeclareLaunchArgument("runtime_dir", description="Absolute WSL path to the shared Windows ur12e_slicer/runtime folder"),
         DeclareLaunchArgument("launch_rviz", default_value="false"),
-        control, moveit, bridge,
+        DeclareLaunchArgument("keepout", default_value="false", choices=["true", "false"]),
+        DeclareLaunchArgument("head_assets_dir", default_value=""),
+        control,
+        SetParameter(name="ompl.ur_manipulator.longest_valid_segment_fraction", value=0.00025,
+                     condition=IfCondition(LaunchConfiguration("keepout"))),
+        SetParametersFromFile(PathJoinSubstitution([package, "config", "head_moveit.yaml"]),
+                              condition=IfCondition(NotEqualsSubstitution(LaunchConfiguration("head_assets_dir"), ""))),
+        moveit, bridge,
     ])

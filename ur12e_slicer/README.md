@@ -4,7 +4,15 @@
 
 本目录是本项工作的统一入口。代码、配置、启动脚本、演示和结果记录随任务推进逐步加入；本清单允许修改、拆分和增补。完成项必须附可复现入口或结果证据。
 
-## 当前增量：URSim 虚拟控制柜
+## 头部解剖避碰
+
+用 `start_linux.sh --anatomy` 启动，Slicer 面板的**规划**使用头部几何和 MoveIt 生成路线。整针扫掠及全臂碰撞复核通过后可回放、查看规划耗时和定位最近姿态。`run_anatomy_linux.sh` 验收 Slicer 链路。[规划方法、命令与对照](validation/HEAD_ANATOMY.md)
+
+## 虚拟禁入区规划对照
+
+用 `start_linux.sh --keepout` 启动 mock，再用 `run_keepout_linux.sh` 比较同一起点和目标的三种场景。结果包括旧轨迹碰撞接触、重规划复核与目标阻断，以及同一相机下的 Slicer 截图。[运行命令与实测记录](validation/VIRTUAL_KEEPOUT.md)
+
+## URSim 虚拟控制柜
 
 博士生布置的本周机器人任务为搭建 URSim、编写并跑通基础控制程序；用户已确认沿用 ROS 2 / MoveIt，并提供真机 External Control 1.0.5 信息。实现复用上周 Slicer / MoveIt 程序，新增控制柜通信，不重做已通过的 mock 导航主线。
 

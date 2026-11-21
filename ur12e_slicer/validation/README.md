@@ -1,5 +1,9 @@
 # ROS mock 后台验收
 
+脑与颅骨的验收使用 `run_anatomy_linux.sh`，覆盖同起终点绕行、两类侵入反例、头位更新和 Slicer 真实回放。`benchmark_head_planning.py` 在同一 mock 文件桥与最终复核下，比较头部几何策略和调过步长的 RRTConnect。[脑模与颅骨验收](HEAD_ANATOMY.md)
+
+球形禁入区的三组只规划对照使用独立入口 `run_keepout_linux.sh`。它复用 MoveIt 场景回读和状态有效性工具，保留同一请求、关节路径与碰撞证据。[虚拟禁入区运行与验收](VIRTUAL_KEEPOUT.md)
+
 `validate_ros_runtime.py` 只向本项目已经运行的 ROS 2 mock 后台发送命令，不安装软件、不启动后台、不模拟机器人。执行时需要暂停 Slicer 的目标发送，避免两个控制端竞争 `runtime/target.json`。
 
 建议在 WSL 中运行，使验收器与 ROS 使用同一壁钟：

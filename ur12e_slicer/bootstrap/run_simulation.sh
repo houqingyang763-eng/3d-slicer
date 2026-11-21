@@ -4,6 +4,22 @@ set -Eeuo pipefail
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
 RUNTIME="$PROJECT/runtime"
+KEEPOUT=false
+HEAD_ASSETS=""
+for argument in "$@"; do
+  case "$argument" in
+    --keepout) KEEPOUT=true ;;
+    --anatomy)
+      KEEPOUT=true
+      HEAD_ASSETS="$PROJECT/.local/head_anatomy"
+      ;;
+    *) printf 'Unknown mock argument: %s\n' "$argument" >&2; exit 2 ;;
+  esac
+done
+if [[ -n "$HEAD_ASSETS" && ! -r "$HEAD_ASSETS/manifest.json" ]]; then
+  printf 'Prepare BrainWeb head assets with bootstrap/prepare_anatomy.py first.\n' >&2
+  exit 2
+fi
 PROJECT_KEY="$(printf '%s' "$PROJECT" | sha256sum | cut -c1-12)"
 WORKSPACE="${UR12E_BUILD_DIR:-${XDG_CACHE_HOME:-$HOME/.cache}/ur12e_slicer/$PROJECT_KEY/ros2_ws}"
 mkdir -p -- "$RUNTIME" "$WORKSPACE"
@@ -20,7 +36,7 @@ export ROS_LOCALHOST_ONLY=1
 set +u
 source /opt/ros/jazzy/setup.bash
 set -u
-python3 - "$RUNTIME/linux_launch.json" <<'PY'
+python3 - "$RUNTIME/linux_launch.json" "$KEEPOUT" "$HEAD_ASSETS" <<'PY'
 import json, os, sys, time
 from pathlib import Path
 p = Path(sys.argv[1])
@@ -35,7 +51,8 @@ if p.exists():
 pid = os.getppid()
 ticks = Path(f"/proc/{pid}/stat").read_text().split(") ", 1)[1].split()[19]
 p.write_text(json.dumps({"pid": pid, "start_ticks": ticks, "started_at": time.time(), "domain_id": 62,
-                         "mode": "mock_hardware"}), encoding="utf-8")
+                         "mode": "mock_hardware", "keepout": sys.argv[2] == "true",
+                         "anatomy": bool(sys.argv[3])}), encoding="utf-8")
 PY
 cd -- "$WORKSPACE"
 colcon --log-base "$WORKSPACE/log" build \
@@ -47,5 +64,8 @@ source "$WORKSPACE/install/setup.bash"
 set -u
 # stop_simulation.sh signals launch alone. Noninteractive mode makes launch
 # forward SIGINT to its children instead of assuming a terminal already did.
-exec ros2 launch --noninteractive ur12e_slicer_bridge mock.launch.py \
-  "runtime_dir:=$RUNTIME" "launch_rviz:=${UR12E_RVIZ:-false}"
+launch_args=("runtime_dir:=$RUNTIME" "launch_rviz:=${UR12E_RVIZ:-false}" "keepout:=$KEEPOUT")
+if [[ -n "$HEAD_ASSETS" ]]; then
+  launch_args+=("head_assets_dir:=$HEAD_ASSETS")
+fi
+exec ros2 launch --noninteractive ur12e_slicer_bridge mock.launch.py "${launch_args[@]}"

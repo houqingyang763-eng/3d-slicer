@@ -231,6 +231,7 @@ class UR12ePanel:
         self.last_frame = 0.0
         self.last_frame_monotonic = 0.0
         self.updating_target = False
+        self.anatomy = None
         self.robot_models = {}
         self.mesh_transforms = {}
         self.fallback_models = []
@@ -359,6 +360,9 @@ class UR12ePanel:
             self.submit_buttons.append((command, button))
             buttons.addWidget(button)
         layout.addLayout(buttons)
+        self.anatomy_box = qt.QGroupBox("头部避碰")
+        self.anatomy_box.hide()
+        layout.addWidget(self.anatomy_box)
         self.status_label = qt.QLabel("等待 ROS 2 仿真反馈…")
         self.status_label.setWordWrap(True)
         self.status_label.setMinimumHeight(65)
@@ -388,7 +392,11 @@ class UR12ePanel:
         self.output_label.setWordWrap(True)
         layout.addWidget(self.output_label)
         layout.addStretch(1)
-        self.dock.setWidget(body)
+        scroll = qt.QScrollArea()
+        scroll.setFrameShape(qt.QFrame.NoFrame)
+        scroll.setWidgetResizable(True)
+        scroll.setWidget(body)
+        self.dock.setWidget(scroll)
         slicer.util.mainWindow().addDockWidget(qt.Qt.RightDockWidgetArea, self.dock)
         self.dock.show()
         slicer.util.mainWindow().showNormal()
@@ -398,6 +406,9 @@ class UR12ePanel:
             module_panel.hide()
 
     def apply_camera(self):
+        if self.anatomy:
+            self.anatomy.frame_camera()
+            return
         camera = slicer.app.layoutManager().threeDWidget(0).threeDView().renderWindow().GetRenderers().GetFirstRenderer().GetActiveCamera()
         camera.SetPosition(2100, -2400, 1700)
         camera.SetFocalPoint(0, -150, 450)
@@ -451,6 +462,8 @@ class UR12ePanel:
         return np.allclose(target["position_m"], pose["position_m"], atol=1e-8) and abs(np.dot(target["orientation_xyzw"], pose["orientation_xyzw"])) > 1-1e-9
 
     def can_execute(self):
+        if self.state and self.state.get("anatomy"):
+            return False
         if self.feedback_error or not self.planned_request or not self.state:
             return False
         return self.same_target(self.planned_request) and self.state.get("status") == "planned" and self.state.get("ready", False) and time.time()-float(self.state.get("timestamp", 0)) < 5
@@ -486,11 +499,17 @@ class UR12ePanel:
         if self.state.get("status") in ("planning", "executing"):
             self.status_label.setText("当前操作尚未结束，请等待规划或执行完成。")
             return None
+        anatomy = self.state.get("anatomy")
+        if anatomy and (command != "plan" or not self.anatomy or not self.anatomy.plan_enabled()):
+            self.status_label.setText("头部避碰只接受当前已确认脑模和颅骨场景的规划请求。")
+            return None
         if command == "execute" and not self.can_execute():
             self.status_label.setText("请先为当前目标规划，收到有效计划后再执行。")
             return None
         target = self.current_target()
         request = dict(target, schema_version=1, request_id=uuid.uuid4().hex, command=command, timestamp=time.time())
+        if anatomy:
+            request["head_revision"] = anatomy["revision"]
         if command == "execute":
             request["plan_request_id"] = self.planned_request["request_id"]
         atomic_json(CONTROL_RUNTIME / "target.json", request)
@@ -543,39 +562,56 @@ class UR12ePanel:
             (RUNTIME / "slicer_feedback_error.txt").write_text(traceback.format_exc(), encoding="utf-8")
 
     def update_feedback(self, state):
+        anatomy = state.get("anatomy")
+        if anatomy and not self.anatomy:
+            from anatomy_panel import AnatomyPanel
+            self.anatomy = AnatomyPanel(self, anatomy)
+        mr_only = bool(self.anatomy and self.anatomy.legacy_visible)
         links = state.get("link_transforms", {})
         for link, node, transform in self.joint_models:
             available = link in links
-            node.GetDisplayNode().SetVisibility(available and not self.mesh_transforms)
+            node.GetDisplayNode().SetVisibility(available and not self.mesh_transforms and not mr_only)
             if available:
                 transform.SetMatrixTransformToParent(vtk_matrix(pose_matrix(links[link])))
         for i, node in enumerate(self.fallback_models):
             a, b = LINK_ORDER[i:i+2]
             available = a in links and b in links
-            node.GetDisplayNode().SetVisibility(available and not self.mesh_transforms)
+            node.GetDisplayNode().SetVisibility(available and not self.mesh_transforms and not mr_only)
             if available:
                 node.SetAndObservePolyData(polyline([pose_matrix(links[a])[:3, 3], pose_matrix(links[b])[:3, 3]], 42 if i < 4 else 30))
         for link, entries in self.mesh_transforms.items():
             for mesh_node, transform in entries:
-                mesh_node.GetDisplayNode().SetVisibility(link in links)
+                mesh_node.GetDisplayNode().SetVisibility(link in links and not mr_only)
                 if link in links:
                     transform.SetMatrixTransformToParent(vtk_matrix(pose_matrix(links[link])))
         tcp = state.get("tcp_pose")
         for node in self.robot_models.values():
-            node.GetDisplayNode().SetVisibility(tcp is not None)
+            node.GetDisplayNode().SetVisibility(tcp is not None and not anatomy)
         if tcp:
             self.tcp_transform.SetMatrixTransformToParent(vtk_matrix(pose_matrix(tcp)))
-        self.tool.GetDisplayNode().SetVisibility("tool0" in links)
+        self.tool.GetDisplayNode().SetVisibility("tool0" in links and not mr_only)
+        if anatomy:
+            self.target_marker.GetDisplayNode().SetVisibility(not mr_only)
         if "tool0" in links:
             self.tool_transform.SetMatrixTransformToParent(vtk_matrix(pose_matrix(links["tool0"])))
             offset = np.array(state.get("tool", {}).get("tip_offset_m", [0, 0, .12])) * 1000
-            self.tool.SetAndObservePolyData(polyline([[0, 0, 0], offset], 7))
+            self.tool.SetAndObservePolyData(polyline([[0, 0, 0], offset], 3 if anatomy else 7))
         plan = state.get("plan", {})
+        if self.anatomy:
+            self.anatomy.update(anatomy, plan)
+            self.session_info["anatomy_loaded"] = True
         path = plan.get("tcp_path_m", [])
-        self.plan_path.GetDisplayNode().SetVisibility(len(path) >= 2 and plan.get("status") in ["planned", "valid", "succeeded"])
+        path_visible = len(path) >= 2 and plan.get("status") in ["planned", "valid", "succeeded"]
+        if anatomy:
+            path_visible = path_visible and self.anatomy.plan_enabled() and plan.get("head_revision") == anatomy["revision"]
+        self.plan_path.GetDisplayNode().SetVisibility(path_visible)
         if len(path) >= 2:
             self.plan_path.SetAndObservePolyData(polyline([(BASE_TO_RAS_MM @ np.r_[np.array(p)*1000, 1])[:3] for p in path], 3))
         labels = {"idle":"就绪", "waiting_for_robot":"等待机器人状态", "planning":"规划中", "planned":"规划成功，等待执行", "executing":"仿真执行中", "succeeded":"仿真执行完成", "error":"操作失败"}
+        if anatomy:
+            labels["planned"] = "原 MR 头部查看" if mr_only else "规划通过 · 整根针净距已复核"
+            if plan.get("status") == "verifying":
+                labels["planning"] = "复核整根针的扫掠净距"
         status = state.get("status", "unknown")
         fixture = state.get("source") == "test_fixture"
         source_text = "界面测试数据（非 ROS 反馈）" if fixture else feedback_source_label(state.get("source"))
@@ -586,7 +622,12 @@ class UR12ePanel:
         self.execute_button.setEnabled(self.can_execute())
         for command, button in self.submit_buttons:
             if command != "execute":
-                button.setEnabled(bool(state.get("ready", False)) and status not in ("planning", "executing"))
+                enabled = bool(state.get("ready", False)) and status not in ("planning", "executing")
+                if anatomy:
+                    enabled = enabled and command == "plan" and self.anatomy.plan_enabled()
+                button.setEnabled(enabled)
+            if anatomy and command != "plan":
+                button.hide()
         self.set_robot_opacity(1.0 if state.get("ready", False) else .2)
         self.show_errors(state)
         if not self.mesh_transforms and links:
@@ -596,7 +637,12 @@ class UR12ePanel:
         annotation = slicer.app.layoutManager().threeDWidget(0).threeDView().cornerAnnotation()
         source_annotation = "FRONTEND TEST FIXTURE - NOT ROS FEEDBACK" if fixture else (
             "UR12e | URSIM SIMULATION" if state.get("source") == "ros2_ursim" else "UR12e | MOCK HARDWARE SIMULATION")
-        annotation.SetText(2, source_annotation + "\nTarget: gold / Tool: cyan\n" + labels.get(status, status))
+        if self.anatomy:
+            captions = {"replay": "BRAIN / SKULL | PLANNED POSE REPLAY", "rejected": "ANATOMY | REJECTED NEEDLE POSE"}
+            caption = "ORIGINAL MR | INTENSITY SURFACE" if mr_only else captions.get(self.anatomy.preview_kind, "BRAINWEB 04 | BRAIN / SKULL")
+            annotation.SetText(2, caption + "\nUR12e mock | Planning only")
+        else:
+            annotation.SetText(2, source_annotation + "\nTarget: gold / Tool: cyan\n" + labels.get(status, status))
 
     def set_robot_opacity(self, value):
         nodes = [node for _, node, _ in self.joint_models] + self.fallback_models + [self.tool] + list(self.robot_models.values())
@@ -729,6 +775,8 @@ class UR12ePanel:
                                      "capture_duration_s": time.perf_counter()-started})
 
     def stop(self):
+        if self.anatomy:
+            self.anatomy.hide_replay()
         self.timer.stop()
         if self.recording:
             self.toggle_recording()

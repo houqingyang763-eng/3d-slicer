@@ -1,5 +1,7 @@
 # 环境准备入口与 Windows / WSL 历史记录
 
+头部避碰使用 prepare_anatomy.py 从 BrainWeb 标签体准备 Slicer 显示和 MoveIt 碰撞所需几何。下载与转换产物保存在本机，原始尺寸和哈希写在 assets/brainweb_source.json。[安装与操作](../validation/HEAD_ANATOMY.md)
+
 **Linux 部署请从 [Linux 部署、运行与验收](../DEPLOYMENT_LINUX.md) 开始。** 当前支持目标为 Ubuntu 24.04 amd64 桌面系统；普通用户执行 `bash ur12e_slicer/bootstrap/install_linux.sh`，只读核对可加 `--check-only`。该入口准备依赖与固定资源，不启动 ROS 或 Slicer。`--offline` 只恢复缓存并检查现有依赖；`--skip-slicer` 跳过 GUI 资源与依赖。
 
 **下文保留为原作者 Windows + WSL 的安装历史及兼容入口说明。** 原生 Linux 不运行 `.ps1`、不安装 Windows 版 Slicer、不导入 WSL 镜像。当前安装器固定 ROS 源配置包和资源校验值，仅安装请求的软件包及其依赖，不运行全系统 `apt upgrade`；已验证 apt 版本与可复现范围见 [`validated_linux_versions.json`](../assets/validated_linux_versions.json)。

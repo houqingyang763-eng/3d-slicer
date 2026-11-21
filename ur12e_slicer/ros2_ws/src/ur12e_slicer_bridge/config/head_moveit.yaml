@@ -1,0 +1,9 @@
+/move_group:
+  ros__parameters:
+    ompl:
+      ur_manipulator:
+        planner_configs: [HeadRRTConnect]
+      planner_configs:
+        HeadRRTConnect:
+          type: geometric::RRTConnect
+          range: 0.70

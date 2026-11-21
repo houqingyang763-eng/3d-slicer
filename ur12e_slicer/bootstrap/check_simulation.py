@@ -17,10 +17,14 @@ try:
     if result["running"]:
         state = json.loads((runtime / "state.json").read_text(encoding="utf-8"))
         age = time.time() - state["timestamp"]
-        result.update({"feedback_age_s": age, "ready": state.get("source") == "ros2_mock_hardware"
+        result.update({"feedback_age_s": age, "keepout": record.get("keepout", False),
+                       "anatomy": record.get("anatomy", False),
+                       "ready": state.get("source") == "ros2_mock_hardware"
                        and state.get("ready") is True and state.get("feedback_valid") is True
                        and 0 <= age <= 1 and state["timestamp"] >= record.get("started_at", 0),
                        "request_id": state.get("request_id"), "status": state.get("status")})
+        if result["anatomy"]:
+            result["head_scene"] = state.get("anatomy")
 except (OSError, ValueError, KeyError) as error:
     result["detail"] = str(error)
 print(json.dumps(result))

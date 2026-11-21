@@ -1,8 +1,8 @@
 # 3D Slicer 影像导航与 UR12e 仿真
 
-本仓库包含基础配准练习，以及 UR12e、ROS 2 / MoveIt 2、3D Slicer 的仿真联动和导航误差评价。当前交付以 **Ubuntu 24.04、x86_64 桌面系统**为部署目标。更新日期：2026-10-31。
+本仓库包含基础配准练习，以及 UR12e、ROS 2 / MoveIt 2、3D Slicer 的仿真联动和导航误差评价。当前交付以 **Ubuntu 24.04、x86_64 桌面系统**为部署目标。更新日期为 2026-11-20。
 
-**想让 GPT 解释近期工作，先读 [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md)**，再看 [三轮精选 JSON 与头模截图](ur12e_slicer/reference_results/2026-10-31-ursim/README.md)。最新复跑为 10 月 31 日：两轮基础控制均 5/5，Slicer 均 20/21（录帧 19 帧未达至少 20 帧），外层没有全通过。头部显示已在当前会话恢复；整套 URSim 头部导航评价尚未重跑。下面的 10 月 27 日全通过属于历史记录。
+**想让 GPT 解释近期工作，先读 [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md)**。URSim 最近一次复跑在 10 月 31 日。两轮基础控制均 5/5，Slicer 均 20/21（录帧 19 帧未达至少 20 帧），外层没有全通过。当天恢复了会话中的头部显示，整套 URSim 头部导航评价尚未重跑。[三轮精选 JSON 与头模截图](ur12e_slicer/reference_results/2026-10-31-ursim/README.md)
 
 **接手的 Codex 先读 [AGENTS.md](AGENTS.md)，操作者按 [Linux 部署与验收](ur12e_slicer/DEPLOYMENT_LINUX.md)执行。** 安装、启动、运行和检查均使用仓库入口，不需要原作者的用户名、Windows 路径、WSL 镜像或 Codex 私有运行时。
 
@@ -14,6 +14,14 @@
 4. 参考平台调研、跨平台评价协议和可读的 JSON / CSV / HTML 结果。
 
 这些成果验证软件、几何和仿真链路。光学观测与真值是合成的；尚未连接物理定位仪或真实机械臂，没有完成实物精度测试或 ASTM 标准符合性测试。
+
+## 脑模与颅骨避碰
+
+用 `start_linux.sh --anatomy` 打开头部规划场景。Slicer 同屏显示脑模、半透明颅骨和 UR12e，并可切换查看原 MR 头部。头部模式按已确认的头模几何优先生成直达或绕行路线，必要时回退到 RRTConnect。整针净距与最终轨迹的全臂碰撞复核通过后可回放。[启动、验收与对照](ur12e_slicer/validation/HEAD_ANATOMY.md)
+
+## 虚拟禁入区对照（2026-11-18）
+
+固定 UR12e mock 的起点与针尖目标，用同一个球比较只显示、参与 MoveIt 碰撞检查和覆盖目标三种条件。已取得旧轨迹与球的实际碰撞接触、通过离散复核的新规划和目标阻断结果。运行入口与 Slicer 对照图说明见 [虚拟禁入区规划验收](ur12e_slicer/validation/VIRTUAL_KEEPOUT.md)。
 
 ## 可选 URSim 控制器路线（2026-10-27）
 

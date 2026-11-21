@@ -7,6 +7,8 @@ ur12e_slicer_bridge:
     pipeline_id: ompl
     # Use the planner configured for this group by the installed UR MoveIt config.
     planner_id: ""
+    # The head profile uses geometry first, or one tuned OMPL request for comparison.
+    head_planning_strategy: geometry
     controller_name: joint_trajectory_controller
     planning_time_s: 5.0
     position_tolerance_m: 0.002
